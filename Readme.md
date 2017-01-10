@@ -9,12 +9,19 @@ TODO
 - Biosphere
 - Parts
     - DockingPorts : civieDockingPort.cfg
-    - Housing : HousingSize2.cfg - HousingSize3.cfg - HousingSize4.cfg - smallHouse.cfg
+    - Housing : HousingSize2.cfg - HousingSize3.cfg - HousingSize4.cfg
     - Hydroponics : Hydroponics_large.cfg - Hydroponics_medium.cfg - Hydroponics_small.cfg
     - Mining : laserdrill.cfg - megadrill.cfg
     - Power : reactor.cfg - smallreactor.cfg
     - Recruitment : university.cfg
     - ResourceStorage : wasteWatertank.cfg - waterTank.cfg
+
+Utility
+-------
+
+surfaceAttachHouseSmall configured, internal ok, transfer ok, go out ok.
+
+TODO : Cannot go back in, no ladder.
 
 Ground Parts
 ------------

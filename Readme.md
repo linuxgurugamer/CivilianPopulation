@@ -9,7 +9,6 @@ TODO
 - Biosphere
 - Parts
     - DockingPorts : civieDockingPort.cfg
-    - Housing : HousingSize2.cfg - HousingSize3.cfg - HousingSize4.cfg
     - Hydroponics : Hydroponics_large.cfg - Hydroponics_medium.cfg - Hydroponics_small.cfg
     - Mining : laserdrill.cfg - megadrill.cfg
     - Power : reactor.cfg - smallreactor.cfg
@@ -19,9 +18,24 @@ TODO
 Utility
 -------
 
-surfaceAttachHouseSmall configured, internal ok, transfer ok, go out ok.
+- HousingSize2
+- HousingSize3
+- HousingSize4
+
+All ok.
+
+- surfaceAttachHouseSmall configured, internal ok, transfer ok, go out ok.
 
 TODO : Cannot go back in, no ladder.
+
+```
+    [LOG 08:21:59.524] Load(Model): CivilianPopulation/Models/Utility/surfaceAttachHouseSmall
+    [ERR 08:21:59.599] Triggers on concave MeshColliders are not supported
+
+    [ERR 08:21:59.600] Triggers on concave MeshColliders are not supported
+```
+
+    
 
 Ground Parts
 ------------

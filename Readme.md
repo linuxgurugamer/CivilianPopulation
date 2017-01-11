@@ -8,6 +8,7 @@ TODO
 - Fix landing legs.
 - Biosphere
 - Parts
+    - Biospheres : stbiodomeFarmMk2 - bioSphereWindows - bioSphereWindowsLarge - bioSphereWindowsWide - t1CivBiomassTank - bioDomeBase - bioDomeBaseLarge - bioSphereBase - bioSphereBaseNoWalls - bioSphereBaseWallRing - parkbioDomeBase - parkbioDomeBaseRock - parkbioDomeBaseMetal
     - DockingPorts : civieDockingPort.cfg
     - Hydroponics : Hydroponics_large.cfg - Hydroponics_medium.cfg - Hydroponics_small.cfg
     - Mining : laserdrill.cfg - megadrill.cfg

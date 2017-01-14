@@ -6,7 +6,7 @@ public enum KspPartField implements KspConfigField {
 	category,
 	subcategory,
 	author,	
-	rescaleFactor,
+	rescaleFactor(true),
 	node_stack_top,
 	node_stack_bottom,
 	node_stack_left,
@@ -30,6 +30,21 @@ public enum KspPartField implements KspConfigField {
 	breakingForce,
 	breakingTorque,
 	maxTemp,
-	explosionPotential,
+	explosionPotential(true),
 	;
+	
+	private boolean option;
+	
+	private KspPartField(boolean option) {
+		this.option = option;
+	}
+
+	private KspPartField() {
+		this(false);
+	}
+
+	public boolean isOption() {
+		return option;
+	}
+
 }

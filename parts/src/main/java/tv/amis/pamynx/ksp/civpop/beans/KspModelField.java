@@ -4,5 +4,7 @@ public enum KspModelField implements KspConfigField {
 
 	PART_name,
 	model,
+	scale,
+	texture,
 	;
 }

@@ -8,6 +8,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,12 +23,20 @@ public class PartToConfigConverter {
 		String config = new String(Files.readAllBytes(Paths.get(getClass().getClassLoader().getResource("part-template.cfg").toURI())));
 
 		for (KspPartField f : KspPartField.values()) {
-			if (part.get(f) != null) {
+			if (!f.isOption()){
 				config = config.replaceAll("%"+f.name()+"%", part.get(f));
+			} else {
+				if (part.get(f) != null) {
+					config = config.replaceAll("%"+f.name()+"%", f.name()+" = "+part.get(f));
+				} else {
+					config = config.replaceAll("    %"+f.name()+"%\n", "");
+				}
 			}
 		}
 		config = config.replaceAll("%MODEL%", getBlockModel(part));
 		config = config.replaceAll("%node_stack%", getBlockNodeStack(part));
+
+		config = config.replaceAll("%explosionPotential%", "explosionPotential = "+part.get(KspPartField.explosionPotential));
 		return new ByteArrayInputStream(config.getBytes(StandardCharsets.UTF_8));
 	}
 
@@ -37,6 +46,12 @@ public class PartToConfigConverter {
 			res.add("    MODEL");
 			res.add("    {");
 			res.add("        model = "+part.getModel().get(KspModelField.model));
+			if (part.getModel().get(KspModelField.scale) != null) {
+				res.add("        scale = "+part.getModel().get(KspModelField.scale));
+			}
+			if (part.getModel().get(KspModelField.texture) != null) {
+				res.add("        texture = "+part.getModel().get(KspModelField.texture));
+			}
 			res.add("    }");
 		}
 		return res.stream().collect(Collectors.joining("\n"));
@@ -46,7 +61,8 @@ public class PartToConfigConverter {
 		List<String> res = new ArrayList<>();
 		for (KspPartField f : KspPartField.values()) {
 			if (f.name().startsWith("node_stack") && part.get(f) != null) {
-				res.add("    "+f.name()+" = "+part.get(f));
+				Arrays.stream(part.get(f).split("\n"))
+					.forEach(line -> res.add("    "+f.name()+" = "+line));
 			}
 		}
 		return res.stream().collect(Collectors.joining("\n"));

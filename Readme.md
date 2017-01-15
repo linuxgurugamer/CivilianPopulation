@@ -8,7 +8,6 @@ TODO
 - Fix landing legs.
 - Biosphere
 - Parts
-    - Biospheres : stbiodomeFarmMk2 - bioSphereWindows - bioSphereWindowsLarge - bioSphereWindowsWide - t1CivBiomassTank - bioDomeBase - bioDomeBaseLarge - bioSphereBase - bioSphereBaseNoWalls - bioSphereBaseWallRing - parkbioDomeBase - parkbioDomeBaseRock - parkbioDomeBaseMetal
     - DockingPorts : civieDockingPort.cfg
     - Hydroponics : Hydroponics_large.cfg - Hydroponics_medium.cfg - Hydroponics_small.cfg
     - Mining : laserdrill.cfg - megadrill.cfg
@@ -24,6 +23,14 @@ Utility
 - HousingSize4
 
 All ok.
+
+- stbiodomeFarmMk2
+
+Almost ok, top attach point should be removed.
+
+- t1CivBiomassTank
+
+Tank for ressources not added : Water and Substrate.
 
 - surfaceAttachHouseSmall configured, internal ok, transfer ok, go out ok.
 
@@ -56,8 +63,25 @@ Structural Parts
 - truss6x6CoreT
 - truss6x6CoreX
 - truss6x6NoCore
+- bioSphereBaseNoWalls
 
 All seems ok.
+
+- bioSphereWindows
+- bioSphereWindowsLarge
+- bioSphereWindowsWide
+
+Cannot go inside, should improve attache attach points.
+
+- bioDomeBase
+- bioDomeBaseLarge
+- bioSphereBase
+- bioSphereBaseWallRing
+- parkbioDomeBase
+- parkbioDomeBaseRock
+- parkbioDomeBaseMetal
+
+Attachment point in the air, cannot go "into" the structure.
 
 Agency
 ------

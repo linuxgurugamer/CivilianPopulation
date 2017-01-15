@@ -15,6 +15,9 @@ import java.util.stream.Collectors;
 import tv.amis.pamynx.ksp.civpop.beans.KspModelField;
 import tv.amis.pamynx.ksp.civpop.beans.KspPart;
 import tv.amis.pamynx.ksp.civpop.beans.KspPartField;
+import tv.amis.pamynx.ksp.civpop.beans.KspResource;
+import tv.amis.pamynx.ksp.civpop.beans.KspResourceField;
+import tv.amis.pamynx.ksp.civpop.beans.KspResourceType;
 
 public class PartToConfigConverter {
 
@@ -34,6 +37,7 @@ public class PartToConfigConverter {
 			}
 		}
 		config = config.replaceAll("%MODEL%", getBlockModel(part));
+		config = config.replaceAll("%RESOURCE%\n", getBlockResource(part));
 		config = config.replaceAll("%node_stack%", getBlockNodeStack(part));
 
 		config = config.replaceAll("%explosionPotential%", "explosionPotential = "+part.get(KspPartField.explosionPotential));
@@ -53,6 +57,29 @@ public class PartToConfigConverter {
 				res.add("        texture = "+part.getModel().get(KspModelField.texture));
 			}
 			res.add("    }");
+		}
+		return res.stream().collect(Collectors.joining("\n"));
+	}
+
+	private String getBlockResource(KspPart part) {
+		List<String> res = new ArrayList<>();
+		if (part.getResources() != null) {
+			for (KspResource resource : part.getResources()) {
+				KspResourceType type = KspResourceType.valueOf(resource.get(KspResourceField.name));
+				if (type != null && type.isGeneric()) {
+					res.add("    RESOURCE");
+					res.add("    {");
+					res.add("        name = "+resource.get(KspResourceField.name));
+					if (resource.get(KspResourceField.amount) != null) {
+						res.add("        amount = "+resource.get(KspResourceField.amount));
+					}
+					if (resource.get(KspResourceField.maxAmount) != null) {
+						res.add("        maxAmount = "+resource.get(KspResourceField.maxAmount));
+					}
+					res.add("    }");
+				}
+			}
+			res.add("");
 		}
 		return res.stream().collect(Collectors.joining("\n"));
 	}

@@ -22,18 +22,23 @@ public class ConfigBuilderShould {
 		File parts = new File("./target/Gamedata/CivilianPopulation/Parts/");
 		Assert.assertThat(parts.exists(), Matchers.is(true));
 
-		checkPart("bioDomeBase");
-		checkPart("bioDomeBaseLarge");
-		checkPart("bioSphereBase");
-		checkPart("bioSphereBaseNoWalls");
-		checkPart("bioSphereBaseWallRing");
-		checkPart("parkbioDomeBase");
-		checkPart("parkbioDomeBaseMetal");
-		checkPart("parkbioDomeBaseRock");
+		checkPart("bioDomeBase", "Structural");
+		checkPart("bioDomeBaseLarge", "Structural");
+		checkPart("bioSphereBase", "Structural");
+		checkPart("bioSphereBaseNoWalls", "Structural");
+		checkPart("bioSphereBaseWallRing", "Structural");
+		checkPart("parkbioDomeBase", "Structural");
+		checkPart("parkbioDomeBaseMetal", "Structural");
+		checkPart("parkbioDomeBaseRock", "Structural");
+		checkPart("stbiodomeFarmMk2", "Utility");
+		checkPart("bioSphereWindows", "Structural");
+		checkPart("bioSphereWindowsLarge", "Structural");
+		checkPart("bioSphereWindowsWide", "Structural");
+		checkPart("t1CivBiomassTank", "Utility");
 	}
 	
-	private void checkPart(String partName) throws IOException, URISyntaxException {
-		File part = new File("./target/Gamedata/CivilianPopulation/Parts/Structural/"+partName+".cfg");
+	private void checkPart(String partName, String category) throws IOException, URISyntaxException {
+		File part = new File("./target/Gamedata/CivilianPopulation/Parts/"+category+"/"+partName+".cfg");
 		Assert.assertTrue(partName + " was not created !", part.exists());
 		String actual = Files.readAllLines(part.toPath()).stream().collect(Collectors.joining("\n"));
 		String expected = new String(Files.readAllBytes(Paths.get(getClass().getClassLoader().getResource(partName+"-expected.cfg").toURI())));

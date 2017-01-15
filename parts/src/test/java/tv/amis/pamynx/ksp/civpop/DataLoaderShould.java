@@ -16,7 +16,7 @@ public class DataLoaderShould {
 		
 		Collection<KspPart> parts = loader.load("PARTS.xlsx");
 		
-		Assert.assertThat(parts.size(), Matchers.is(8));
+		Assert.assertThat(parts.size(), Matchers.is(13));
 	}
 	
 }

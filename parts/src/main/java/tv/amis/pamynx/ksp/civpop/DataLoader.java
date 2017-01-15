@@ -2,11 +2,9 @@ package tv.amis.pamynx.ksp.civpop;
 
 import java.io.IOException;
 import java.util.Collection;
-import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
@@ -16,6 +14,8 @@ import tv.amis.pamynx.ksp.civpop.beans.KspModel;
 import tv.amis.pamynx.ksp.civpop.beans.KspModelField;
 import tv.amis.pamynx.ksp.civpop.beans.KspPart;
 import tv.amis.pamynx.ksp.civpop.beans.KspPartField;
+import tv.amis.pamynx.ksp.civpop.beans.KspResource;
+import tv.amis.pamynx.ksp.civpop.beans.KspResourceField;
 
 public class DataLoader {
 
@@ -23,11 +23,13 @@ public class DataLoader {
 
 	private KspConfigLoader<KspPartField, KspPart> partLoader;
 	private KspConfigLoader<KspModelField, KspModel> modelLoader;
+	private KspListConfigLoader<KspResourceField, KspResource> resourceLoader;
 	
 	public DataLoader() {
 		super();
 		partLoader = new KspConfigLoader<KspPartField, KspPart>(() -> new KspPart());
 		modelLoader = new KspConfigLoader<KspModelField, KspModel>(() -> new KspModel());
+		resourceLoader = new KspListConfigLoader<KspResourceField, KspResource>(() -> new KspResource());
 	}
 	
 	
@@ -39,6 +41,10 @@ public class DataLoader {
 			Map<String, KspModel> models = modelLoader.loadFrom(wb.getSheet("MODEL"));
 			parts.values()
 				.forEach(part -> part.setModel(models.get(part.getName())));
+			
+			Map<String, List<KspResource>> resources = resourceLoader.loadFrom(wb.getSheet("RESOURCE"));
+			parts.values()
+				.forEach(part -> part.setResources(resources.get(part.getName())));
 		} catch (IOException e) {
 			logger.error(e.getMessage(),  e);
 			throw new ConfigBuilderException(e);

@@ -35,6 +35,9 @@ public class ConfigBuilderShould {
 		checkPart("bioSphereWindowsLarge", "Structural");
 		checkPart("bioSphereWindowsWide", "Structural");
 		checkPart("t1CivBiomassTank", "Utility");
+		checkPart("CivPopReactor", "Electrical");
+		checkPart("SmallCivPopReactor", "Electrical");
+		checkPart("civieDock", "Utility");
 	}
 	
 	private void checkPart(String partName, String category) throws IOException, URISyntaxException {

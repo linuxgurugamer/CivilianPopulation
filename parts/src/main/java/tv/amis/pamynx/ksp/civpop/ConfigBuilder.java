@@ -7,28 +7,33 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import tv.amis.pamynx.ksp.civpop.beans.KspPart;
+import tv.amis.pamynx.ksp.civpop.repository.KspRepository;
 
 public class ConfigBuilder {
 
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	private Path target;
-	
-	private DataLoader loader;
+	private KspRepository repository;
 	private PartToConfigConverter converter;
 
 	public ConfigBuilder(String target) {
 		this.target = Paths.get(target);
-		this.loader = new DataLoader();
-		this.converter = new PartToConfigConverter();
+		this.repository = new KspRepository();
+		this.converter = new PartToConfigConverter(repository);
 	}
 
-	public void build(String data) {
-		loader.load(data).stream()
+	public void build(String data) throws IOException {
+		try (Workbook wb = new XSSFWorkbook(this.getClass().getClassLoader().getResourceAsStream("PARTS.xlsx"))){
+			repository.load(wb);
+		};
+		repository.getParts().stream()
 			.forEach(this::writePartConfig);
 	}
 

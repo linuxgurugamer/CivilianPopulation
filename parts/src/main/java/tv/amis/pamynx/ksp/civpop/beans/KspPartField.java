@@ -5,7 +5,8 @@ public enum KspPartField implements KspConfigField {
 	module,
 	category,
 	subcategory,
-	author,	
+	author,
+	scale(true),
 	rescaleFactor(true),
 	node_stack_top,
 	node_stack_bottom,
@@ -14,7 +15,7 @@ public enum KspPartField implements KspConfigField {
 	node_stack_left,
 	node_stack_right,
 	node_attach(true),
-	CrewCapacity,
+	CrewCapacity(true),
 	TechRequired,
 	entryCost,
 	cost,
@@ -32,6 +33,7 @@ public enum KspPartField implements KspConfigField {
 	breakingTorque(true),
 	maxTemp,
 	explosionPotential(true),
+	vesselType(true),
 	;
 	
 	private boolean option;

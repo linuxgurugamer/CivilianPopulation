@@ -11,9 +11,18 @@ TODO
     - DockingPorts : civieDockingPort.cfg
     - Hydroponics : Hydroponics_large.cfg - Hydroponics_medium.cfg - Hydroponics_small.cfg
     - Mining : laserdrill.cfg - megadrill.cfg
-    - Power : reactor.cfg - smallreactor.cfg
     - Recruitment : university.cfg
     - ResourceStorage : wasteWatertank.cfg - waterTank.cfg
+
+Electrical
+----------
+
+- CivPopReactor
+- SmallCivPopReactor
+
+Rebalance cost, converstion speed.
+Big reator animation won't stop.
+Turn the lights off when the reactors are off.
 
 Utility
 -------
@@ -21,6 +30,7 @@ Utility
 - HousingSize2
 - HousingSize3
 - HousingSize4
+- t1CivBiomassTank
 
 All ok.
 
@@ -28,13 +38,13 @@ All ok.
 
 Almost ok, top attach point should be removed.
 
-- t1CivBiomassTank
+- civieDockingPort
 
-Tank for ressources not added : Water and Substrate.
+Part is ok, behaviour to add (Modules CivilianDockGrowth & KerbalRecruitment).
 
-- surfaceAttachHouseSmall configured, internal ok, transfer ok, go out ok.
+- surfaceAttachHouseSmall
 
-TODO : Cannot go back in, no ladder.
+Cannot go back in, no ladder.
 
 ```
     [LOG 08:21:59.524] Load(Model): CivilianPopulation/Models/Utility/surfaceAttachHouseSmall

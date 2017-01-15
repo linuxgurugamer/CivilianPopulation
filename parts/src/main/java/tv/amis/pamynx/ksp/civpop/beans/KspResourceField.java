@@ -6,5 +6,6 @@ public enum KspResourceField implements KspConfigField {
 	name,
 	amount,
 	maxAmount,
+	isTweakable,
 	;
 }

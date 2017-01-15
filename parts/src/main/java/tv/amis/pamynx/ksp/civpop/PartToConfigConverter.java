@@ -12,16 +12,28 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import tv.amis.pamynx.ksp.civpop.beans.KspConversion;
+import tv.amis.pamynx.ksp.civpop.beans.KspConversionField;
+import tv.amis.pamynx.ksp.civpop.beans.KspInternalField;
 import tv.amis.pamynx.ksp.civpop.beans.KspModelField;
+import tv.amis.pamynx.ksp.civpop.beans.KspModule;
+import tv.amis.pamynx.ksp.civpop.beans.KspModuleField;
 import tv.amis.pamynx.ksp.civpop.beans.KspPart;
 import tv.amis.pamynx.ksp.civpop.beans.KspPartField;
 import tv.amis.pamynx.ksp.civpop.beans.KspResource;
 import tv.amis.pamynx.ksp.civpop.beans.KspResourceField;
 import tv.amis.pamynx.ksp.civpop.beans.KspResourceType;
+import tv.amis.pamynx.ksp.civpop.repository.KspRepository;
 
 public class PartToConfigConverter {
 
+	private KspRepository repository;
 	
+	public PartToConfigConverter(KspRepository repository) {
+		super();
+		this.repository = repository;
+	}
+
 	public InputStream toConfig(KspPart part) throws IOException, URISyntaxException {
 		String config = new String(Files.readAllBytes(Paths.get(getClass().getClassLoader().getResource("part-template.cfg").toURI())));
 
@@ -37,36 +49,56 @@ public class PartToConfigConverter {
 			}
 		}
 		config = config.replaceAll("%MODEL%", getBlockModel(part));
+		config = config.replaceAll("%INTERNAL%\n", getBlockInternal(part));
 		config = config.replaceAll("%RESOURCE%\n", getBlockResource(part));
+		config = config.replaceAll("%MODULE%\n", getBlockModule(part));
 		config = config.replaceAll("%node_stack%", getBlockNodeStack(part));
 
-		config = config.replaceAll("%explosionPotential%", "explosionPotential = "+part.get(KspPartField.explosionPotential));
+		//config = config.replaceAll("%explosionPotential%", "explosionPotential = "+part.get(KspPartField.explosionPotential));
 		return new ByteArrayInputStream(config.getBytes(StandardCharsets.UTF_8));
 	}
 
 	private String getBlockModel(KspPart part) {
 		List<String> res = new ArrayList<>();
-		if (part.getModel() != null) {
+		if (repository.getModel(part) != null) {
 			res.add("    MODEL");
 			res.add("    {");
-			res.add("        model = "+part.getModel().get(KspModelField.model));
-			if (part.getModel().get(KspModelField.scale) != null) {
-				res.add("        scale = "+part.getModel().get(KspModelField.scale));
+			res.add("        model = "+repository.getModel(part).get(KspModelField.model));
+			if (repository.getModel(part).get(KspModelField.scale) != null) {
+				res.add("        scale = "+repository.getModel(part).get(KspModelField.scale));
 			}
-			if (part.getModel().get(KspModelField.texture) != null) {
-				res.add("        texture = "+part.getModel().get(KspModelField.texture));
+			if (repository.getModel(part).get(KspModelField.texture) != null) {
+				res.add("        texture = "+repository.getModel(part).get(KspModelField.texture));
 			}
 			res.add("    }");
 		}
 		return res.stream().collect(Collectors.joining("\n"));
 	}
 
+	private String getBlockInternal(KspPart part) {
+		List<String> res = new ArrayList<>();
+		if (repository.getInternal(part) != null) {
+			res.add("    INTERNAL");
+			res.add("    {");
+			res.add("        name = "+repository.getInternal(part).get(KspInternalField.name));
+			if (repository.getModel(part).get(KspModelField.scale) != null) {
+				res.add("        scale = "+repository.getModel(part).get(KspModelField.scale));
+			}
+			if (repository.getModel(part).get(KspModelField.texture) != null) {
+				res.add("        texture = "+repository.getModel(part).get(KspModelField.texture));
+			}
+			res.add("    }");
+			res.add("");
+		}
+		return res.stream().collect(Collectors.joining("\n"));
+	}
+
 	private String getBlockResource(KspPart part) {
 		List<String> res = new ArrayList<>();
-		if (part.getResources() != null) {
-			for (KspResource resource : part.getResources()) {
+		if (repository.getResources(part) != null) {
+			for (KspResource resource : repository.getResources(part)) {
 				KspResourceType type = KspResourceType.valueOf(resource.get(KspResourceField.name));
-				if (type != null && type.isGeneric()) {
+				if (type != null) {
 					res.add("    RESOURCE");
 					res.add("    {");
 					res.add("        name = "+resource.get(KspResourceField.name));
@@ -76,6 +108,9 @@ public class PartToConfigConverter {
 					if (resource.get(KspResourceField.maxAmount) != null) {
 						res.add("        maxAmount = "+resource.get(KspResourceField.maxAmount));
 					}
+					if (resource.get(KspResourceField.isTweakable) != null) {
+						res.add("        isTweakable = "+resource.get(KspResourceField.isTweakable));
+					}
 					res.add("    }");
 				}
 			}
@@ -83,6 +118,47 @@ public class PartToConfigConverter {
 		}
 		return res.stream().collect(Collectors.joining("\n"));
 	}
+	
+
+	private String getBlockModule(KspPart part) {
+		List<String> res = new ArrayList<>();
+		if (repository.getModules(part) != null) {
+			for (KspModule module : repository.getModules(part)) {
+				res.add("    MODULE");
+				res.add("    {");
+				for (KspModuleField f : KspModuleField.values()) {
+					if (f != KspModuleField.PART_name) {
+						String value = module.get(f);
+						if (value != null) {
+							res.add("        "+f.name()+" = "+value);
+						}
+					}
+				}
+				if ("ModuleResourceConverter".equals(module.get(KspModuleField.name))) {
+					for (KspConversion conversion : repository.getConversions(module)) {
+						res.add("        "+conversion.get(KspConversionField.TYPE)+"_RESOURCE");
+						res.add("        {");
+						for (KspConversionField f : KspConversionField.values()) {
+							if (f != KspConversionField.PART_name 
+							 && f != KspConversionField.TYPE 
+							 && f != KspConversionField.ConverterName
+							 ) {
+								String value = conversion.get(f);
+								if (value != null) {
+									res.add("            "+f.name()+" = "+value);
+								}
+							}
+						}
+						res.add("        }");
+					}
+				}
+				res.add("    }");
+			}
+			res.add("");
+		}
+		return res.stream().collect(Collectors.joining("\n"));
+	}
+
 
 	private String getBlockNodeStack(KspPart part) {
 		List<String> res = new ArrayList<>();

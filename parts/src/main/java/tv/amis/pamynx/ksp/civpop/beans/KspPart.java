@@ -1,12 +1,7 @@
 package tv.amis.pamynx.ksp.civpop.beans;
 
-import java.util.List;
-
 public class KspPart extends KspConfig<KspPartField>{
 
-	private KspModel model;
-	private List<KspResource> resources;
-	
 	public KspPart() {
 		super();
 	}
@@ -32,23 +27,4 @@ public class KspPart extends KspConfig<KspPartField>{
 	public void setCategory(String category) {
 		this.set(KspPartField.category, category);
 	}
-
-	public void setModel(KspModel model) {
-		this.model = model;
-	}
-	
-	public KspModel getModel() {
-		return this.model;
-	}
-
-	public void setResources(List<KspResource> resources) {
-		this.resources = resources;
-	}
-	
-	public List<KspResource> getResources() {
-		return this.resources;
-	}
-
-
-
 }

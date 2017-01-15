@@ -14,6 +14,9 @@ public enum KspResourceType {
 	Ablator,
 	Substrate(false),
 	Water(false),
+	EnrichedUranium(false),
+	DepletedUranium(false),
+	CivilianGrowthCounter(false),
 	;
 
 	public boolean generic;

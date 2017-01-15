@@ -5,14 +5,10 @@ TODO
 ----
 
 - Add Netherdyne as an agency.
-- Fix landing legs.
-- Biosphere
 - Parts
-    - DockingPorts : civieDockingPort.cfg
     - Hydroponics : Hydroponics_large.cfg - Hydroponics_medium.cfg - Hydroponics_small.cfg
     - Mining : laserdrill.cfg - megadrill.cfg
     - Recruitment : university.cfg
-    - ResourceStorage : wasteWatertank.cfg - waterTank.cfg
 
 Electrical
 ----------
@@ -20,9 +16,16 @@ Electrical
 - CivPopReactor
 - SmallCivPopReactor
 
-Rebalance cost, converstion speed.
+
+
+Rebalance cost, conversion speed.
 Big reator animation won't stop.
 Turn the lights off when the reactors are off.
+
+```
+    [WRN 00:08:25.564] [ShipConstruct for CivPopReactor]: part cost (15000.0) is less than the cost of its resources (432500.0)
+    [WRN 00:08:25.598] [ShipConstruct for SmallCivPopReactor]: part cost (8000.0) is less than the cost of its resources (173000.0)
+```
 
 Utility
 -------
@@ -32,15 +35,23 @@ Utility
 - HousingSize4
 - t1CivBiomassTank
 
+- civieDockingPort
+
+Part is ok, behaviour to add (Modules CivilianDockGrowth & KerbalRecruitment).
+
 All ok.
+
+- t1civWasteWaterTank
+
+calibrate these to 1 day worth of waste
+
+- t1CivWaterTank
+
+calbriate these to 1 day worth of food/water
 
 - stbiodomeFarmMk2
 
 Almost ok, top attach point should be removed.
-
-- civieDockingPort
-
-Part is ok, behaviour to add (Modules CivilianDockGrowth & KerbalRecruitment).
 
 - surfaceAttachHouseSmall
 
@@ -52,8 +63,6 @@ Cannot go back in, no ladder.
 
     [ERR 08:21:59.600] Triggers on concave MeshColliders are not supported
 ```
-
-    
 
 Ground Parts
 ------------

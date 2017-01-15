@@ -38,6 +38,8 @@ public class ConfigBuilderShould {
 		checkPart("CivPopReactor", "Electrical");
 		checkPart("SmallCivPopReactor", "Electrical");
 		checkPart("civieDock", "Utility");
+		checkPart("t1civWasteWaterTank", "Utility");
+		checkPart("t1CivWaterTank", "Utility");
 	}
 	
 	private void checkPart(String partName, String category) throws IOException, URISyntaxException {

@@ -68,7 +68,8 @@ public class PartToConfigConverter {
 				res.add("        scale = "+repository.getModel(part).get(KspModelField.scale));
 			}
 			if (repository.getModel(part).get(KspModelField.texture) != null) {
-				res.add("        texture = "+repository.getModel(part).get(KspModelField.texture));
+				Arrays.stream(repository.getModel(part).get(KspModelField.texture).split("\n"))
+					.forEach(s -> res.add("        texture = "+s));
 			}
 			res.add("    }");
 		}
@@ -81,12 +82,6 @@ public class PartToConfigConverter {
 			res.add("    INTERNAL");
 			res.add("    {");
 			res.add("        name = "+repository.getInternal(part).get(KspInternalField.name));
-			if (repository.getModel(part).get(KspModelField.scale) != null) {
-				res.add("        scale = "+repository.getModel(part).get(KspModelField.scale));
-			}
-			if (repository.getModel(part).get(KspModelField.texture) != null) {
-				res.add("        texture = "+repository.getModel(part).get(KspModelField.texture));
-			}
 			res.add("    }");
 			res.add("");
 		}

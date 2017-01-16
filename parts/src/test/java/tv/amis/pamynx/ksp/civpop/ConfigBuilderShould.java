@@ -40,6 +40,19 @@ public class ConfigBuilderShould {
 		checkPart("civieDock", "Utility");
 		checkPart("t1civWasteWaterTank", "Utility");
 		checkPart("t1CivWaterTank", "Utility");
+		checkPart("colossalLandingLeg", "Ground");
+		checkPart("colossalLandingLeg2", "Ground");
+		checkPart("truss18x18NoCore", "Structural");
+		checkPart("truss6x18", "Structural");
+		checkPart("truss6x6Core", "Structural");
+		checkPart("truss6x6CoreL", "Structural");
+		checkPart("truss6x6CoreT", "Structural");
+		checkPart("truss6x6CoreX", "Structural");
+		checkPart("truss6x6NoCore", "Structural");
+		checkPart("InsituKerbalRecruiterTest", "Utility");
+		checkPart("t1CivilizationGenerationShipQuartersMedium", "Utility");
+		checkPart("t1CivilizationGenerationShipQuartersLarge", "Utility");
+		checkPart("surfaceAttachHouseSmall", "Utility");
 	}
 	
 	private void checkPart(String partName, String category) throws IOException, URISyntaxException {

@@ -8,15 +8,13 @@ TODO
 - Parts
     - Hydroponics : Hydroponics_large.cfg - Hydroponics_medium.cfg - Hydroponics_small.cfg
     - Mining : laserdrill.cfg - megadrill.cfg
-    - Recruitment : university.cfg
+    - Recruitment : .cfg
 
 Electrical
 ----------
 
 - CivPopReactor
 - SmallCivPopReactor
-
-
 
 Rebalance cost, conversion speed.
 Big reator animation won't stop.
@@ -26,6 +24,13 @@ Turn the lights off when the reactors are off.
     [WRN 00:08:25.564] [ShipConstruct for CivPopReactor]: part cost (15000.0) is less than the cost of its resources (432500.0)
     [WRN 00:08:25.598] [ShipConstruct for SmallCivPopReactor]: part cost (8000.0) is less than the cost of its resources (173000.0)
 ```
+
+Science
+-------
+
+-university
+
+Almost ok, some EVA problems without ladder.
 
 Utility
 -------

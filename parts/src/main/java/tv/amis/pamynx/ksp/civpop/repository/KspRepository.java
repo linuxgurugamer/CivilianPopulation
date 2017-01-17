@@ -2,6 +2,7 @@ package tv.amis.pamynx.ksp.civpop.repository;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.apache.poi.ss.usermodel.Workbook;
@@ -93,9 +94,13 @@ public class KspRepository {
 	}
 
 	public List<KspConversion> getConversions(KspModule module) {
+		String name = Optional
+				.ofNullable(module.get(KspModuleField.ConverterName))
+				.orElse(module.get(KspModuleField.name));
+		
 		return this.conversions.getList().stream()
 				.filter(conversion -> conversion.get(KspConversionField.PART_name).equals(module.get(KspModuleField.PART_name)))
-				.filter(conversion -> conversion.get(KspConversionField.ConverterName).equals(module.get(KspModuleField.ConverterName)))
+				.filter(conversion -> conversion.get(KspConversionField.ConverterName).equals(name))
 				.collect(Collectors.toList());
 	}
 

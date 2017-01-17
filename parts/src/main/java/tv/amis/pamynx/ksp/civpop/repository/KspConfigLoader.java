@@ -99,5 +99,4 @@ public class KspConfigLoader<F extends KspConfigField, C extends KspConfig<F>> {
 		}
 		return c;
 	}
-
 }

@@ -28,5 +28,15 @@ public enum KspModuleField implements KspConfigField {
 	storageRange,
 	allowRepeatedSubjects,
 	textureQuadName,
+	minimumCrew,
+    containerModuleIndex,
+    dataStorage,
+    crewsRequired,
+    canResetConnectedModules,
+    canResetNearbyModules,
+    interactionRange,
+    SurfaceBonus,
+    ContextBonus,
+    homeworldMultiplier,
     ;
 }

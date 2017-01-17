@@ -7,5 +7,7 @@ public enum KspConversionField implements KspConfigField {
     ResourceName,
     Ratio,
     DumpExcess,
+    name,
+    amount,
     ;
 }

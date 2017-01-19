@@ -54,6 +54,7 @@ public class ConfigBuilderShould {
 		checkPart("t1CivilizationGenerationShipQuartersLarge", "Utility");
 		checkPart("surfaceAttachHouseSmall", "Utility");
 		checkPart("nduniversity", "Science");
+		checkPart("t1civSmallGardenModule", "Utility");
 	}
 	
 	private void checkPart(String partName, String category) throws IOException, URISyntaxException {

@@ -38,5 +38,7 @@ public enum KspModuleField implements KspConfigField {
     SurfaceBonus,
     ContextBonus,
     homeworldMultiplier,
+    status,
+    allowManualControl,
     ;
 }

@@ -6,7 +6,7 @@ TODO
 
 - Add Netherdyne as an agency.
 - Parts
-    - Hydroponics : Hydroponics_large.cfg - Hydroponics_medium.cfg - Hydroponics_small.cfg
+    - Hydroponics : Hydroponics_large.cfg - Hydroponics_medium.cfg
     - Mining : laserdrill.cfg - megadrill.cfg
     - Recruitment : .cfg
 
@@ -68,6 +68,10 @@ Cannot go back in, no ladder.
 
     [ERR 08:21:59.600] Triggers on concave MeshColliders are not supported
 ```
+
+- t1civSmallGardenModule
+
+Part seems ok, animation KO (button toggle, status moving...)
 
 Ground Parts
 ------------

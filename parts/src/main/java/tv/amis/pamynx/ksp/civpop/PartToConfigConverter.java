@@ -165,6 +165,24 @@ public class PartToConfigConverter {
 						res.add("        }");
 					}
 				}
+				if ("ModuleResourceHarvester".equals(module.get(KspModuleField.name))) {
+					for (KspConversion conversion : repository.getConversions(module)) {
+						res.add("        "+conversion.get(KspConversionField.TYPE)+"_RESOURCE");
+						res.add("        {");
+						for (KspConversionField f : KspConversionField.values()) {
+							if (f != KspConversionField.PART_name 
+							 && f != KspConversionField.TYPE 
+							 && f != KspConversionField.ConverterName
+							 ) {
+								String value = conversion.get(f);
+								if (value != null) {
+									res.add("            "+f.name()+" = "+value);
+								}
+							}
+						}
+						res.add("        }");
+					}
+				}
 				res.add("    }");
 			}
 			res.add("");

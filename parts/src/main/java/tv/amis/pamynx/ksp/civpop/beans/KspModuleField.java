@@ -40,5 +40,8 @@ public enum KspModuleField implements KspConfigField {
     homeworldMultiplier,
     status,
     allowManualControl,
+    HarvesterType,
+    Efficiency,
+    ResourceName,
     ;
 }

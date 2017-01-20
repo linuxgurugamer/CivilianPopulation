@@ -28,8 +28,14 @@ public class ConfigBuilder {
 		this.repository = new KspRepository();
 		this.converter = new PartToConfigConverter(repository);
 	}
+	
+	public static void main(String...args) throws IOException {
+		ConfigBuilder builder = new ConfigBuilder(args[0]);
+		builder.build(args[1]);
+	}
 
 	public void build(String data) throws IOException {
+		logger.info("building part file from "+data+" to "+target+"...");
 		try (Workbook wb = new XSSFWorkbook(this.getClass().getClassLoader().getResourceAsStream("PARTS.xlsx"))){
 			repository.load(wb);
 		};

@@ -1,4 +1,4 @@
-package tv.amis.pamynx.ksp.civpop;
+package tv.amis.pamynx.ksp.civpop.integration;
 
 import java.io.File;
 import java.io.IOException;
@@ -13,13 +13,11 @@ import org.junit.Test;
 
 public class ConfigBuilderShould {
 
+	private static final String path = "./target/Gamedata/CivilianPopulation";
+	
 	@Test
 	public void create_parts_folder() throws IOException, URISyntaxException {
-		ConfigBuilder builder = new ConfigBuilder("./target/Gamedata/CivilianPopulation");
-		
-		builder.build("PARTS.xlsx");
-		
-		File parts = new File("./target/Gamedata/CivilianPopulation/Parts/");
+		File parts = new File(path+"/Parts/");
 		Assert.assertThat(parts.exists(), Matchers.is(true));
 
 		checkPart("bioDomeBase", "Structural");
@@ -63,7 +61,7 @@ public class ConfigBuilderShould {
 	}
 	
 	private void checkPart(String partName, String category) throws IOException, URISyntaxException {
-		File part = new File("./target/Gamedata/CivilianPopulation/Parts/"+category+"/"+partName+".cfg");
+		File part = new File(path+"/Parts/"+category+"/"+partName+".cfg");
 		Assert.assertTrue(partName + " was not created !", part.exists());
 		String actual = Files.readAllLines(part.toPath()).stream().collect(Collectors.joining("\n"));
 		String expected = new String(Files.readAllBytes(Paths.get(getClass().getClassLoader().getResource(partName+"-expected.cfg").toURI())));

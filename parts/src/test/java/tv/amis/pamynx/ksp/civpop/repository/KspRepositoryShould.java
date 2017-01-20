@@ -18,7 +18,7 @@ public class KspRepositoryShould {
 			repository.load(wb);
 		};
 
-		Assert.assertThat(repository.getParts().size(), Matchers.is(33));
+		Assert.assertThat(repository.getParts().size(), Matchers.is(35));
 	}
 
 	@Test

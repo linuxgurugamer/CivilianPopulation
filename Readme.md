@@ -35,16 +35,18 @@ Almost ok, some EVA problems without ladder.
 Utility
 -------
 
-- HousingSize2
-- HousingSize3
-- HousingSize4
+- InsituKerbalRecruiterTest
+- t1CivilizationGenerationShipQuartersMedium
+- t1CivilizationGenerationShipQuartersLarge
 - t1CivBiomassTank
+- t1civGardenBiosphereMedium
+- t1civGardenBiosphere
+
+All ok.
 
 - civieDockingPort
 
 Part is ok, behaviour to add (Modules CivilianDockGrowth & KerbalRecruitment).
-
-All ok.
 
 - t1civWasteWaterTank
 

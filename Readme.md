@@ -41,6 +41,8 @@ Utility
 - t1CivBiomassTank
 - t1civGardenBiosphereMedium
 - t1civGardenBiosphere
+- megadrill.cfg
+- pipeNetwork.cfg
 
 All ok.
 

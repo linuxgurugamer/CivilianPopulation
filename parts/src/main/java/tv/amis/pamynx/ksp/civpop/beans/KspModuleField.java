@@ -43,5 +43,7 @@ public enum KspModuleField implements KspConfigField {
     HarvesterType,
     Efficiency,
     ResourceName,
+    RecipeInputs,
+    HarvestThreshold
     ;
 }

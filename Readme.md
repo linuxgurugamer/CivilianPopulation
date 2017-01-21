@@ -5,10 +5,6 @@ TODO
 ----
 
 - Add Netherdyne as an agency.
-- Parts
-    - Hydroponics : Hydroponics_large.cfg - Hydroponics_medium.cfg
-    - Mining : laserdrill.cfg - megadrill.cfg
-    - Recruitment : .cfg
 
 Electrical
 ----------
@@ -103,7 +99,7 @@ All seems ok.
 - bioSphereWindowsLarge
 - bioSphereWindowsWide
 
-Cannot go inside, should improve attache attach points.
+Cannot go inside, should improve attach points.
 
 - bioDomeBase
 - bioDomeBaseLarge

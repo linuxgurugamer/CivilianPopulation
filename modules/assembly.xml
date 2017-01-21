@@ -12,4 +12,10 @@
 			<outputDirectory>Gamedata/CivilianPopulation</outputDirectory>
 		</file>
 	</files>
+    <fileSets>
+        <fileSet>
+            <directory>${basedir}/src/main/resources</directory>
+            <outputDirectory>Gamedata/CivilianPopulation/GUI</outputDirectory>
+        </fileSet>
+    </fileSets>
 </assembly>  

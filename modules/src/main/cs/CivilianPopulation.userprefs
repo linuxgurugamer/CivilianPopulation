@@ -1,12 +1,10 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workbench ActiveDocument="CivilianDockGrowth.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="KerbalRecruitment.cs">
     <Files>
-      <File FileName="CivilianDockGrowth.cs" Line="6" Column="29" />
       <File FileName="CivilianPopulationRegulator.cs" Line="8" Column="29" />
-      <File FileName="CivilianSpawnGrowth.cs" Line="6" Column="29" />
-      <File FileName="debuggingClass.cs" Line="5" Column="29" />
-      <File FileName="KerbalRecruitment.cs" Line="6" Column="29" />
-      <File FileName="PopModGUI.cs" Line="12" Column="29" />
+      <File FileName="CivilianDockGrowth.cs" Line="13" Column="31" />
+      <File FileName="PopModGUI.cs" Line="31" Column="107" />
+      <File FileName="KerbalRecruitment.cs" Line="16" Column="42" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />

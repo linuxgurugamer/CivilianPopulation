@@ -17,7 +17,7 @@ namespace CivilianPopulation
   {
     static Rect _windowPosition = new Rect(Screen.width / 2 - 250, Screen.height / 2 - 250, 500, 300);
     static bool showPopInfo = false;
-    internal static string assetFolder = "CivilianPopulation/Assets/";
+    internal static string assetFolder = "CivilianPopulation/GUI/";
     static bool CivPopGUIOn = false;
     internal bool CivPopTooltip = false;
 
@@ -28,7 +28,7 @@ namespace CivilianPopulation
     /// </summary>
     public void Awake ()
     {
-      Debug.Log (debuggingClass.modName + this.name + " is starting Awake()!");
+      Debug.Log (debuggingClass.modName + this.name + " is starting Awake()!"); // Called when game starts
       DontDestroyOnLoad (this);
       GameEvents.onGUIApplicationLauncherReady.Add (OnAppLauncherReady);//when AppLauncher can take apps, give it OnAppLauncherReady (mine)
       GameEvents.onGUIApplicationLauncherDestroyed.Add (OnAppLauncherDestroyed);//Not sure what this does

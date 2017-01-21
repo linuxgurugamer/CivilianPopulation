@@ -13,9 +13,26 @@
 	<modules>
         <module>assets</module>
         <module>parts</module>
+        <module>modules</module>
         <module>mod</module>
-		<!-- module>modules</module -->
 	</modules>
+
+    <scm>
+        <connection>scm:git:https://github.com/rleroy/CivilianPopulation.git</connection>
+    </scm>
+
+    <distributionManagement>
+        <repository>
+            <id>nexus</id>
+            <name>Nexus Releases</name>
+            <url>http://nexus.amis.tv/repository/maven-releases</url>
+        </repository>
+        <snapshotRepository>
+            <id>nexus</id>
+            <name>Nexus Snapshots</name>
+            <url>http://nexus.amis.tv/repository/maven-snapshots</url>
+        </snapshotRepository>
+    </distributionManagement>
 
 </project>
 

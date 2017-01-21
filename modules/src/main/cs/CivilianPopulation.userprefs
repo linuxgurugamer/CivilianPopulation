@@ -1,0 +1,17 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workbench ActiveDocument="CivilianDockGrowth.cs">
+    <Files>
+      <File FileName="CivilianDockGrowth.cs" Line="6" Column="29" />
+      <File FileName="CivilianPopulationRegulator.cs" Line="8" Column="29" />
+      <File FileName="CivilianSpawnGrowth.cs" Line="6" Column="29" />
+      <File FileName="debuggingClass.cs" Line="5" Column="29" />
+      <File FileName="KerbalRecruitment.cs" Line="6" Column="29" />
+      <File FileName="PopModGUI.cs" Line="12" Column="29" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>

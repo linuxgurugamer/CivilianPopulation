@@ -67,12 +67,18 @@
             <version>${project.version}</version>
             <type>zip</type>
 		</dependency>
-		<dependency>
-			<groupId>tv.amis.pamynx</groupId>
-			<artifactId>ksp-civilian-population-assets</artifactId>
-			<version>${project.version}</version>
-			<type>zip</type>
-		</dependency>
+        <dependency>
+            <groupId>tv.amis.pamynx</groupId>
+            <artifactId>ksp-civilian-population-assets</artifactId>
+            <version>${project.version}</version>
+            <type>zip</type>
+        </dependency>
+        <dependency>
+            <groupId>tv.amis.pamynx</groupId>
+            <artifactId>ksp-civilian-population-modules</artifactId>
+            <version>${project.version}</version>
+            <type>zip</type>
+        </dependency>
 	</dependencies>
 
 </project>

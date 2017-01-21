@@ -3,3 +3,4 @@
 .classpath
 target/
 ~$*.xlsx
+**/cs/obj

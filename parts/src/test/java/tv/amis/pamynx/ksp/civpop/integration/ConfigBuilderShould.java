@@ -52,9 +52,6 @@ public class ConfigBuilderShould {
 		checkPart("t1CivilizationGenerationShipQuartersLarge", "Utility");
 		checkPart("surfaceAttachHouseSmall", "Utility");
 		checkPart("nduniversity", "Science");
-		checkPart("t1civSmallGardenModule", "Utility");
-		checkPart("t1civGardenBiosphereMedium", "Utility");
-		checkPart("t1civGardenBiosphere", "Utility");
 		checkPart("megadrill", "Utility");
 		checkPart("pipeNetwork", "Utility");
 		

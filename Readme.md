@@ -73,6 +73,7 @@ Cannot go back in, no ladder.
 
 Part seems ok, animation KO (button toggle, status moving...)
 
+
 Ground Parts
 ------------
 
@@ -110,6 +111,13 @@ Cannot go inside, should improve attach points.
 - parkbioDomeBaseMetal
 
 Attachment point in the air, cannot go "into" the structure.
+
+Kerbalism Config
+----------------
+- t1civSmallGardenModule config done.
+
+TODO : Kerbalism config for t1civGardenBiosphereMedium & t1civGardenBiosphere
+
 
 Agency
 ------

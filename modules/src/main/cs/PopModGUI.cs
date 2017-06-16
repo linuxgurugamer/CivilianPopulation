@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading;
 using UnityEngine;
 using KSP;
-using KSP.UI.Screens;
 
 //required for ApplicationLauncherButton type
 

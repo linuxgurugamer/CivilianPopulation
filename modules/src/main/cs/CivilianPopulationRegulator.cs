@@ -259,13 +259,15 @@ namespace CivilianPopulation
     /// <param name="name">Name.</param>
     public double getResourceBudget (string name)
     {
-      if (this.vessel != null) {
+	/* TODO broken since 1.3
+	  if (this.vessel != null) {
         var myVar = this.part.Resources.Get (name).info.id;
         double civilianResourceAmount;
         double maxCivilianResourceAmount;//not used but needed for vessel.GetConnectedResourceTotals
         this.vessel.GetConnectedResourceTotals (myVar, out civilianResourceAmount, out maxCivilianResourceAmount, true);
         return civilianResourceAmount;
       }
+     */
       return 0;
     }
 

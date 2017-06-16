@@ -77,9 +77,10 @@ Part seems ok, animation KO (button toggle, status moving...)
 Ground Parts
 ------------
 
-Legs are broken, one do not deploy, the other deploy on load.
+Legs are broken, one do not deploy, the other deploys on load.
 
 @see http://forum.kerbalspaceprogram.com/index.php?/topic/135250-landing-legs-in-11/&page=1
+
 @see KerbalPlanetaryBaseSystems - GameData/PlanetaryBaseInc/BaseSystem/Parts/Wheels/LandingLeg.cfg
 
 Structural Parts

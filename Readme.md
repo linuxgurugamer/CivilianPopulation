@@ -1,7 +1,7 @@
 Civilian Population
 ===================
 
-![Civilian Population](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "Civilian Population")
+![Civilian Population](https://github.com/rleroy/CivilianPopulation/blob/master/banner.png "Civilian Population")
 
 Turn your Kerbal society into a Type 1 Civilization by adding civilian exploration! 
 Your agency as research goes on gains the ability to have civilians take part on your exploration.
@@ -15,13 +15,14 @@ Credits
 -------
 
 This mod is a fork from "Newbier Newb's Revamp of Civilian Population" mod.
+
 It exists thanks to the collective work of :
 - [@Tralfagar](http://forum.kerbalspaceprogram.com/index.php?/profile/150801-tralfagar/) that can be found [here](http://forum.kerbalspaceprogram.com/index.php?/topic/143823-120-newbier-newbs-revamp-of-civilian-population/).
 - [@michaelhester07](http://forum.kerbalspaceprogram.com/index.php?/profile/96470-michaelhester07/) that can be found [here](http://forum.kerbalspaceprogram.com/index.php?/topic/101058-10x-civilian-population-14/).
 - [@rabidninjawombat](http://forum.kerbalspaceprogram.com/index.php?/profile/108889-rabidninjawombat/) that can be found [here](http://forum.kerbalspaceprogram.com/index.php?/topic/111815-104civilian-population-1751-update-to-105-in-progress/).
 - [@GGumby](http://forum.kerbalspaceprogram.com/index.php?/profile/122189-ggumby/) that can be found [here](http://forum.kerbalspaceprogram.com/index.php?/topic/140127-112ckan-civilian-populations-revived/).
 
-It is licenced under [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/)
+Licenced under [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/)
 
 TODO
 ----

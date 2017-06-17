@@ -22,68 +22,58 @@ It exists thanks to the collective work of :
 - [@rabidninjawombat](http://forum.kerbalspaceprogram.com/index.php?/profile/108889-rabidninjawombat/) that can be found [here](http://forum.kerbalspaceprogram.com/index.php?/topic/111815-104civilian-population-1751-update-to-105-in-progress/).
 - [@GGumby](http://forum.kerbalspaceprogram.com/index.php?/profile/122189-ggumby/) that can be found [here](http://forum.kerbalspaceprogram.com/index.php?/topic/140127-112ckan-civilian-populations-revived/).
 
-Licenced under [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/)
+Licenced under [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/).
 
-TODO
-----
+This mod requires [Community Resource Pack](http://forum.kerbalspaceprogram.com/index.php?/topic/83007-13-community-resource-pack/).
 
-- Add Netherdyne as an agency.
+Any kind of help is more than welcome, pick a `TODO` above, do it, and I will be glad to accept your pull request.
+If you need help to understand how to build the mod, just ask !
 
-Electrical
-----------
+Electrical parts
+----------------
 
-- CivPopReactor
-- SmallCivPopReactor
+- Netherdyne Reactor Unit DX-110
+- Netherdyne Reactor Unit MX-99
 
-Rebalance cost, conversion speed.
-Big reator animation won't stop.
-Turn the lights off when the reactors are off.
+Convert Enriched Uranium into Depleted Uranium, Xenon Gas and Electricity !
+
+TODO : 
+- Rebalance cost.
+- Rebalance conversion speed.
+- Big reactor animation won't stop.
+- Turn the lights off when the reactors are off.
 
 ```
     [WRN 00:08:25.564] [ShipConstruct for CivPopReactor]: part cost (15000.0) is less than the cost of its resources (432500.0)
     [WRN 00:08:25.598] [ShipConstruct for SmallCivPopReactor]: part cost (8000.0) is less than the cost of its resources (173000.0)
 ```
 
-Science
--------
+Science parts
+-------------
 
--university
+- Netherdyne University.
 
-Almost ok, some EVA problems without ladder.
+A command and research module.
 
-Utility
--------
+TODO :
+- Fix EVA problems when there is not ladder.
+- Implements training module that will allow to turn civilian into regular kerbonauts.
 
-- InsituKerbalRecruiterTest
-- t1CivilizationGenerationShipQuartersMedium
-- t1CivilizationGenerationShipQuartersLarge
-- t1CivBiomassTank
-- t1civGardenBiosphereMedium
-- t1civGardenBiosphere
-- megadrill.cfg
-- pipeNetwork.cfg
+Utility parts : Apartments
+--------------------------
 
-All ok.
+- Civilian Large House mk2
+- Civilian Small Apartment Complex
+- Civilian Large Apartment Complex
+- Civilian Contractor Dock Mk1
+- Civilian Small House
 
-- civieDockingPort
+Living quarters for civilians.
 
-Part is ok, behaviour to add (Modules CivilianDockGrowth & KerbalRecruitment).
-
-- t1civWasteWaterTank
-
-calibrate these to 1 day worth of waste
-
-- t1CivWaterTank
-
-calbriate these to 1 day worth of food/water
-
-- stbiodomeFarmMk2
-
-Almost ok, top attach point should be removed.
-
-- surfaceAttachHouseSmall
-
-Cannot go back in, no ladder.
+TODO : 
+- Add behaviour to the Contractor Dock to have civilian pop grow from it (Modules CivilianDockGrowth & KerbalRecruitment).
+- Cannot go back in Small House.
+- Add ladder to Small House.
 
 ```
     [LOG 08:21:59.524] Load(Model): CivilianPopulation/Models/Utility/surfaceAttachHouseSmall
@@ -92,15 +82,46 @@ Cannot go back in, no ladder.
     [ERR 08:21:59.600] Triggers on concave MeshColliders are not supported
 ```
 
-- t1civSmallGardenModule
+Utility parts : Farms
+---------------------
 
-Part seems ok, animation KO (button toggle, status moving...)
+- Hydroponic Garden Biosphere
+- Small Hydroponic Garden Biosphere
+- Netherdyne Farm Biodome Mk2
+- Small Hydroponic Garden Module
 
+Use plants to grow food, purify water and air. 
 
-Ground Parts
+TODO :
+- Remove biodome top attach point.
+- Animation on "Small Hydroponic Garden Module" does not work.
+
+Utility parts : Tanks
+---------------------
+
+- Small Fertilizer Tank
+- Small Waste Water Tank
+- Small Sustenance Tank
+
+TODO :
+- Calibrate those to a capacity of 1 day / kerbal.
+
+Utility parts : Drill
+---------------------
+
+- Netherdyne XL-9000 Mega Laser Drill
+- Netherdyne Laser Drill
+
+Laser drilling for surface exploitation.
+
+Ground parts
 ------------
 
-Legs are broken, one do not deploy, the other deploys on load.
+- Cruiser Landing Gear
+- Cruiser Landing Gear Mk2
+
+TODO ;
+- Fix legs deployments
 
 @see http://forum.kerbalspaceprogram.com/index.php?/topic/135250-landing-legs-in-11/&page=1
 
@@ -124,7 +145,7 @@ All seems ok.
 - bioSphereWindowsLarge
 - bioSphereWindowsWide
 
-Cannot go inside, should improve attach points.
+TODO : Cannot go inside, should improve attach points.
 
 - bioDomeBase
 - bioDomeBaseLarge
@@ -134,19 +155,27 @@ Cannot go inside, should improve attach points.
 - parkbioDomeBaseRock
 - parkbioDomeBaseMetal
 
-Attachment point in the air, cannot go "into" the structure.
-
-Kerbalism Config
-----------------
-- t1civSmallGardenModule config done.
-
-TODO : Kerbalism config for t1civGardenBiosphereMedium & t1civGardenBiosphere
-
+TODO : Attachment point in the air, cannot go "into" the structure.
 
 Agency
 ------
 
-TODO.
+TODO : Add Netherdyne as an agency.
 
 @see KerbalPlanetaryBaseSystems - GameData/PlanetaryBaseInc/BaseSystem/Agencies
 @see KerbalPlanetaryBaseSystems - Sources/PlanetarySurfaceStructures/SurfaceStructuresCategoryFilter.cs
+
+Configuration for third party addons
+------------------------------------
+
+TODO : Kerbalism - Configure farms.
+
+Civilian behaviour
+------------------
+
+TODO :
+- Rent of civilian every months (aka 1 rotation of the Mun)
+- Civilian contractor growth
+- Civilian recruitment process
+- Civilian breeding growth
+- Civilian aging and death

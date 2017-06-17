@@ -1,9 +1,9 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workbench ActiveDocument="CivilianPopulationRegulator.cs">
     <Files>
-      <File FileName="CivilianPopulationRegulator.cs" Line="269" Column="16" />
+      <File FileName="CivilianPopulationRegulator.cs" Line="262" Column="23" />
       <File FileName="CivilianDockGrowth.cs" Line="58" Column="22" />
-      <File FileName="PopModGUI.cs" Line="15" Column="2" />
+      <File FileName="PopModGUI.cs" Line="18" Column="37" />
       <File FileName="KerbalRecruitment.cs" Line="42" Column="2" />
       <File FileName="SpecialistClass.cs" Line="19" Column="2" />
       <File FileName="debuggingClass.cs" Line="11" Column="39" />

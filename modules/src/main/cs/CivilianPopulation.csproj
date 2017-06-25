@@ -33,7 +33,7 @@
     <Folder Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CivilianPopulationUI.cs" />
+    <Compile Include="CivilianPopulation.cs" />
     <Compile Include="CivilianVessel.cs" />
   </ItemGroup>
   <ItemGroup>

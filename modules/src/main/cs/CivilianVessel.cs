@@ -6,16 +6,17 @@ namespace CivilianPopulation
     class CivilianVessel
     {
         private Vessel vessel;
-        private bool populated;
+        private int civilianCount;
 
         public CivilianVessel(Vessel vessel)
         {
             this.vessel = vessel;
+            this.civilianCount = 0;
             foreach (ProtoCrewMember crew in this.vessel.GetVesselCrew())
             {
                 if (crew.trait == "Civilian")
                 {
-                    this.populated = true;
+                    civilianCount++;
                 }
             }
         }
@@ -25,14 +26,14 @@ namespace CivilianPopulation
             return this.vessel.vesselName;
         }
 
+        public int getCivilianCount() 
+        {
+            return civilianCount;
+        }
+
         public List<ProtoCrewMember> getCrew()
         {
             return this.vessel.GetVesselCrew();
         }
-
-        public bool isPopulated()
-        {
-            return this.populated;
-        }
-    }
+   }
 }

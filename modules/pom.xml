@@ -28,7 +28,7 @@
                             <goal>exec</goal>
                         </goals>
                         <configuration>
-                            <executable>xbuild</executable>
+                            <executable>msbuild</executable>
                             <workingDirectory>${project.basedir}/src/main/cs</workingDirectory>
                         </configuration>
                     </execution>

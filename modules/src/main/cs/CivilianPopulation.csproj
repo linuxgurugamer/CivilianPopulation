@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -34,7 +34,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CivilianPopulation.cs" />
+    <Compile Include="CivilianPopulationCore.cs" />
+    <Compile Include="CivilianPopulationUI.cs" />
     <Compile Include="CivilianVessel.cs" />
+    <Compile Include="CivilianPopulationConfiguration.cs" />
+    <Compile Include="KSPAdapter.cs" />
+    <Compile Include="CivilianPopulationAdapter.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Assembly-CSharp-firstpass">

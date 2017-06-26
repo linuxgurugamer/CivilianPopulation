@@ -4,3 +4,6 @@
 target/
 ~$*.xlsx
 **/cs/obj
+**/bin/Debug
+**/obj/Debug
+.suo

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace CivilianPopulation
 {
-    class CivilianVessel
+    public class CivilianVessel
     {
         private Vessel vessel;
         private int civilianCount;

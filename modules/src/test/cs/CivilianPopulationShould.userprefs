@@ -1,0 +1,15 @@
+﻿<Properties StartupConfiguration="{95566A06-5913-4832-ABD8-FC6B139DA820}|Unit Tests">
+  <MonoDevelop.Ide.Workbench ActiveDocument="CivilianPopulationCoreTests.cs">
+    <Files>
+      <File FileName="CivilianPopulationCoreTests.cs" Line="20" Column="17" />
+      <File FileName="TestAdapter.cs" Line="32" Column="16" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.ItemProperties.CivilianPopulationShould PreferredExecutionTarget="MonoDevelop.Default" />
+  <MultiItemStartupConfigurations />
+</Properties>

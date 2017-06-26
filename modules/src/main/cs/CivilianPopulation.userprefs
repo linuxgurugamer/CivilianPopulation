@@ -4,17 +4,6 @@
       <File FileName="CivilianPopulation.cs" Line="40" Column="18" />
       <File FileName="CivilianVessel.cs" Line="9" Column="1" />
     </Files>
-    <Pads>
-      <Pad Id="ProjectPad">
-        <State name="__root__">
-          <Node name="CivilianPopulation" expanded="True">
-            <Node name="CivilianPopulation" expanded="True">
-              <Node name="CivilianPopulation.cs" selected="True" />
-            </Node>
-          </Node>
-        </State>
-      </Pad>
-    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

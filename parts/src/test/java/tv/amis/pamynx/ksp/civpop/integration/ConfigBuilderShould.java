@@ -1,8 +1,11 @@
 package tv.amis.pamynx.ksp.civpop.integration;
 
+import static tv.amis.pamynx.ksp.civpop.ConfigBuilder.LINE_SEPARATOR;
+
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.stream.Collectors;
@@ -60,8 +63,11 @@ public class ConfigBuilderShould {
 	private void checkPart(String partName, String category) throws IOException, URISyntaxException {
 		File part = new File(path+"/Parts/"+category+"/"+partName+".cfg");
 		Assert.assertTrue(partName + " was not created !", part.exists());
-		String actual = Files.readAllLines(part.toPath()).stream().collect(Collectors.joining("\n"));
-		String expected = new String(Files.readAllBytes(Paths.get(getClass().getClassLoader().getResource(partName+"-expected.cfg").toURI())));
+		String actual = Files.readAllLines(part.toPath()).stream().collect(Collectors.joining(LINE_SEPARATOR));
+		actual = actual.replaceAll("  ", " ");
+		String expected = new String(Files.readAllBytes(Paths.get(getClass().getClassLoader().getResource(partName+"-expected.cfg").toURI())), Charset.forName("utf-8"));
+		expected = expected.replaceAll("  ", " ");
+
 		Assert.assertEquals(expected, actual);
 	}
 }

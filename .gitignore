@@ -7,3 +7,4 @@ target/
 **/bin/Debug
 **/obj/Debug
 .suo
+TestResult.xml

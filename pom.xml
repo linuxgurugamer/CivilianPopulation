@@ -5,9 +5,13 @@
     <artifactId>ksp-civilian-population</artifactId>
     <packaging>pom</packaging>
 	<version>2.0.3-SNAPSHOT</version>
-
     <name>KSP :: Civilian Population</name>
-
+    
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    </properties>
+    
     <modules>
         <module>assets</module>
         <module>parts</module>

@@ -7,5 +7,5 @@ target/
 **/bin/Debug
 **/obj/Debug
 .suo
-*.userprefs
+**/*.userprefs
 **/TestResult.xml

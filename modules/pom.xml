@@ -30,9 +30,10 @@
                         </goals>
                         <configuration>
                             <executable>msbuild</executable>
-                            <workingDirectory>${project.basedir}/src/main/cs</workingDirectory>
+                            <workingDirectory>${project.basedir}</workingDirectory>
                         </configuration>
                     </execution>
+<!-- 
                     <execution>
                         <id>test-compile</id>
                         <phase>test-compile</phase>
@@ -44,6 +45,7 @@
                             <workingDirectory>${project.basedir}/src/test/cs/</workingDirectory>
                         </configuration>
                     </execution>
+ -->
                     <execution>
                         <id>test</id>
                         <phase>test</phase>
@@ -53,7 +55,7 @@
                         <configuration>
                             <executable>nunit-console</executable>
                             <workingDirectory>${project.basedir}/src/test/cs/</workingDirectory>
-                            <commandlineArgs>bin/Debug/CivilianPopulationShould.dll</commandlineArgs>
+                            <commandlineArgs>${project.build.directory}/bin/Debug/CivilianPopulationShould.dll</commandlineArgs>
                         </configuration>
                     </execution>
                 </executions>

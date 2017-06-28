@@ -1,5 +1,7 @@
 package tv.amis.pamynx.ksp.civpop;
 
+import static tv.amis.pamynx.ksp.civpop.ConfigBuilder.LINE_SEPARATOR;
+
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -44,14 +46,14 @@ public class PartToConfigConverter {
 				if (part.get(f) != null) {
 					config = config.replaceAll("%"+f.name()+"%", f.name()+" = "+part.get(f));
 				} else {
-					config = config.replaceAll("    %"+f.name()+"%\n", "");
+					config = config.replaceAll("    %"+f.name()+"%"+LINE_SEPARATOR, "");
 				}
 			}
 		}
 		config = config.replaceAll("%MODEL%", getBlockModel(part));
-		config = config.replaceAll("%INTERNAL%\n", getBlockInternal(part));
-		config = config.replaceAll("%RESOURCE%\n", getBlockResource(part));
-		config = config.replaceAll("%MODULE%\n", getBlockModule(part));
+		config = config.replaceAll("%INTERNAL%"+LINE_SEPARATOR, getBlockInternal(part));
+		config = config.replaceAll("%RESOURCE%"+LINE_SEPARATOR, getBlockResource(part));
+		config = config.replaceAll("%MODULE%"+LINE_SEPARATOR, getBlockModule(part));
 		config = config.replaceAll("%node_stack%", getBlockNodeStack(part));
 
 		//config = config.replaceAll("%explosionPotential%", "explosionPotential = "+part.get(KspPartField.explosionPotential));

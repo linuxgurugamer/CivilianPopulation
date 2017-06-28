@@ -23,6 +23,8 @@ public class ConfigBuilder {
 	private KspRepository repository;
 	private PartToConfigConverter converter;
 
+	public static final String LINE_SEPARATOR = System.getProperty("line.separator");
+
 	public ConfigBuilder(String target) {
 		this.target = Paths.get(target);
 		this.repository = new KspRepository();

@@ -74,7 +74,7 @@
         </dependency>
         <dependency>
             <groupId>tv.amis.pamynx</groupId>
-            <artifactId>ksp-civilian-population-modules</artifactId>
+            <artifactId>ksp-civilian-population-plugin</artifactId>
             <version>${project.version}</version>
             <type>zip</type>
         </dependency>

@@ -1,0 +1,29 @@
+<assembly xmlns="http://maven.apache.org/ASSEMBLY/2.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/ASSEMBLY/2.0.0 http://maven.apache.org/xsd/assembly-2.0.0.xsd">
+	<id>distribution</id>
+	<formats>
+		<format>zip</format>
+	</formats>
+	<includeBaseDirectory>false</includeBaseDirectory>
+	<files>
+        <file>
+            <source>${basedir}/src/main/cs/Domain/bin/Debug/Domain.dll</source>
+            <outputDirectory>Gamedata/CivilianPopulation</outputDirectory>
+        </file>
+        <file>
+            <source>${basedir}/src/main/cs/GUI/bin/Debug/GUI.dll</source>
+            <outputDirectory>Gamedata/CivilianPopulation</outputDirectory>
+        </file>
+        <file>
+            <source>${basedir}/src/main/cs/Infra/bin/Debug/Infra.dll</source>
+            <outputDirectory>Gamedata/CivilianPopulation</outputDirectory>
+        </file>
+	</files>
+    <fileSets>
+        <fileSet>
+            <directory>${basedir}/src/main/resources</directory>
+            <outputDirectory>Gamedata/CivilianPopulation/GUI</outputDirectory>
+        </fileSet>
+    </fileSets>
+</assembly>  

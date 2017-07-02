@@ -10,10 +10,10 @@ namespace CivilianPopulation.Domain
         [Test()]
         public void AddRentEveryDay()
         {
-            MockedCivilianPopulationAdapter adapter = new MockedCivilianPopulationAdapter();
-            adapter.setFunds(0);
+            FundsAccount fundsAccount = new FundsAccount();
+            fundsAccount.setFunds(0);
 
-			CivilianPopulationService service = new CivilianPopulationService(adapter);
+            CivilianPopulationService service = new CivilianPopulationService(fundsAccount.addFunds);
 
 			bool career = true;
 			int time = 0;
@@ -21,43 +21,43 @@ namespace CivilianPopulation.Domain
 
             CivilianPopulationWorld world = new CivilianPopulationWorld(career, time, vessels);
             service.update(world);
-			Assert.AreEqual(0, adapter.getFunds());
+			Assert.AreEqual(0, fundsAccount.getFunds());
 
             time += 60 * 60;
             world = new CivilianPopulationWorld(career, time, vessels);
 			service.update(world);
-			Assert.AreEqual(0, adapter.getFunds());
+			Assert.AreEqual(0, fundsAccount.getFunds());
 
 			time += 60 * 60;
             vessels.Add(new CivilianVessel("My vessel", 2));
 			world = new CivilianPopulationWorld(career, time, vessels);
 			service.update(world);
-			Assert.AreEqual(0, adapter.getFunds());
+			Assert.AreEqual(0, fundsAccount.getFunds());
 
 			time += 60 * 60;
 			world = new CivilianPopulationWorld(career, time, vessels);
 			service.update(world);
-            Assert.AreEqual(0, adapter.getFunds());
+            Assert.AreEqual(0, fundsAccount.getFunds());
 
 			time += 60 * 60;
 			world = new CivilianPopulationWorld(career, time, vessels);
 			service.update(world);
-			Assert.AreEqual(0, adapter.getFunds());
+			Assert.AreEqual(0, fundsAccount.getFunds());
 
             time += 60 * 60;
 			world = new CivilianPopulationWorld(career, time, vessels);
 			service.update(world);
-			Assert.AreEqual(0, adapter.getFunds());
+			Assert.AreEqual(0, fundsAccount.getFunds());
 
 			time += 60 * 60;
 			world = new CivilianPopulationWorld(career, time, vessels);
 			service.update(world);
-			Assert.AreEqual(0, adapter.getFunds());
+			Assert.AreEqual(0, fundsAccount.getFunds());
 
 			time += 60 * 60;
 			world = new CivilianPopulationWorld(career, time, vessels);
 			service.update(world);
-			Assert.AreEqual(400, adapter.getFunds());
+			Assert.AreEqual(400, fundsAccount.getFunds());
 		}
     }
 }

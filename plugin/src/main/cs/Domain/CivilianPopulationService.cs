@@ -8,14 +8,14 @@ namespace CivilianPopulation.Domain
 		private const double timeBetweenRents = 6*60*60;
 		private const int rentAmountPerCivilian = 200;
 
-        private CivilianPopulationAdapter adapter;
+        private Action<int> addFunds;
 
 		private double nextTaxesDate;
 		private CivilianPopulationWorld world;
 
-        public CivilianPopulationService(CivilianPopulationAdapter adapter)
+        public CivilianPopulationService(Action<int> addFunds)
         {
-            this.adapter = adapter;
+            this.addFunds = addFunds;
         }
 
         public void update(CivilianPopulationWorld world)
@@ -33,7 +33,7 @@ namespace CivilianPopulation.Domain
 				{
 					nextTaxesDate = next;
                     int numCivilians = world.getCiviliansInFlight();
-					adapter.addFunds(numCivilians * rentAmountPerCivilian);
+                    this.addFunds(numCivilians * rentAmountPerCivilian);
 				}
 			}
 		}

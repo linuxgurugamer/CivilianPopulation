@@ -14,8 +14,7 @@ namespace CivilianPopulation.Infra
 
 		public void Start()
 		{
-            CivilianPopulationAdapter adapter = new KSPCivilianPopulationAdapter();
-            this.service = new CivilianPopulationService(adapter);
+            this.service = new CivilianPopulationService(this.addFunds);
 			this.gui = new CivilianPopulationGUI(service);
 		}
 
@@ -25,26 +24,36 @@ namespace CivilianPopulation.Infra
 		}
 
 		public void FixedUpdate()
-		{
-			bool career = HighLogic.CurrentGame.Mode == Game.Modes.CAREER;
+        {
+            CivilianPopulationWorld world = getWorldFromGame();
+            service.update(world);
+        }
+
+        private static CivilianPopulationWorld getWorldFromGame()
+        {
+            bool career = HighLogic.CurrentGame.Mode == Game.Modes.CAREER;
             double universalTime = Planetarium.GetUniversalTime();
             List<CivilianVessel> vessels = new List<CivilianVessel>();
-			foreach (Vessel vessel in FlightGlobals.Vessels)
-			{
+            foreach (Vessel vessel in FlightGlobals.Vessels)
+            {
                 int civilianCount = 0;
-				foreach (ProtoCrewMember crew in vessel.GetVesselCrew())
-				{
-					if (crew.trait == "Civilian")
-					{
-						civilianCount++;
-					}
-				}
-				CivilianVessel civVessel = new CivilianVessel(vessel.GetName(), civilianCount);
-				vessels.Add(civVessel);
-			}
+                foreach (ProtoCrewMember crew in vessel.GetVesselCrew())
+                {
+                    if (crew.trait == "Civilian")
+                    {
+                        civilianCount++;
+                    }
+                }
+                CivilianVessel civVessel = new CivilianVessel(vessel.GetName(), civilianCount);
+                vessels.Add(civVessel);
+            }
 
-			CivilianPopulationWorld world = new CivilianPopulationWorld(career, universalTime, vessels);
-			service.update(world);
+            CivilianPopulationWorld world = new CivilianPopulationWorld(career, universalTime, vessels);
+            return world;
+        }
+
+        private void addFunds(int amount) {
+			Funding.Instance.AddFunds(amount, TransactionReasons.Progression);
 		}
 
 		private void log(string message)

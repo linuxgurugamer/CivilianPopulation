@@ -2,7 +2,7 @@
 
 namespace CivilianPopulation.Domain
 {
-    internal class MockedCivilianPopulationAdapter : CivilianPopulationAdapter
+    internal class FundsAccount
     {
         private int funds;
 

@@ -32,7 +32,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CivilianPopulationServiceShould.cs" />
-    <Compile Include="MockedCivilianPopulationAdapter.cs" />
+    <Compile Include="FundsAccount.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

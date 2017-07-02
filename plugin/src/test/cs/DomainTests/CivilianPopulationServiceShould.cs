@@ -13,7 +13,7 @@ namespace CivilianPopulation.Domain
             FundsAccount fundsAccount = new FundsAccount();
             fundsAccount.setFunds(0);
 
-            CivilianPopulationService service = new CivilianPopulationService(fundsAccount.addFunds);
+            CivilianPopulationService service = new CivilianPopulationService(fundsAccount.addFunds, addNewCivilian);
 
 			bool career = true;
 			int time = 0;
@@ -29,7 +29,7 @@ namespace CivilianPopulation.Domain
 			Assert.AreEqual(0, fundsAccount.getFunds());
 
 			time += 60 * 60;
-            vessels.Add(new CivilianVessel("My vessel", 2, false));
+            vessels.Add(new CivilianVessel(new Guid(), "My vessel", 2, false));
 			world = new CivilianPopulationWorld(career, time, vessels);
 			service.update(world);
 			Assert.AreEqual(0, fundsAccount.getFunds());
@@ -59,5 +59,10 @@ namespace CivilianPopulation.Domain
 			service.update(world);
 			Assert.AreEqual(400, fundsAccount.getFunds());
 		}
+
+        public void addNewCivilian(Guid id)
+        {
+            // Do nothing
+        }
     }
 }

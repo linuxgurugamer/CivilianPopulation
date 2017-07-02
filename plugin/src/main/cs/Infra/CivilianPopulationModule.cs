@@ -16,12 +16,12 @@ namespace CivilianPopulation.Infra
 		{
             if (service == null)
             {
-                service = new CivilianPopulationService(this.addFunds);
+                service = new CivilianPopulationService(this.addFunds, this.addCivilian);
                 gui = new CivilianPopulationGUI(service);
             }
 		}
 
-		public void OnGUI()
+        public void OnGUI()
 		{
 			gui.update();
 		}
@@ -60,7 +60,7 @@ namespace CivilianPopulation.Infra
                         }
                     }
                 }
-                CivilianVessel civVessel = new CivilianVessel(vessel.GetName(), civilianCount, hasCivilianDocks);
+                CivilianVessel civVessel = new CivilianVessel(vessel.id, vessel.GetName(), civilianCount, hasCivilianDocks);
                 vessels.Add(civVessel);
             }
 
@@ -70,6 +70,11 @@ namespace CivilianPopulation.Infra
 
         private void addFunds(int amount) {
 			Funding.Instance.AddFunds(amount, TransactionReasons.Progression);
+		}
+
+		private void addCivilian(Guid obj)
+		{
+			Debug.Log("creating civilian into ship " + obj);
 		}
 
 		private void log(string message)

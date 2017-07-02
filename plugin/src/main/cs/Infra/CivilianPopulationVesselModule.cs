@@ -9,8 +9,8 @@ namespace CivilianPopulation.Infra
 
         [KSPField(isPersistant = true, guiActive = false)]
         public bool hasCivilianDocks;
-
-        public CivilianPopulationVesselModule()
+        
+		public CivilianPopulationVesselModule()
         {
         }
 

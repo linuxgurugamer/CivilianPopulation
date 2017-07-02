@@ -84,6 +84,10 @@ namespace CivilianPopulation.GUI
                     if (vessel.hasCivilianDock()) {
 						GUILayout.BeginHorizontal();
 						GUILayout.Label(" -> Civilian dock : " + vessel.hasCivilianDock());
+						if (GUILayout.Button("Spawn", GUILayout.Width(200f)))
+						{
+                            service.addNewCivilian(vessel.getId());
+						}
 						GUILayout.EndHorizontal();
 					}
 				}

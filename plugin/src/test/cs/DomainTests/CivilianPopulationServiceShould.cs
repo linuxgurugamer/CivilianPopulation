@@ -29,7 +29,7 @@ namespace CivilianPopulation.Domain
 			Assert.AreEqual(0, fundsAccount.getFunds());
 
 			time += 60 * 60;
-            vessels.Add(new CivilianVessel("My vessel", 2));
+            vessels.Add(new CivilianVessel("My vessel", 2, false));
 			world = new CivilianPopulationWorld(career, time, vessels);
 			service.update(world);
 			Assert.AreEqual(0, fundsAccount.getFunds());

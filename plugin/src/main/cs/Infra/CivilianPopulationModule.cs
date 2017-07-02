@@ -9,13 +9,16 @@ namespace CivilianPopulation.Infra
 	[KSPScenario(ScenarioCreationOptions.AddToAllGames, GameScenes.FLIGHT, GameScenes.TRACKSTATION, GameScenes.SPACECENTER, GameScenes.EDITOR)]
 	public class CivilianPopulationModule : ScenarioModule
     {
-		private CivilianPopulationService service;
-		private CivilianPopulationGUI gui;
+		private static CivilianPopulationService service;
+		private static CivilianPopulationGUI gui;
 
 		public void Start()
 		{
-            this.service = new CivilianPopulationService(this.addFunds);
-			this.gui = new CivilianPopulationGUI(service);
+            if (service == null)
+            {
+                service = new CivilianPopulationService(this.addFunds);
+                gui = new CivilianPopulationGUI(service);
+            }
 		}
 
 		public void OnGUI()
@@ -44,7 +47,20 @@ namespace CivilianPopulation.Infra
                         civilianCount++;
                     }
                 }
-                CivilianVessel civVessel = new CivilianVessel(vessel.GetName(), civilianCount);
+
+                bool hasCivilianDocks = false;
+                foreach (VesselModule module in vessel.vesselModules)
+                {
+                    if (module.GetType() == typeof(CivilianPopulationVesselModule))
+                    {
+                        CivilianPopulationVesselModule civPopModule = (CivilianPopulationVesselModule)module;
+                        if (civPopModule.hasCivilianDocks)
+                        {
+                            hasCivilianDocks = true;
+                        }
+                    }
+                }
+                CivilianVessel civVessel = new CivilianVessel(vessel.GetName(), civilianCount, hasCivilianDocks);
                 vessels.Add(civVessel);
             }
 

@@ -37,10 +37,16 @@ namespace CivilianPopulation.Domain
             Assert.AreEqual("37 day(s) 04:03:43", formatter.format(813823));
 		}
 		[Test()]
-		public void Format_1_year()
+		public void Format_100_days()
 		{
 			TimeFormatter formatter = new TimeFormatter();
-            Assert.AreEqual("1 year(s) 0 day(s) 00:00:00", formatter.format(2160000));
+            Assert.AreEqual("100 day(s) 00:00:00", formatter.format(2160000));
+		}
+		[Test()]
+		public void Format_500_days()
+		{
+			TimeFormatter formatter = new TimeFormatter();
+            Assert.AreEqual("1 year(s) 74 day(s) 00:00:00", formatter.format(10800000));
 		}
 	}
 }

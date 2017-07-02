@@ -76,11 +76,16 @@ namespace CivilianPopulation.GUI
 
 			foreach (CivilianVessel vessel in service.getVessels())
 			{
-				if (vessel.getCivilianCount() > 0)
+				if (vessel.getCivilianCount() > 0 || vessel.hasCivilianDock())
 				{
 					GUILayout.BeginHorizontal();
-					GUILayout.Label(vessel.getName() + " : " + vessel.getCivilianCount() + " Civilians");
+                    GUILayout.Label(vessel.getName() + " : " + vessel.getCivilianCount() + " Civilians");
 					GUILayout.EndHorizontal();
+                    if (vessel.hasCivilianDock()) {
+						GUILayout.BeginHorizontal();
+						GUILayout.Label(" -> Civilian dock : " + vessel.hasCivilianDock());
+						GUILayout.EndHorizontal();
+					}
 				}
 			}
 
@@ -93,6 +98,11 @@ namespace CivilianPopulation.GUI
 			GUILayout.EndScrollView();
 			GUILayout.EndVertical();
 			UnityEngine.GUI.DragWindow();
+		}
+
+		private void log(string message)
+		{
+			Debug.Log(this.GetType().Name + message);
 		}
 	}
 }

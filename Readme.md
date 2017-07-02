@@ -173,8 +173,10 @@ TODO : Kerbalism - Configure farms.
 Civilian behaviour
 ------------------
 
+DONE :
+- Rent of civilian : 200 funds per civilian per day (6 hours).
+
 TODO :
-- Rent of civilian every months (aka 1 rotation of the Mun)
 - Civilian contractor growth
 - Civilian recruitment process
 - Civilian breeding growth

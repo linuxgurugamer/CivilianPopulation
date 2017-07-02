@@ -33,6 +33,7 @@
   <ItemGroup>
     <Compile Include="CivilianPopulationServiceShould.cs" />
     <Compile Include="FundsAccount.cs" />
+    <Compile Include="TimeFormatterShould.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

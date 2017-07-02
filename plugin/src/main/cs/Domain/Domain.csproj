@@ -34,6 +34,7 @@
     <Compile Include="CivilianPopulationService.cs" />
     <Compile Include="CivilianPopulationWorld.cs" />
     <Compile Include="CivilianVessel.cs" />
+    <Compile Include="TimeFormatter.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -8,6 +8,7 @@ namespace CivilianPopulation.GUI
     public class CivilianPopulationGUI
     {
 		private CivilianPopulationService service;
+        private TimeFormatter formatter;
 
 		private ApplicationLauncherButton button = null;
 		private bool windowShown = false;
@@ -17,6 +18,7 @@ namespace CivilianPopulation.GUI
 		public CivilianPopulationGUI(CivilianPopulationService service)
         {
             this.service = service;
+            this.formatter = new TimeFormatter();
 
 			GameEvents.onGUIApplicationLauncherReady.Add(onAppLauncherReady);//when AppLauncher can take apps, give it OnAppLauncherReady (mine)
 			GameEvents.onGUIApplicationLauncherDestroyed.Add(onAppLauncherDestroyed);//Not sure what this does
@@ -66,10 +68,10 @@ namespace CivilianPopulation.GUI
 			scrollPosition = GUILayout.BeginScrollView(scrollPosition, GUILayout.Width(500), GUILayout.Height(300));
 
 			GUILayout.BeginHorizontal();
-			GUILayout.Label("Get universal time : " + Planetarium.GetUniversalTime());
+            GUILayout.Label("Universal time : " + formatter.format(Planetarium.GetUniversalTime()));
 			GUILayout.EndHorizontal();
 			GUILayout.BeginHorizontal();
-			GUILayout.Label("Time until taxes : " + service.getTimeUntilTaxes());
+            GUILayout.Label("Time until taxes : " + formatter.format(service.getTimeUntilTaxes()));
 			GUILayout.EndHorizontal();
 
 			foreach (CivilianVessel vessel in service.getVessels())

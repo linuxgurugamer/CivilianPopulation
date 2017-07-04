@@ -48,19 +48,16 @@ namespace CivilianPopulation.Infra
                     }
                 }
 
-                bool hasCivilianDocks = false;
+                int capacity = 0;
                 foreach (VesselModule module in vessel.vesselModules)
                 {
                     if (module.GetType() == typeof(CivilianPopulationVesselModule))
                     {
                         CivilianPopulationVesselModule civPopModule = (CivilianPopulationVesselModule)module;
-                        if (civPopModule.hasCivilianDocks)
-                        {
-                            hasCivilianDocks = true;
-                        }
+                        capacity = civPopModule.getCapacity();
                     }
                 }
-                CivilianVessel civVessel = new CivilianVessel(vessel.id, vessel.GetName(), civilianCount, hasCivilianDocks);
+                CivilianVessel civVessel = new CivilianVessel(vessel.id, vessel.GetName(), civilianCount, capacity);
                 vessels.Add(civVessel);
             }
 

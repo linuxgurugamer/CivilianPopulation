@@ -3,27 +3,48 @@ using UnityEngine;
 
 namespace CivilianPopulation.Infra
 {
-    public class CivilianPopulationDockModule : BaseConverter
+    public class CivilianPopulationDockModule : PartModule
     {
-		public void Start()
-		{
-            log(" - Start !");
-		}
+        [KSPField(isPersistant = true, guiActive = false)]
+        public bool activated;
 
-		public void Update()
-		{
-			log(" - Update !");
-		}
+        public void Start()
+        {
+            // log(" - Start !");
+        }
 
-        public override void FixedUpdate()
-		{
-            base.FixedUpdate();
-			log(" - FixedUpdate !");
-		}
+        public void Update()
+        {
+            // log(" - Update !");
+        }
 
-		private void log(string message)
-		{
-			Debug.Log(this.GetType().Name + message);
-		}
-	}
+        public void FixedUpdate()
+        {
+            // log(" - FixedUpdate !");
+        }
+
+        [KSPEvent(guiName = "Activate", active = true, guiActive = true)]
+        public void activate()
+        {
+            log(" - Activate !");
+            this.activated = true;
+        }
+
+        [KSPEvent(guiName = "Deactivate", active = true, guiActive = true)]
+        public void deactivate()
+        {
+            log(" - Deactivate !");
+            this.activated = false;
+        }
+
+        public bool isActivated() 
+        {
+            return this.activated;
+        }
+
+        private void log(string message)
+        {
+            Debug.Log(this.GetType().Name + message);
+        }
+    }
 }

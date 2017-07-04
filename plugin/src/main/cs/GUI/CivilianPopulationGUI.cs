@@ -76,14 +76,14 @@ namespace CivilianPopulation.GUI
 
 			foreach (CivilianVessel vessel in service.getVessels())
 			{
-				if (vessel.getCivilianCount() > 0 || vessel.hasCivilianDock())
+				if (vessel.getCivilianCount() > 0 || vessel.getDocksCapacity() > 0)
 				{
 					GUILayout.BeginHorizontal();
                     GUILayout.Label(vessel.getName() + " : " + vessel.getCivilianCount() + " Civilians");
 					GUILayout.EndHorizontal();
-                    if (vessel.hasCivilianDock()) {
+                    if (vessel.getDocksCapacity() > 0) {
 						GUILayout.BeginHorizontal();
-						GUILayout.Label(" -> Civilian dock : " + vessel.hasCivilianDock());
+						GUILayout.Label(" -> Civilian dock : " + vessel.getDocksCapacity());
 						if (GUILayout.Button("Spawn", GUILayout.Width(200f)))
 						{
                             service.addNewCivilian(vessel.getId());

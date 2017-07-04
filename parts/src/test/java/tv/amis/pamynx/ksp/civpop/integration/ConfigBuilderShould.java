@@ -8,6 +8,7 @@ import java.net.URISyntaxException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import org.hamcrest.Matchers;
@@ -63,11 +64,9 @@ public class ConfigBuilderShould {
 	private void checkPart(String partName, String category) throws IOException, URISyntaxException {
 		File part = new File(path+"/Parts/"+category+"/"+partName+".cfg");
 		Assert.assertTrue(partName + " was not created !", part.exists());
-		String actual = Files.readAllLines(part.toPath()).stream().collect(Collectors.joining(LINE_SEPARATOR));
-		actual = actual.replaceAll("  ", " ");
-		String expected = new String(Files.readAllBytes(Paths.get(getClass().getClassLoader().getResource(partName+"-expected.cfg").toURI())), Charset.forName("utf-8"));
-		expected = expected.replaceAll("  ", " ");
-
-		Assert.assertEquals(expected, actual);
+		List<String> actualLines = Files.readAllLines(part.toPath()).stream().map(s -> s.replaceAll("  ", " ")).collect(Collectors.toList());
+		List<String> expectedLines = Files.readAllLines(Paths.get(getClass().getClassLoader().getResource(partName+"-expected.cfg").toURI()))
+				.stream().map(s -> s.replaceAll("  ", " ")).collect(Collectors.toList());
+		Assert.assertEquals(actualLines, expectedLines);
 	}
 }

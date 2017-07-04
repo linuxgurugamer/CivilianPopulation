@@ -8,13 +8,15 @@ namespace CivilianPopulation.Domain
         private string name;
 		private int civilianCount;
 		private int docksCapacity;
+		private double deliveryDate;
 
-        public CivilianVessel(Guid id, string name, int civilianCount, int docksCapacity)
+		public CivilianVessel(Guid id, string name, int civilianCount, int docksCapacity, double deliveryDate)
         {
             this.id = id;
             this.name = name;
             this.civilianCount = civilianCount;
 			this.docksCapacity = docksCapacity;
+            this.deliveryDate = deliveryDate;
 		}
 
         public Guid getId()
@@ -33,5 +35,9 @@ namespace CivilianPopulation.Domain
         {
             return docksCapacity;
         }
-	}
+        public double getDeliveryDate()
+        {
+            return deliveryDate;
+        }
+    }
 }

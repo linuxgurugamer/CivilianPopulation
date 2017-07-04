@@ -83,11 +83,10 @@ namespace CivilianPopulation.GUI
 					GUILayout.EndHorizontal();
                     if (vessel.getDocksCapacity() > 0) {
 						GUILayout.BeginHorizontal();
-						GUILayout.Label(" -> Civilian dock : " + vessel.getDocksCapacity());
-						if (GUILayout.Button("Spawn", GUILayout.Width(200f)))
-						{
-                            service.addNewCivilian(vessel.getId());
-						}
+						GUILayout.Label(" -> Civilian dock Capacity : " + vessel.getDocksCapacity());
+						GUILayout.EndHorizontal();
+						GUILayout.BeginHorizontal();
+                        GUILayout.Label(" -> Time until next arrival : " + formatter.format(vessel.getDeliveryDate() - Planetarium.GetUniversalTime()));
 						GUILayout.EndHorizontal();
 					}
 				}

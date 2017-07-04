@@ -9,15 +9,13 @@ namespace CivilianPopulation.Domain
 		private const int rentAmountPerCivilian = 200;
 
 		private Action<int> addFunds;
-		private Action<Guid> addCivilian;
 
 		private double nextTaxesDate;
 		private CivilianPopulationWorld world;
 
-        public CivilianPopulationService(Action<int> addFunds, Action<Guid> addCivilian)
+        public CivilianPopulationService(Action<int> addFunds)
         {
             this.addFunds = addFunds;
-            this.addCivilian = addCivilian; 
         }
 
         public void update(CivilianPopulationWorld world)
@@ -59,11 +57,6 @@ namespace CivilianPopulation.Domain
         public List<CivilianVessel> getVessels()
         {
             return world.getVessels();
-        }
-
-        public void addNewCivilian(Guid id)
-        {
-            addCivilian(id);
         }
     }
 }

@@ -16,7 +16,7 @@ namespace CivilianPopulation.Infra
 		{
             if (service == null)
             {
-                service = new CivilianPopulationService(this.addFunds, this.addCivilian);
+                service = new CivilianPopulationService(this.addFunds);
                 gui = new CivilianPopulationGUI(service);
             }
 		}
@@ -48,16 +48,18 @@ namespace CivilianPopulation.Infra
                     }
                 }
 
-                int capacity = 0;
-                foreach (VesselModule module in vessel.vesselModules)
+				int capacity = 0;
+				double delivery = 0;
+				foreach (VesselModule module in vessel.vesselModules)
                 {
                     if (module.GetType() == typeof(CivilianPopulationVesselModule))
                     {
                         CivilianPopulationVesselModule civPopModule = (CivilianPopulationVesselModule)module;
                         capacity = civPopModule.getCapacity();
+                        delivery = civPopModule.getDeliveryDate();
                     }
                 }
-                CivilianVessel civVessel = new CivilianVessel(vessel.id, vessel.GetName(), civilianCount, capacity);
+                CivilianVessel civVessel = new CivilianVessel(vessel.id, vessel.GetName(), civilianCount, capacity, delivery);
                 vessels.Add(civVessel);
             }
 

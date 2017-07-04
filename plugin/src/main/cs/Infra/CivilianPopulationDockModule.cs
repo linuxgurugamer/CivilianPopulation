@@ -5,6 +5,8 @@ namespace CivilianPopulation.Infra
 {
     public class CivilianPopulationDockModule : PartModule
     {
+        private const double DELIVERY_DELAY = 60 * 60 * 6;
+
         [KSPField(isPersistant = true, guiActive = false)]
         public bool activated;
 
@@ -21,6 +23,18 @@ namespace CivilianPopulation.Infra
         public void FixedUpdate()
         {
             // log(" - FixedUpdate !");
+			foreach (VesselModule module in vessel.vesselModules)
+            {
+                if (module.GetType() == typeof(CivilianPopulationVesselModule))
+                {
+					CivilianPopulationVesselModule civPopModule = (CivilianPopulationVesselModule)module;
+                    if (civPopModule.waiting > 0) 
+                    {
+                        log(" - spawn " + civPopModule.waiting + " civilian(s).");
+                        civPopModule.waiting = 0;
+                    }
+                }
+            }
         }
 
         [KSPEvent(guiName = "Activate", active = true, guiActive = true)]
@@ -28,7 +42,16 @@ namespace CivilianPopulation.Infra
         {
             log(" - Activate !");
             this.activated = true;
-        }
+
+			foreach (VesselModule module in vessel.vesselModules)
+			{
+				if (module.GetType() == typeof(CivilianPopulationVesselModule))
+				{
+					CivilianPopulationVesselModule civPopModule = (CivilianPopulationVesselModule)module;
+                    civPopModule.setDeliveryDate(Planetarium.GetUniversalTime() + DELIVERY_DELAY);
+				}
+			}
+		}
 
         [KSPEvent(guiName = "Deactivate", active = true, guiActive = true)]
         public void deactivate()

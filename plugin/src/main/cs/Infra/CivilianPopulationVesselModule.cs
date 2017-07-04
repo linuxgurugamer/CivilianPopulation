@@ -7,7 +7,7 @@ namespace CivilianPopulation.Infra
 {
     public class CivilianPopulationVesselModule : VesselModule
     {
-		private const double DELIVERY_DELAY = 60 * 60 * 6;
+		private const double DELIVERY_DELAY = 60 * 60 * 6 * 85; // 85 Kerbin Days
 
         private TimeFormatter formatter = new TimeFormatter();
 
@@ -36,7 +36,21 @@ namespace CivilianPopulation.Infra
                 {
                     if (dock.isActivated())
                     {
-                        capacity += dock.part.CrewCapacity - dock.part.protoModuleCrew.Count;
+                        int dockCapacity = dock.part.CrewCapacity - dock.part.protoModuleCrew.Count;
+                        while (this.waiting > 0 && dockCapacity > 0)
+                        {
+							log(" - spawning a civilian.");
+							ProtoCrewMember newCivilian = createNewCrewMember("Civilian");
+							if (dock.part.AddCrewmember(newCivilian))
+							{
+								vessel.SpawnCrew();
+								Debug.Log(this.GetType().Name + newCivilian.name + " has been placed successfully by placeNewCivilian");
+							}
+
+							this.waiting = this.waiting - 1;
+							dockCapacity = dock.part.CrewCapacity - dock.part.protoModuleCrew.Count;
+						}
+						capacity += dock.part.CrewCapacity - dock.part.protoModuleCrew.Count;
 					}
                 }
             }
@@ -52,7 +66,16 @@ namespace CivilianPopulation.Infra
             }
 		}
 
-        private void addNewCivilian()
+		private ProtoCrewMember createNewCrewMember(string kerbalTraitName)
+		{
+			KerbalRoster roster = HighLogic.CurrentGame.CrewRoster;
+			ProtoCrewMember newKerbal = roster.GetNewKerbal(ProtoCrewMember.KerbalType.Crew);
+			KerbalRoster.SetExperienceTrait(newKerbal, kerbalTraitName);//Set the Kerbal as the specified role (kerbalTraitName)
+			Debug.Log(this.GetType().Name + "Created " + newKerbal.name + ", a " + newKerbal.trait);
+			return newKerbal;
+		}
+
+		private void addNewCivilian()
         {
 			this.waiting = this.waiting + 1;
 			this.capacity = this.capacity - 1;

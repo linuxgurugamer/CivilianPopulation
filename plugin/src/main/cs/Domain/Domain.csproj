@@ -31,10 +31,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="CivilianPopulationService.cs" />
+    <Compile Include="CivilianPopulationRentService.cs" />
     <Compile Include="CivilianPopulationWorld.cs" />
     <Compile Include="CivilianVessel.cs" />
-    <Compile Include="TimeFormatter.cs" />
+    <Compile Include="CivilianPopulationContractorService.cs" />
+    <Compile Include="ContractorMission.cs" />
+    <Compile Include="CivilianVesselBuilder.cs" />
+    <Compile Include="CelestialBodyType.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -4,25 +4,30 @@ namespace CivilianPopulation.Domain
 {
     public class CivilianVessel
     {
-        private Guid id;
-        private string name;
-		private int civilianCount;
-		private int docksCapacity;
-		private double deliveryDate;
+        private readonly string name;
+		private readonly int civilianCount;
+		private readonly int docksCapacity;
+		private readonly bool orbiting;
+		private readonly CelestialBodyType body;
+		private readonly ContractorMission missionInProgress;
 
-		public CivilianVessel(Guid id, string name, int civilianCount, int docksCapacity, double deliveryDate)
+		public CivilianVessel(
+            string name, 
+            int civilianCount, 
+            int docksCapacity,
+            bool orbiting,
+            CelestialBodyType body,
+            ContractorMission missionInProgress
+        )
         {
-            this.id = id;
-            this.name = name;
-            this.civilianCount = civilianCount;
+			this.name = name;
+			this.civilianCount = civilianCount;
 			this.docksCapacity = docksCapacity;
-            this.deliveryDate = deliveryDate;
+			this.orbiting = orbiting;
+			this.body = body;
+			this.missionInProgress = missionInProgress;
 		}
 
-        public Guid getId()
-        {
-            return id;
-        }
         public string getName()
 		{
 			return name;
@@ -35,9 +40,17 @@ namespace CivilianPopulation.Domain
         {
             return docksCapacity;
         }
-        public double getDeliveryDate()
-        {
-            return deliveryDate;
-        }
+		public bool isOrbiting()
+		{
+			return this.orbiting;
+		}
+		public CelestialBodyType getBody()
+		{
+			return this.body;
+		}
+		public ContractorMission getMission()
+		{
+			return this.missionInProgress;
+		}
     }
 }

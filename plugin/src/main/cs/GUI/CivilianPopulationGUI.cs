@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using CivilianPopulation.Domain;
 using KSP.UI.Screens;
 using UnityEngine;
@@ -7,7 +8,6 @@ namespace CivilianPopulation.GUI
 {
     public class CivilianPopulationGUI
     {
-		private CivilianPopulationService service;
         private TimeFormatter formatter;
 
 		private ApplicationLauncherButton button = null;
@@ -15,19 +15,21 @@ namespace CivilianPopulation.GUI
 		private Rect windowPosition = new Rect(Screen.width / 2 - 250, Screen.height / 2 - 250, 500, 300);
 		private Vector2 scrollPosition;
 
-		public CivilianPopulationGUI(CivilianPopulationService service)
+		private List<CivilianVessel> vessels;
+
+		public CivilianPopulationGUI()
         {
-            this.service = service;
             this.formatter = new TimeFormatter();
 
 			GameEvents.onGUIApplicationLauncherReady.Add(onAppLauncherReady);//when AppLauncher can take apps, give it OnAppLauncherReady (mine)
 			GameEvents.onGUIApplicationLauncherDestroyed.Add(onAppLauncherDestroyed);//Not sure what this does
 		}
 
-        public void update()
+        public void update(List<CivilianVessel> vessels)
         {
 			if (windowShown)
 			{
+				this.vessels = vessels;
 				windowPosition = GUILayout.Window(0, windowPosition, drawWindow, "Civilian Population");
 			}
 		}
@@ -67,28 +69,34 @@ namespace CivilianPopulation.GUI
 			GUILayout.BeginVertical();
 			scrollPosition = GUILayout.BeginScrollView(scrollPosition, GUILayout.Width(500), GUILayout.Height(300));
 
-			GUILayout.BeginHorizontal();
-            GUILayout.Label("Universal time : " + formatter.format(Planetarium.GetUniversalTime()));
-			GUILayout.EndHorizontal();
-			GUILayout.BeginHorizontal();
-            GUILayout.Label("Time until taxes : " + formatter.format(service.getTimeUntilTaxes()));
-			GUILayout.EndHorizontal();
-
-			foreach (CivilianVessel vessel in service.getVessels())
+			foreach (CivilianVessel vessel in vessels)
 			{
-				if (vessel.getCivilianCount() > 0 || vessel.getDocksCapacity() > 0)
-				{
+				GUILayout.BeginHorizontal();
+				GUILayout.Label(vessel.getName());
+				GUILayout.EndHorizontal();
+
+				GUILayout.BeginHorizontal();
+				GUILayout.Label("  Civilians : " + vessel.getCivilianCount());
+				GUILayout.EndHorizontal();
+				GUILayout.BeginHorizontal();
+				GUILayout.Label("  Docks capacity : " + vessel.getDocksCapacity());
+				GUILayout.EndHorizontal();
+				GUILayout.BeginHorizontal();
+				GUILayout.Label("  In orbit ? " + vessel.isOrbiting());
+				GUILayout.EndHorizontal();
+				GUILayout.BeginHorizontal();
+				GUILayout.Label("  Body type : " + getCelestialBodyLabel(vessel.getBody()));
+				GUILayout.EndHorizontal();
+
+				if (vessel.getMission() != null)
+                {
+                    ContractorMission mission = vessel.getMission();
+                    GUILayout.BeginHorizontal();
+                    GUILayout.Label("  Mission arrival : " + formatter.format(mission.getEndDate()));
+                    GUILayout.EndHorizontal();
 					GUILayout.BeginHorizontal();
-                    GUILayout.Label(vessel.getName() + " : " + vessel.getCivilianCount() + " Civilians");
-					GUILayout.EndHorizontal();
-                    if (vessel.getDocksCapacity() > 0) {
-						GUILayout.BeginHorizontal();
-						GUILayout.Label(" -> Civilian dock Capacity : " + vessel.getDocksCapacity());
-						GUILayout.EndHorizontal();
-						GUILayout.BeginHorizontal();
-                        GUILayout.Label(" -> Time until next arrival : " + formatter.format(vessel.getDeliveryDate() - Planetarium.GetUniversalTime()));
-						GUILayout.EndHorizontal();
-					}
+                    GUILayout.Label("  Mission destination : " + getCelestialBodyLabel(mission.getBody()));
+                    GUILayout.EndHorizontal();
 				}
 			}
 
@@ -101,6 +109,16 @@ namespace CivilianPopulation.GUI
 			GUILayout.EndScrollView();
 			GUILayout.EndVertical();
 			UnityEngine.GUI.DragWindow();
+		}
+
+        private string getCelestialBodyLabel(CivilianPopulation.Domain.CelestialBodyType type) 
+        {
+			string bodyType = "Outer world";
+			if (type == CivilianPopulation.Domain.CelestialBodyType.HOMEWORLD)
+				bodyType = "Homeworld";
+			if (type == CivilianPopulation.Domain.CelestialBodyType.HOMEWORLD_MOON)
+				bodyType = "Homeworld moon";
+            return bodyType;
 		}
 
 		private void log(string message)

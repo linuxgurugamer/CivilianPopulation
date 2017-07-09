@@ -35,7 +35,7 @@
                     </execution>
 
                     <execution>
-                        <id>test</id>
+                        <id>test-domain</id>
                         <phase>test</phase>
                         <goals>
                             <goal>exec</goal>
@@ -46,6 +46,20 @@
                             <commandlineArgs>${project.basedir}/src/test/cs/DomainTests/bin/Debug/DomainTests.dll</commandlineArgs>
                         </configuration>
                     </execution>
+
+                    <execution>
+                        <id>test-gui</id>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <executable>nunit-console</executable>
+                            <workingDirectory>${project.basedir}</workingDirectory>
+                            <commandlineArgs>${project.basedir}/src/test/cs/GUITests/bin/Debug/GUITests.dll</commandlineArgs>
+                        </configuration>
+                    </execution>
+
                 </executions>
             </plugin>
 

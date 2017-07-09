@@ -9,71 +9,45 @@ namespace CivilianPopulation.Infra
 	[KSPScenario(ScenarioCreationOptions.AddToAllGames, GameScenes.FLIGHT, GameScenes.TRACKSTATION, GameScenes.SPACECENTER, GameScenes.EDITOR)]
 	public class CivilianPopulationModule : ScenarioModule
     {
-		private static CivilianPopulationService service;
+		private static CivilianPopulationRentService service;
+		private static CivilianPopulationAdapter adapter;
 		private static CivilianPopulationGUI gui;
 
 		public void Start()
 		{
             if (service == null)
             {
-                service = new CivilianPopulationService(this.addFunds);
-                gui = new CivilianPopulationGUI(service);
+                service = new CivilianPopulationRentService(this.addFunds);
+                adapter = new CivilianPopulationAdapter();
+                gui = new CivilianPopulationGUI();
             }
 		}
 
         public void OnGUI()
 		{
-			gui.update();
+			gui.update(getVessels());
 		}
 
 		public void FixedUpdate()
         {
-            CivilianPopulationWorld world = getWorldFromGame();
-            service.update(world);
-        }
-
-        private static CivilianPopulationWorld getWorldFromGame()
-        {
-            bool career = HighLogic.CurrentGame.Mode == Game.Modes.CAREER;
-            double universalTime = Planetarium.GetUniversalTime();
-            List<CivilianVessel> vessels = new List<CivilianVessel>();
-            foreach (Vessel vessel in FlightGlobals.Vessels)
+            if (HighLogic.CurrentGame.Mode == Game.Modes.CAREER)
             {
-                int civilianCount = 0;
-                foreach (ProtoCrewMember crew in vessel.GetVesselCrew())
-                {
-                    if (crew.trait == "Civilian")
-                    {
-                        civilianCount++;
-                    }
-                }
-
-				int capacity = 0;
-				double delivery = 0;
-				foreach (VesselModule module in vessel.vesselModules)
-                {
-                    if (module.GetType() == typeof(CivilianPopulationVesselModule))
-                    {
-                        CivilianPopulationVesselModule civPopModule = (CivilianPopulationVesselModule)module;
-                        capacity = civPopModule.getCapacity();
-                        delivery = civPopModule.getDeliveryDate();
-                    }
-                }
-                CivilianVessel civVessel = new CivilianVessel(vessel.id, vessel.GetName(), civilianCount, capacity, delivery);
-                vessels.Add(civVessel);
+                service.update(Planetarium.GetUniversalTime(), getVessels());
             }
-
-            CivilianPopulationWorld world = new CivilianPopulationWorld(career, universalTime, vessels);
-            return world;
         }
+
+        private List<CivilianVessel> getVessels()
+        {
+			List<CivilianVessel> vessels = new List<CivilianVessel>();
+			foreach (Vessel vessel in FlightGlobals.Vessels)
+			{
+                vessels.Add(adapter.asCivilianVessel(vessel));
+			}
+            return vessels;
+		}
 
         private void addFunds(int amount) {
 			Funding.Instance.AddFunds(amount, TransactionReasons.Progression);
-		}
-
-		private void addCivilian(Guid obj)
-		{
-			Debug.Log("creating civilian into ship " + obj);
 		}
 
 		private void log(string message)

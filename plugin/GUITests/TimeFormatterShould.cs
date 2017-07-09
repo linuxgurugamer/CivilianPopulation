@@ -1,7 +1,7 @@
 ﻿using System;
 using NUnit.Framework;
 
-namespace CivilianPopulation.Domain
+namespace CivilianPopulation.GUI
 {
 	[TestFixture()]
 	public class TimeFormatterShould

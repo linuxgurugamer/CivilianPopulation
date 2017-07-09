@@ -5,23 +5,16 @@ namespace CivilianPopulation.Domain
 {
     public class CivilianPopulationWorld
     {
-		private bool career;
 		private double universalTime;
         private List<CivilianVessel> vessels;
 
         public CivilianPopulationWorld(bool career, double universalTime, List<CivilianVessel> vessels)
         {
-            this.career = career;
             this.universalTime = universalTime;
             this.vessels = vessels;
         }
 
-		internal bool isCareer()
-        {
-            return career;
-        }
-
-        internal double getUniversalTime()
+        public double getUniversalTime()
         {
 			return universalTime;
 		}
@@ -35,7 +28,7 @@ namespace CivilianPopulation.Domain
             return res;
 		}
 
-        internal List<CivilianVessel> getVessels()
+        public List<CivilianVessel> getVessels()
         {
             return vessels;
         }

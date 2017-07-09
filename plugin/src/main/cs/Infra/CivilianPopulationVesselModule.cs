@@ -47,7 +47,6 @@ namespace CivilianPopulation.Infra
                 }
                 catch(Exception error)
                 {
-                    log(" - getMission error : " + this.missionEndDate);
                     log(" error : " + error.Message);
 					log(" error : " + error.StackTrace);
 					this.missionEndDate = "-1";
@@ -61,7 +60,6 @@ namespace CivilianPopulation.Infra
 		{
             if (newMission != null)
             {
-				log(" - setMission : " + newMission.getEndDate());
 				this.missionEndDate = newMission.getEndDate().ToString();
                 this.missionTargetType = adapter.bodyTypeToInt(newMission.getBody());
             }

@@ -33,14 +33,12 @@ namespace CivilianPopulation.Infra
         [KSPEvent(guiName = "Activate", active = true, guiActive = true)]
         public void activate()
         {
-            log(" - Activate !");
             this.activated = true;
 		}
 
         [KSPEvent(guiName = "Deactivate", active = true, guiActive = true)]
         public void deactivate()
         {
-            log(" - Deactivate !");
             this.activated = false;
         }
 

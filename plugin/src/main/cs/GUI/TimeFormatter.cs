@@ -40,11 +40,25 @@ namespace CivilianPopulation.GUI
 
             String res = hourAsString + ":" + minAsString + ":" + secAsString;
             if (days > 0 || years > 0) {
-                res = days + " day(s) " + res;
+                if (days > 1)
+                {
+                    res = days + " day(s) " + res;
+                }
+                else
+                {
+					res = days + " day " + res;
+				}
             }
 			if (years > 0)
 			{
-				res = years + " year(s) " + res;
+				if (years > 1)
+				{
+					res = years + " year(s) " + res;
+				}
+				else
+				{
+					res = years + " year " + res;
+				}
 			}
 			return res;
         }

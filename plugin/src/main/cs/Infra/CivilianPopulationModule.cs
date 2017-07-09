@@ -25,7 +25,7 @@ namespace CivilianPopulation.Infra
 
         public void OnGUI()
 		{
-			gui.update(getVessels());
+			gui.update(Planetarium.GetUniversalTime(), getVessels());
 		}
 
 		public void FixedUpdate()

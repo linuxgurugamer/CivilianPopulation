@@ -46,7 +46,7 @@ namespace CivilianPopulation.GUI
 		public void Format_500_days()
 		{
 			TimeFormatter formatter = new TimeFormatter();
-            Assert.AreEqual("1 year(s) 74 day(s) 00:00:00", formatter.format(10800000));
+            Assert.AreEqual("1 year 74 day(s) 00:00:00", formatter.format(10800000));
 		}
 	}
 }

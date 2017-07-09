@@ -38,6 +38,7 @@
     <Compile Include="ContractorMission.cs" />
     <Compile Include="CivilianVesselBuilder.cs" />
     <Compile Include="CelestialBodyType.cs" />
+    <Compile Include="CelestialBody.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

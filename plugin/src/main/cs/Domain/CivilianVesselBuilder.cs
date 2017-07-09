@@ -7,13 +7,9 @@ namespace CivilianPopulation.Domain
 		private int civilianCount = 0;
 		private int docksCapacity = 0;
         private bool orbiting = false;
-        private CelestialBodyType body = CelestialBodyType.HOMEWORLD;
+        private CelestialBody body = new CelestialBody("Kerbin", CelestialBodyType.HOMEWORLD);
 		private ContractorMission missionInProgress = null;
 		
-        public CivilianVesselBuilder()
-        {
-        }
-    		
         public CivilianVessel build()
         {
             return new CivilianVessel(
@@ -50,7 +46,7 @@ namespace CivilianPopulation.Domain
 			return this;
 		}
 
-		public CivilianVesselBuilder on(CelestialBodyType body)
+		public CivilianVesselBuilder on(CelestialBody body)
 		{
 			this.body = body;
 			return this;

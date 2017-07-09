@@ -28,8 +28,8 @@ namespace CivilianPopulation.Infra
 				if (module.GetType() == typeof(CivilianPopulationVesselModule))
 				{
 					CivilianPopulationVesselModule civPopModule = (CivilianPopulationVesselModule)module;
-					capacity = civPopModule.getCapacity();
-                    civilianCount = civPopModule.getWaiting();
+					capacity += civPopModule.getCapacity();
+                    civilianCount += civPopModule.getWaiting();
 					mission = civPopModule.getMission();
 				}
 			}
@@ -38,7 +38,7 @@ namespace CivilianPopulation.Infra
 				   .countingCivilian(civilianCount)
 				   .withADockCapacityOf(capacity)
 				   .inOrbit(!vessel.LandedOrSplashed)
-                   .on(getBodyType(vessel.mainBody))
+                   .on(new Domain.CelestialBody(vessel.mainBody.name, getBodyType(vessel.mainBody)))
 				   .targetedBy(mission);
 			return builder.build();
 		}

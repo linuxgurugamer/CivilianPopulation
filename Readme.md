@@ -174,10 +174,12 @@ Civilian behaviour
 ------------------
 
 DONE :
+
 - Rent of civilian : 200 funds per civilian per day (6 hours).
+- Civilian contractor growth
 
 TODO :
-- Civilian contractor growth
+
 - Civilian recruitment process
 - Civilian breeding growth
 - Civilian aging and death

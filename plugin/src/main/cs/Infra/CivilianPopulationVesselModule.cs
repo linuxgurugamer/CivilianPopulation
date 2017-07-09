@@ -17,14 +17,13 @@ namespace CivilianPopulation.Infra
 		public int capacity;
 
         private CivilianPopulationContractorService service;
-		private CivilianPopulationAdapter adapter;
+		private CivilianPopulationAdapter adapter = new CivilianPopulationAdapter();
 
 		public void Start()
 		{
 			if (service == null)
 			{
 				service = new CivilianPopulationContractorService(setMission, addCivilian);
-                adapter = new CivilianPopulationAdapter();
 			}
 		}
 
@@ -48,7 +47,10 @@ namespace CivilianPopulation.Infra
                 }
                 catch(Exception error)
                 {
-                    this.missionEndDate = "-1";
+                    log(" - getMission error : " + this.missionEndDate);
+                    log(" error : " + error.Message);
+					log(" error : " + error.StackTrace);
+					this.missionEndDate = "-1";
                     mission = null;
                 }
 			}
@@ -59,12 +61,13 @@ namespace CivilianPopulation.Infra
 		{
             if (newMission != null)
             {
-                this.missionEndDate = newMission.getEndDate().ToString();
+				log(" - setMission : " + newMission.getEndDate());
+				this.missionEndDate = newMission.getEndDate().ToString();
                 this.missionTargetType = adapter.bodyTypeToInt(newMission.getBody());
             }
             else
             {
-                this.missionEndDate = "-1";
+				this.missionEndDate = "-1";
             }
 		}
 

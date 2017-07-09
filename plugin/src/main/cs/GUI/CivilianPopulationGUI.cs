@@ -15,6 +15,7 @@ namespace CivilianPopulation.GUI
 		private Rect windowPosition = new Rect(Screen.width / 2 - 250, Screen.height / 2 - 250, 500, 300);
 		private Vector2 scrollPosition;
 
+        private double currentDate;
 		private List<CivilianVessel> vessels;
 
 		public CivilianPopulationGUI()
@@ -25,10 +26,11 @@ namespace CivilianPopulation.GUI
 			GameEvents.onGUIApplicationLauncherDestroyed.Add(onAppLauncherDestroyed);//Not sure what this does
 		}
 
-        public void update(List<CivilianVessel> vessels)
+        public void update(double currentDate, List<CivilianVessel> vessels)
         {
 			if (windowShown)
 			{
+                this.currentDate = currentDate;
 				this.vessels = vessels;
 				windowPosition = GUILayout.Window(0, windowPosition, drawWindow, "Civilian Population");
 			}
@@ -71,33 +73,23 @@ namespace CivilianPopulation.GUI
 
 			foreach (CivilianVessel vessel in vessels)
 			{
-				GUILayout.BeginHorizontal();
-				GUILayout.Label(vessel.getName());
-				GUILayout.EndHorizontal();
-
-				GUILayout.BeginHorizontal();
-				GUILayout.Label("  Civilians : " + vessel.getCivilianCount());
-				GUILayout.EndHorizontal();
-				GUILayout.BeginHorizontal();
-				GUILayout.Label("  Docks capacity : " + vessel.getDocksCapacity());
-				GUILayout.EndHorizontal();
-				GUILayout.BeginHorizontal();
-				GUILayout.Label("  In orbit ? " + vessel.isOrbiting());
-				GUILayout.EndHorizontal();
-				GUILayout.BeginHorizontal();
-				GUILayout.Label("  Body type : " + getCelestialBodyLabel(vessel.getBody()));
-				GUILayout.EndHorizontal();
-
-				if (vessel.getMission() != null)
+                if (vessel.getCivilianCount() > 0 || vessel.getDocksCapacity() > 0)
                 {
-                    ContractorMission mission = vessel.getMission();
-                    GUILayout.BeginHorizontal();
-                    GUILayout.Label("  Mission arrival : " + formatter.format(mission.getEndDate()));
-                    GUILayout.EndHorizontal();
 					GUILayout.BeginHorizontal();
-                    GUILayout.Label("  Mission destination : " + getCelestialBodyLabel(mission.getBody()));
-                    GUILayout.EndHorizontal();
-				}
+					GUILayout.Label(getVesselStatus(vessel));
+					GUILayout.EndHorizontal();
+
+					GUILayout.BeginHorizontal();
+					GUILayout.Label("  Docks capacity : " + vessel.getDocksCapacity());
+					GUILayout.EndHorizontal();
+
+                    if (vessel.getMission() != null)
+                    {
+                        GUILayout.BeginHorizontal();
+                        GUILayout.Label("  Mission arrival : " + formatter.format(vessel.getMission().getEndDate() - currentDate));
+                        GUILayout.EndHorizontal();
+                    }
+                }
 			}
 
 			GUILayout.BeginHorizontal();
@@ -111,14 +103,26 @@ namespace CivilianPopulation.GUI
 			UnityEngine.GUI.DragWindow();
 		}
 
-        private string getCelestialBodyLabel(CivilianPopulation.Domain.CelestialBodyType type) 
+        private string getVesselStatus(CivilianVessel vessel)
         {
-			string bodyType = "Outer world";
-			if (type == CivilianPopulation.Domain.CelestialBodyType.HOMEWORLD)
-				bodyType = "Homeworld";
-			if (type == CivilianPopulation.Domain.CelestialBodyType.HOMEWORLD_MOON)
-				bodyType = "Homeworld moon";
-            return bodyType;
+            string res = vessel.getName();
+            res += " - ";
+            if (vessel.isOrbiting())
+            {
+                res += "in orbit around ";
+            }
+            else
+            {
+                res += "on surface of ";
+            }
+            res += vessel.getBody().getName();
+			res += " - ";
+            res += vessel.getCivilianCount() + " civilian";
+            if (vessel.getCivilianCount() > 1)
+            {
+				res += "s";
+			}
+            return res;
 		}
 
 		private void log(string message)

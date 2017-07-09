@@ -8,7 +8,7 @@ namespace CivilianPopulation.Domain
 		private readonly int civilianCount;
 		private readonly int docksCapacity;
 		private readonly bool orbiting;
-		private readonly CelestialBodyType body;
+		private readonly CelestialBody body;
 		private readonly ContractorMission missionInProgress;
 
 		public CivilianVessel(
@@ -16,7 +16,7 @@ namespace CivilianPopulation.Domain
             int civilianCount, 
             int docksCapacity,
             bool orbiting,
-            CelestialBodyType body,
+            CelestialBody body,
             ContractorMission missionInProgress
         )
         {
@@ -44,7 +44,7 @@ namespace CivilianPopulation.Domain
 		{
 			return this.orbiting;
 		}
-		public CelestialBodyType getBody()
+		public CelestialBody getBody()
 		{
 			return this.body;
 		}

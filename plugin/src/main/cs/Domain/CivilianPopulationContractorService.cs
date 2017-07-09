@@ -18,22 +18,22 @@ namespace CivilianPopulation.Domain
         public void update(double currentDate, CivilianVessel vessel)
 		{
             if (vessel.isOrbiting() 
-                && vessel.getBody() != CelestialBodyType.OTHERS
+                && vessel.getBody().getType() != CelestialBodyType.OTHERS
                 && vessel.getDocksCapacity() > 0)
             {
                 if (vessel.getMission() == null)
                 {
                     double missionDuration = MISSION_DURATION;
-                    if (vessel.getBody() != CelestialBodyType.HOMEWORLD)
+                    if (vessel.getBody().getType() != CelestialBodyType.HOMEWORLD)
                     {
                         missionDuration = missionDuration * 2;
                     }
-                    ContractorMission mission = new ContractorMission(currentDate + missionDuration, vessel.getBody());
+                    ContractorMission mission = new ContractorMission(currentDate + missionDuration, vessel.getBody().getType());
 					setMission(mission);
 				}
                 else
                 {
-                    if (vessel.getBody() != vessel.getMission().getBody())
+                    if (vessel.getBody().getType() != vessel.getMission().getBody())
                     {
 						setMission(null);
 					}

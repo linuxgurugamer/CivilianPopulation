@@ -1,11 +1,18 @@
-﻿using System;
+﻿﻿using System;
 using NUnit.Framework;
 
 namespace CivilianPopulation.Domain
 {
     public class CivilianPopulationContractorServiceShould
     {
-        private const double DAY_IN_SECONDS = 60 * 60 * 6;
+		private static CelestialBody KERBIN = new CelestialBody("Kerbin", CelestialBodyType.HOMEWORLD);
+        private static CelestialBody MUN    = new CelestialBody("Mun",    CelestialBodyType.HOMEWORLD_MOON);
+		private static CelestialBody MINMUS = new CelestialBody("Minmus", CelestialBodyType.HOMEWORLD_MOON);
+        private static CelestialBody DUNA   = new CelestialBody("Duna",   CelestialBodyType.OTHERS);
+		private static CelestialBody EVE    = new CelestialBody("Eve",    CelestialBodyType.OTHERS);
+		private static CelestialBody KERBOL = new CelestialBody("Kerbol", CelestialBodyType.OTHERS);
+
+		private const double DAY_IN_SECONDS = 60 * 60 * 6;
 
         private double currentDate;
 
@@ -66,7 +73,7 @@ namespace CivilianPopulation.Domain
 		public void launch_a_mission_for_day_185_at_day_15_when_vessel_is_in_homeworld_moon_orbit()
 		{
 			currentDate = DAY_IN_SECONDS * 15;
-            builder.on(CelestialBodyType.HOMEWORLD_MOON);
+            builder.on(MINMUS);
 
 			service.update(currentDate, builder.build());
 
@@ -80,7 +87,7 @@ namespace CivilianPopulation.Domain
 		public void cancel_civilian_delivery_mission_if_vessel_is_not_orbiting_a_homeworld_moon()
 		{
             mission = new ContractorMission(DAY_IN_SECONDS * 30, CelestialBodyType.HOMEWORLD);
-			builder.on(CelestialBodyType.OTHERS)
+			builder.on(EVE)
                    .targetedBy(mission);
 
 			service.update(currentDate, builder.build());
@@ -107,7 +114,7 @@ namespace CivilianPopulation.Domain
 		{
 			mission = new ContractorMission(DAY_IN_SECONDS * 12, CelestialBodyType.HOMEWORLD);
 
-            builder.on(CelestialBodyType.HOMEWORLD_MOON)
+            builder.on(MUN)
 			       .targetedBy(mission);
 
 			service.update(currentDate, builder.build());

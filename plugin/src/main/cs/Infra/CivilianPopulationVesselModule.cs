@@ -33,9 +33,8 @@ namespace CivilianPopulation.Infra
 
         public void FixedUpdate()
         {
-            service.update(Planetarium.GetUniversalTime(), adapter.asCivilianVessel(vessel));
-
-            if (FlightGlobals.ActiveVessel.id == vessel.id)
+			service.update(Planetarium.GetUniversalTime(), adapter.asCivilianVessel(vessel));
+            if (FlightGlobals.ActiveVessel != null && FlightGlobals.ActiveVessel.id == vessel.id)
             {
                 List<CivilianPopulationDockModule> docks = FlightGlobals.ActiveVessel.FindPartModulesImplementing<CivilianPopulationDockModule>();
                 if (docks.Count == 0)

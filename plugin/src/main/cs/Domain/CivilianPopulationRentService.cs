@@ -39,15 +39,10 @@ namespace CivilianPopulation.Domain
 			return res;
 		}
 
-		private double getNextTaxesDate(double universalTime)
+        public double getNextTaxesDate(double universalTime)
 		{
-			double now = universalTime;
-			double next = 0;
-			while (next < now)
-			{
-				next += timeBetweenRents;
-			}
-			return next;
+            double currentDay = Math.Floor(universalTime / timeBetweenRents);
+            return (currentDay + 1) * timeBetweenRents;
 		}
     }
 }

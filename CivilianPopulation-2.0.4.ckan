@@ -1,0 +1,26 @@
+{
+    "spec_version": 1,
+    "identifier": "CivilianPopulation",
+    "name": "Civilian Population",
+    "abstract": "Turn your Kerbal society into a Type 1 Civilization by adding civilian exploration!",
+    "author": [
+        "Pamynx",
+        "Trafalgar",
+        "Michaelhester07",
+        "GGumby"
+    ],
+    "license": "CC-BY-NC-4.0",
+    "resources": {
+        "homepage": "https://github.com/rleroy/CivilianPopulation"
+    },
+    "version": "2.0.4",
+    "ksp_version": "1.3.0",
+    "download": "http://nexus.amis.tv/repository/maven-releases/tv/amis/pamynx/ksp-civilian-population-mod/2.0.4/ksp-civilian-population-mod-2.0.4.zip",
+    "download_size": 14747721,
+    "download_hash": {
+        "sha1": "368D3C6B498FD5587EA02746AC347BA615D39617",
+        "sha256": "144797AB45AB8BB4A46C501022813BCFCC1B6B2042BFF8B092D44C41FE24EF44"
+    },
+    "download_content_type": "application/zip",
+    "x_generated_by": "netkan"
+}

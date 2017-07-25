@@ -9,7 +9,7 @@
 	<fileSets>
 		<fileSet>
             <directory>${project.build.directory}/dependency/Gamedata/CivilianPopulation</directory>
-            <outputDirectory>Gamedata/CivilianPopulation</outputDirectory>
+            <outputDirectory>CivilianPopulation</outputDirectory>
 		</fileSet>
 	</fileSets>
 </assembly>  

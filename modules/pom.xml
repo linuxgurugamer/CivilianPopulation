@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>tv.amis.pamynx</groupId>
 		<artifactId>ksp-civilian-population</artifactId>
-		<version>2.0.4</version>
+		<version>2.0.5-SNAPSHOT</version>
 	</parent>
 	<artifactId>ksp-civilian-population-modules</artifactId>
 	<packaging>pom</packaging>

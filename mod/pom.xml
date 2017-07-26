@@ -55,9 +55,35 @@
 					</execution>
 				</executions>
 			</plugin>
+			<plugin>
+				<groupId>de.jutzig</groupId>
+				<artifactId>github-release-plugin</artifactId>
+				<version>1.1.1</version>
+				<configuration>
+					<description>KSP :: Civilian Population</description>
+				</configuration>
+                	<executions>
+					<execution>
+						<phase>deploy</phase>
+						<goals>
+							<goal>release</goal>
+						</goals>
+						<id>upload</id>
+						<inherited>false</inherited>
+						<configuration>
+								<include>${project.artifactId}-${project.version}.zip</include>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 
 		</plugins>
 	</build>
+
+	<scm>
+		<connection>scm:git:https://github.com/rleroy/CivilianPopulation.git</connection>
+		<tag>HEAD</tag>
+	</scm>
 
 	<dependencies>
 		<dependency>

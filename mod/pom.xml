@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
@@ -32,7 +33,7 @@
 					</execution>
 				</executions>
 				<configuration>
-				    <excludeTransitive>true</excludeTransitive>
+					<excludeTransitive>true</excludeTransitive>
 				</configuration>
 			</plugin>
 
@@ -62,7 +63,7 @@
 				<configuration>
 					<description>KSP :: Civilian Population</description>
 				</configuration>
-                	<executions>
+				<executions>
 					<execution>
 						<phase>deploy</phase>
 						<goals>
@@ -71,7 +72,14 @@
 						<id>upload</id>
 						<inherited>false</inherited>
 						<configuration>
-								<include>${project.artifactId}-${project.version}.zip</include>
+							<fileSets>
+								<fileSet>
+									<directory>${project.build.directory}</directory>
+					                <includes>
+										<include>${project.artifactId}-${project.version}.zip</include>
+									</includes>
+								</fileSet>
+							</fileSets>
 						</configuration>
 					</execution>
 				</executions>
@@ -89,21 +97,21 @@
 		<dependency>
 			<groupId>tv.amis.pamynx</groupId>
 			<artifactId>ksp-civilian-population-parts</artifactId>
-            <version>${project.version}</version>
-            <type>zip</type>
+			<version>${project.version}</version>
+			<type>zip</type>
 		</dependency>
-        <dependency>
-            <groupId>tv.amis.pamynx</groupId>
-            <artifactId>ksp-civilian-population-assets</artifactId>
-            <version>${project.version}</version>
-            <type>zip</type>
-        </dependency>
-        <dependency>
-            <groupId>tv.amis.pamynx</groupId>
-            <artifactId>ksp-civilian-population-plugin</artifactId>
-            <version>${project.version}</version>
-            <type>zip</type>
-        </dependency>
+		<dependency>
+			<groupId>tv.amis.pamynx</groupId>
+			<artifactId>ksp-civilian-population-assets</artifactId>
+			<version>${project.version}</version>
+			<type>zip</type>
+		</dependency>
+		<dependency>
+			<groupId>tv.amis.pamynx</groupId>
+			<artifactId>ksp-civilian-population-plugin</artifactId>
+			<version>${project.version}</version>
+			<type>zip</type>
+		</dependency>
 	</dependencies>
 
 </project>

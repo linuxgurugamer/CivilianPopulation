@@ -36,19 +36,21 @@
 				<groupId>de.jutzig</groupId>
 				<artifactId>github-release-plugin</artifactId>
 				<version>1.1.1</version>
-				<configuration>
-					<description>KSP :: Civilian Population</description>
-					<releaseName>${project.version}</releaseName>
-					<tag>${project.version}</tag>
-					<fileSets>
-						<fileSet>
-							<directory>${project.build.directory}/checkout/mod/target</directory>
-							<includes>
-								<include>ksp-civilian-population-mod-*.zip</include>
-							</includes>
-						</fileSet>
-					</fileSets>
-				</configuration>
+     <executions>
+        <execution>
+          <id>github-upload</id>
+          <phase>deploy</phase>
+          <goals>
+              <goal>release</goal>
+         </goals>
+         <inherited>false</inherited>
+         <configuration>
+               <releaseName>${project.version}</releaseName>
+               <tag>${project.version}</tag>
+               <artifact>${project.build.directory}/checkout/mod/target/ksp-civilian-population-mod-${project.version}.zip</artifact>
+         </configuration>
+      </execution>
+     </executions>
 			</plugin>
 		</plugins>
 	</build>

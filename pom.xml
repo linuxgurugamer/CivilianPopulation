@@ -1,52 +1,71 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
 
-    <groupId>tv.amis.pamynx</groupId>
-    <artifactId>ksp-civilian-population</artifactId>
-    <packaging>pom</packaging>
+	<groupId>tv.amis.pamynx</groupId>
+	<artifactId>ksp-civilian-population</artifactId>
+	<packaging>pom</packaging>
 	<version>2.0.5-SNAPSHOT</version>
-    <name>KSP :: Civilian Population</name>
-    
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    </properties>
-    
-    <modules>
-        <module>assets</module>
-        <module>parts</module>
-        <module>modules</module>
-        <module>plugin</module>
-        <module>mod</module>
-    </modules>
+	<name>KSP :: Civilian Population</name>
 
-    <scm>
-        <connection>scm:git:https://github.com/rleroy/CivilianPopulation.git</connection>
-      <tag>HEAD</tag>
-  </scm>
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+	</properties>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-release-plugin</artifactId>
-                <version>2.5.3</version>
-            </plugin>
-        </plugins>
-    </build>
+	<modules>
+		<module>assets</module>
+		<module>parts</module>
+		<module>modules</module>
+		<module>plugin</module>
+		<module>mod</module>
+	</modules>
 
-    <distributionManagement>
-        <repository>
-            <id>nexus</id>
-            <name>Nexus Releases</name>
-            <url>http://nexus.amis.tv/repository/maven-releases</url>
-        </repository>
-        <snapshotRepository>
-            <id>nexus</id>
-            <name>Nexus Snapshots</name>
-            <url>http://nexus.amis.tv/repository/maven-snapshots</url>
-        </snapshotRepository>
-    </distributionManagement>
+	<scm>
+		<connection>scm:git:https://github.com/rleroy/CivilianPopulation.git</connection>
+		<tag>HEAD</tag>
+	</scm>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-release-plugin</artifactId>
+				<version>2.5.3</version>
+			</plugin>
+			<plugin>
+				<groupId>de.jutzig</groupId>
+				<artifactId>github-release-plugin</artifactId>
+				<version>1.1.1</version>
+				<configuration>
+					<description>KSP :: Civilian Population</description>
+					<releaseName>${project.version}</releaseName>
+					<tag>${project.version}</tag>
+					<fileSets>
+						<fileSet>
+							<directory>${project.build.directory}/checkout/mod/target</directory>
+							<includes>
+								<include>ksp-civilian-population-mod-*.zip</include>
+							</includes>
+						</fileSet>
+					</fileSets>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<distributionManagement>
+		<repository>
+			<id>nexus</id>
+			<name>Nexus Releases</name>
+			<url>http://nexus.amis.tv/repository/maven-releases</url>
+		</repository>
+		<snapshotRepository>
+			<id>nexus</id>
+			<name>Nexus Snapshots</name>
+			<url>http://nexus.amis.tv/repository/maven-snapshots</url>
+		</snapshotRepository>
+	</distributionManagement>
 
 </project>
 

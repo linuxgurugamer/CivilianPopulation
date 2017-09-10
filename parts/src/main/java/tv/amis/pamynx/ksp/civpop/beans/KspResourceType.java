@@ -16,7 +16,6 @@ public enum KspResourceType {
 	Water(false),
 	EnrichedUranium(false),
 	DepletedUranium(false),
-	CivilianGrowthCounter(false),
 	;
 
 	public boolean generic;

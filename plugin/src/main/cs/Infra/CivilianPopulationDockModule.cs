@@ -20,21 +20,24 @@ namespace CivilianPopulation.Infra
 
         public void FixedUpdate()
         {
-			foreach (VesselModule module in vessel.vesselModules)
-			{
-				if (module.GetType() == typeof(CivilianPopulationVesselModule))
-				{
-					CivilianPopulationVesselModule civPopModule = (CivilianPopulationVesselModule)module;
-                    civPopModule.updateCapacity();
-				}
-			}
-		}
+            if (vessel != null)
+            {
+                foreach (VesselModule module in vessel.vesselModules)
+                {
+                    if (module.GetType() == typeof(CivilianPopulationVesselModule))
+                    {
+                        CivilianPopulationVesselModule civPopModule = (CivilianPopulationVesselModule)module;
+                        civPopModule.updateCapacity();
+                    }
+                }
+            }
+        }
 
         [KSPEvent(guiName = "Activate", active = true, guiActive = true)]
         public void activate()
         {
             this.activated = true;
-		}
+        }
 
         [KSPEvent(guiName = "Deactivate", active = true, guiActive = true)]
         public void deactivate()

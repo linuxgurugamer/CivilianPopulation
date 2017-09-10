@@ -176,10 +176,10 @@ Civilian behaviour
 DONE :
 
 - Rent of civilian : 200 funds per civilian per day (6 hours).
-- Civilian contractor growth
+- Civilian contractor growth : Every 80 days on Kerbin orbit, 160 around Mun or Minmus, never elsewhere, a civilian will be created on an activated Civilian Dock.
+- Civilian recruitment process : The button recruit of the university will turn civilian living in this university into regular kerbals with a random choosen profession.
 
 TODO :
 
-- Civilian recruitment process
 - Civilian breeding growth
 - Civilian aging and death

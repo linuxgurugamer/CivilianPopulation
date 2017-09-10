@@ -76,6 +76,7 @@
     <Compile Include="old\CivilianDockGrowth.cs" />
     <Compile Include="old\CivilianPopulationRegulator.cs" />
     <Compile Include="CivilianPopulationAdapter.cs" />
+    <Compile Include="CivilianPopulationRecruitmentModule.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Domain\Domain.csproj">

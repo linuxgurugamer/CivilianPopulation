@@ -44,6 +44,7 @@ public enum KspModuleField implements KspConfigField {
     Efficiency,
     ResourceName,
     RecipeInputs,
-    HarvestThreshold
+    HarvestThreshold,
+    recruitmentTraits
     ;
 }

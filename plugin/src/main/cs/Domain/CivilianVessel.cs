@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace CivilianPopulation.Domain
 {
@@ -32,7 +33,18 @@ namespace CivilianPopulation.Domain
 		{
 			return name;
 		}
-		public int getCivilianCount()
+
+        internal List<CivilianKerbal> getMales()
+        {
+            throw new NotImplementedException();
+        }
+
+        internal List<CivilianKerbal> getFemales()
+        {
+            throw new NotImplementedException();
+        }
+
+        public int getCivilianCount()
 		{
 			return civilianCount;
 		}

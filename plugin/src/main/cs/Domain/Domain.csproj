@@ -30,6 +30,8 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CivilianKerbal.cs" />
+    <Compile Include="CivilianKerbalCouple.cs" />
     <Compile Include="CivilianPopulationGrowthService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="CivilianPopulationRentService.cs" />

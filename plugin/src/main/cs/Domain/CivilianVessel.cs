@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace CivilianPopulation.Domain
 {
     public class CivilianVessel
     {
         private readonly string name;
-		private readonly int civilianCount;
+		private readonly List<CivilianKerbal> civilians;
 		private readonly int docksCapacity;
 		private readonly bool orbiting;
 		private readonly CelestialBody body;
@@ -14,7 +15,6 @@ namespace CivilianPopulation.Domain
 
 		public CivilianVessel(
             string name, 
-            int civilianCount, 
             int docksCapacity,
             bool orbiting,
             CelestialBody body,
@@ -22,7 +22,7 @@ namespace CivilianPopulation.Domain
         )
         {
 			this.name = name;
-			this.civilianCount = civilianCount;
+            this.civilians = new List<CivilianKerbal>();
 			this.docksCapacity = docksCapacity;
 			this.orbiting = orbiting;
 			this.body = body;
@@ -34,19 +34,9 @@ namespace CivilianPopulation.Domain
 			return name;
 		}
 
-        internal List<CivilianKerbal> getMales()
-        {
-            throw new NotImplementedException();
-        }
-
-        internal List<CivilianKerbal> getFemales()
-        {
-            throw new NotImplementedException();
-        }
-
         public int getCivilianCount()
 		{
-			return civilianCount;
+            return this.civilians.Count();
 		}
         public int getDocksCapacity()
         {
@@ -64,5 +54,20 @@ namespace CivilianPopulation.Domain
 		{
 			return this.missionInProgress;
 		}
-    }
+
+		public void addCivilian(CivilianKerbal kerbal)
+		{
+            this.civilians.Add((kerbal));
+		}
+
+        public IEnumerable<CivilianKerbal> getMales()
+		{
+            return this.civilians.Where(kerbal => kerbal.isMale());
+		}
+
+		public IEnumerable<CivilianKerbal> getFemales()
+		{
+			return this.civilians.Where(kerbal => !kerbal.isMale());
+		}
+	}
 }

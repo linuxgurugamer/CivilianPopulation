@@ -11,21 +11,23 @@ namespace CivilianPopulation.Infra
         public string missionEndDate;
         [KSPField(isPersistant = true, guiActive = false)]
         public int missionTargetType;
-        [KSPField(isPersistant = true, guiActive = false)]
-        public int waiting;
-        [KSPField(isPersistant = true, guiActive = false)]
+		[KSPField(isPersistant = true, guiActive = false)]
+		public int waitingMales;
+		[KSPField(isPersistant = true, guiActive = false)]
+		public int waitingFemales;
+		[KSPField(isPersistant = true, guiActive = false)]
         public int capacity;
 
         private CivilianPopulationContractorService service;
         private CivilianPopulationAdapter adapter = new CivilianPopulationAdapter();
 
-        public void Start()
+		public void Start()
         {
             if (service == null)
             {
                 service = new CivilianPopulationContractorService(setMission, addCivilian);
             }
-        }
+		}
 
         public void Update()
         {
@@ -79,18 +81,32 @@ namespace CivilianPopulation.Infra
 
         public int getCapacity()
         {
-            return this.capacity - this.waiting;
+            return this.capacity - this.waitingMales - this.getWaitingFemales();
         }
 
-        public int getWaiting()
-        {
-            return this.waiting;
-        }
+		public int getWaitingMales()
+		{
+            return this.waitingMales;
+		}
 
-        private void addCivilian()
+		public int getWaitingFemales()
+		{
+            return this.waitingFemales;
+		}
+
+		private void addCivilian(Boolean male)
         {
-            waiting = waiting + 1;
-            log("addNewCivilian : capacity is now " + this.capacity + ", " + this.waiting + " civilians will spawn.");
+            if (male) 
+            {
+                waitingMales = waitingMales + 1;
+            } else 
+            {
+                waitingFemales = waitingFemales + 1;
+            }
+            log("addNewCivilian : capacity is now " + this.capacity + ", "
+				+ this.waitingMales + " male civilians will spawn,"
+				+ this.waitingFemales + " female civilians will spawn."
+               );
         }
 
         public void updateCapacity()
@@ -104,29 +120,50 @@ namespace CivilianPopulation.Infra
                     if (dock.isActivated())
                     {
                         int dockCapacity = dock.part.CrewCapacity - dock.part.protoModuleCrew.Count;
-                        while (this.waiting > 0 && dockCapacity > 0)
-                        {
-                            log("spawning a civilian.");
-                            ProtoCrewMember newCivilian = createNewCrewMember("Civilian");
-                            if (dock.part.AddCrewmember(newCivilian))
-                            {
-                                vessel.SpawnCrew();
-                                log(newCivilian.name + " has been placed successfully by placeNewCivilian");
-                            }
-                            this.waiting = this.waiting - 1;
-                        }
-                        capacity += dock.part.CrewCapacity - dock.part.protoModuleCrew.Count;
+						while (this.waitingMales > 0 && dockCapacity > 0)
+						{
+							log("spawning a civilian.");
+							ProtoCrewMember newCivilian = createNewCrewMember("Civilian", true);
+							if (dock.part.AddCrewmember(newCivilian))
+							{
+								vessel.SpawnCrew();
+								log(newCivilian.name + " has been placed successfully by placeNewCivilian");
+							}
+							this.waitingMales = this.waitingMales - 1;
+						}
+						while (this.waitingFemales > 0 && dockCapacity > 0)
+						{
+							log("spawning a civilian.");
+							ProtoCrewMember newCivilian = createNewCrewMember("Civilian", false);
+							if (dock.part.AddCrewmember(newCivilian))
+							{
+								vessel.SpawnCrew();
+								log(newCivilian.name + " has been placed successfully by placeNewCivilian");
+							}
+							this.waitingFemales = this.waitingFemales - 1;
+						}
+						capacity += dock.part.CrewCapacity - dock.part.protoModuleCrew.Count;
                     }
                 }
             }
         }
 
-        private ProtoCrewMember createNewCrewMember(string kerbalTraitName)
+        private ProtoCrewMember createNewCrewMember(string kerbalTraitName, Boolean male)
         {
             KerbalRoster roster = HighLogic.CurrentGame.CrewRoster;
             ProtoCrewMember newKerbal = roster.GetNewKerbal(ProtoCrewMember.KerbalType.Crew);
-            KerbalRoster.SetExperienceTrait(newKerbal, kerbalTraitName);//Set the Kerbal as the specified role (kerbalTraitName)
-            Debug.Log(this.GetType().Name + "Created " + newKerbal.name + ", a " + newKerbal.trait);
+            KerbalRoster.SetExperienceTrait(newKerbal, kerbalTraitName);
+            if (male)
+            {
+                newKerbal.gender = ProtoCrewMember.Gender.Male;
+				newKerbal.ChangeName(CrewGenerator.GetRandomName(ProtoCrewMember.Gender.Male));
+				log("Created " + newKerbal.name + ", a male " + newKerbal.trait);
+			} else
+            {
+				newKerbal.gender = ProtoCrewMember.Gender.Female;
+                newKerbal.ChangeName(CrewGenerator.GetRandomName(ProtoCrewMember.Gender.Female));
+				log("Created " + newKerbal.name + ", a female " + newKerbal.trait);
+			}
             return newKerbal;
         }
 

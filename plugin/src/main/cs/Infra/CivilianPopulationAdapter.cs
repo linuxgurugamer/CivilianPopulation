@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+
 using CivilianPopulation.Domain;
 
 namespace CivilianPopulation.Infra
@@ -11,12 +13,14 @@ namespace CivilianPopulation.Infra
 
         internal CivilianVessel asCivilianVessel(Vessel vessel)
         {
-			int civilianCount = 0;
+            List<CivilianKerbal> civilians = new List<CivilianKerbal>();
 			foreach (ProtoCrewMember crew in vessel.GetVesselCrew())
 			{
 				if (crew.trait == "Civilian")
 				{
-					civilianCount++;
+                    Boolean male = crew.gender == ProtoCrewMember.Gender.Male;
+                    CivilianKerbal kerbal = new CivilianKerbal(male);
+                    civilians.Add(kerbal);
 				}
 			}
 
@@ -29,18 +33,31 @@ namespace CivilianPopulation.Infra
 				{
 					CivilianPopulationVesselModule civPopModule = (CivilianPopulationVesselModule)module;
 					capacity += civPopModule.getCapacity();
-                    civilianCount += civPopModule.getWaiting();
+					for (int i = 0; i < civPopModule.getWaitingMales(); i++)
+					{
+						CivilianKerbal kerbal = new CivilianKerbal(true);
+						civilians.Add(kerbal);
+					}
+					for (int i = 0; i < civPopModule.getWaitingFemales(); i++)
+					{
+						CivilianKerbal kerbal = new CivilianKerbal(false);
+						civilians.Add(kerbal);
+					}
 					mission = civPopModule.getMission();
 				}
 			}
 			CivilianVesselBuilder builder = new CivilianVesselBuilder();
 			builder.named(vessel.GetName())
-				   .countingCivilian(civilianCount)
 				   .withADockCapacityOf(capacity)
 				   .inOrbit(!vessel.LandedOrSplashed)
                    .on(new Domain.CelestialBody(vessel.mainBody.name, getBodyType(vessel.mainBody)))
 				   .targetedBy(mission);
-			return builder.build();
+			CivilianVessel civVessel = builder.build();
+            foreach (CivilianKerbal kerbal in civilians)
+            {
+				civVessel.addCivilian(kerbal);
+            }
+            return civVessel;
 		}
 
 		private CivilianPopulation.Domain.CelestialBodyType getBodyType(CelestialBody body)

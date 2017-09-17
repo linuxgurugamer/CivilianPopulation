@@ -4,7 +4,6 @@ namespace CivilianPopulation.Domain
     public class CivilianVesselBuilder
     {
 		private string name = "unknown";
-		private int civilianCount = 0;
 		private int docksCapacity = 0;
         private bool orbiting = false;
         private CelestialBody body = new CelestialBody("Kerbin", CelestialBodyType.HOMEWORLD);
@@ -14,7 +13,6 @@ namespace CivilianPopulation.Domain
         {
             return new CivilianVessel(
                 name,
-                civilianCount,
                 docksCapacity,
                 orbiting,
                 body,
@@ -27,12 +25,6 @@ namespace CivilianPopulation.Domain
             this.name = name;
             return this;
         }
-
-		public CivilianVesselBuilder countingCivilian(int count)
-		{
-			this.civilianCount = count;
-			return this;
-		}
 
 		public CivilianVesselBuilder withADockCapacityOf(int number)
 		{

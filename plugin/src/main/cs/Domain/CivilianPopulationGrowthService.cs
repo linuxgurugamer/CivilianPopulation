@@ -7,51 +7,115 @@ namespace CivilianPopulation.Domain
 {
     public class CivilianPopulationGrowthService
     {
-        private const double DAY_IN_SECONDS = 60 * 60 * 6;
+		private const double DAY_IN_SECONDS = 60 * 60 * 6;
+		private const int MALE_AVAILABILITY = 3;
+		private const int FEMALE_AVAILABILITY = 3;
+		private const int CHANCE_OF_PREGNANCY = 10;
+		private const int PREGNANCY_DURATION_IN_DAYS = 75;
 
-        private double lastUpdate;
+		private Action<CivilianKerbal, double> setPregnant;
+		private Action<CivilianKerbal> birth;
 
-        public CivilianPopulationGrowthService()
+		protected System.Random rng;
+		private double lastUpdate;
+
+        public CivilianPopulationGrowthService(
+            Action<CivilianKerbal, double> setPregnant,
+            Action<CivilianKerbal> birth)
         {
-            this.lastUpdate = -1;
-        }
+			this.setPregnant = setPregnant;
+			this.birth = birth;
+			this.lastUpdate = -1;
+			this.rng = new System.Random();
+		}
 
         public void update(double currentDate, CivilianVessel vessel)
         {
-            if (lastUpdate != -1 && getDay(lastUpdate) < getDay(currentDate))
+            if (lastUpdate > -1 && getDay(lastUpdate) < getDay(currentDate))
             {
-                doUpdate(vessel);
+                doUpdate(currentDate, vessel);
             }
             lastUpdate = currentDate;
         }
 
-        protected virtual void doUpdate(CivilianVessel vessel)
+        protected virtual void doUpdate(double currentDate, CivilianVessel vessel)
         {
             // select males
-            List<CivilianKerbal> males = vessel.getMales();
+            IEnumerable<CivilianKerbal> males = vessel.getMales();
             // select females
-            List<CivilianKerbal> females = vessel.getFemales();
+            IEnumerable<CivilianKerbal> females = vessel.getFemales();
             // make couples
-            List<CivilianKerbalCouple> couples = makeCouples(males, females);
+            IEnumerable<CivilianKerbalCouple> couples = makeCouples(males, females);
             // change females state
-            changeFemaleState(couples);
+            turnPregnantSomeFemales(currentDate, couples);
             // birth
-            birthOfNewCivilans(females);
+            birthOfNewCivilans(currentDate, females);
         }
 
-        private List<CivilianKerbalCouple> makeCouples(List<CivilianKerbal> males, List<CivilianKerbal> females)
+        protected virtual IEnumerable<CivilianKerbalCouple> makeCouples(
+            IEnumerable<CivilianKerbal> males, 
+            IEnumerable<CivilianKerbal> females)
         {
-            throw new NotImplementedException();
+            List<CivilianKerbal> availableMales = new List<CivilianKerbal>();
+            foreach (CivilianKerbal kerbal in males)
+            {
+                if (rng.Next() % MALE_AVAILABILITY == 0)
+                {
+                    availableMales.Add(kerbal);
+                }
+            }
+
+            List<CivilianKerbal> availableFemales = new List<CivilianKerbal>();
+            foreach (CivilianKerbal kerbal in females)
+            {
+                if (rng.Next() % FEMALE_AVAILABILITY == 0)
+                {
+                    availableFemales.Add(kerbal);
+                }
+            }
+
+            List<CivilianKerbalCouple> couples = new List<CivilianKerbalCouple>();
+            foreach (CivilianKerbal male in availableMales)
+            {
+                if (availableFemales.Count > 0)
+                {
+                    int index = rng.Next() % availableFemales.Count();
+                    CivilianKerbal female = availableFemales[index];
+                    availableFemales.RemoveAt(index);
+                    couples.Add(new CivilianKerbalCouple(male, female));
+                }
+            }
+            return couples;
         }
 
-        private void changeFemaleState(List<CivilianKerbalCouple> couples)
+        protected virtual void turnPregnantSomeFemales(
+            double now, 
+            IEnumerable<CivilianKerbalCouple> couples)
         {
-            throw new NotImplementedException();
+            foreach (CivilianKerbalCouple couple in couples)
+            {
+                CivilianKerbal female = couple.getFemale();
+                if (female.getExpectingBirthAt() < 0)
+                {
+                    if (rng.Next() % CHANCE_OF_PREGNANCY == 0)
+                    {
+                        this.setPregnant(female, now);
+                    }    
+                }
+            }
         }
 
-        private void birthOfNewCivilans(List<CivilianKerbal> females)
+        protected virtual void birthOfNewCivilans(
+			double now,
+			IEnumerable<CivilianKerbal> females)
         {
-            throw new NotImplementedException();
+            foreach (CivilianKerbal kerbal in females)
+            {
+                if (kerbal.getExpectingBirthAt() < now)
+                {
+                    birth(kerbal);
+                }
+            }
         }
 
         private double getDay(double date)

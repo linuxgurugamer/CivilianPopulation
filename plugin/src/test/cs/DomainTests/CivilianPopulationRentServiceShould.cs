@@ -28,7 +28,10 @@ namespace CivilianPopulation.Domain
 			Assert.AreEqual(0, fundsAccount.getFunds());
 
 			time += ONE_HOUR;
-            vessels.Add(new CivilianVesselBuilder().countingCivilian(2).build());
+            CivilianVessel vessel = new CivilianVesselBuilder().build();
+			vessel.addCivilian(new CivilianKerbal(true));
+			vessel.addCivilian(new CivilianKerbal(false));
+			vessels.Add(vessel);
 			service.update(time, vessels);
 			Assert.AreEqual(0, fundsAccount.getFunds());
 

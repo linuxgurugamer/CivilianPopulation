@@ -7,13 +7,15 @@ namespace CivilianPopulation.Domain
 		private const double MISSION_DURATION = DAY_IN_SECONDS * 85;
 
 		private Action<ContractorMission> setMission;
-        private Action addCivilian;
+        private Action<Boolean> addCivilian;
+		private System.Random rng;
 
-        public CivilianPopulationContractorService(Action<ContractorMission> setMission, Action addCivilian)
+		public CivilianPopulationContractorService(Action<ContractorMission> setMission, Action<Boolean> addCivilian)
         {
 			this.setMission = setMission;
             this.addCivilian = addCivilian;
-        }
+			this.rng = new System.Random();
+		}
 
         public void update(double currentDate, CivilianVessel vessel)
 		{
@@ -41,7 +43,12 @@ namespace CivilianPopulation.Domain
                     {
                         if (currentDate > vessel.getMission().getEndDate())
                         {
-                            addCivilian();
+							if (rng.Next() % 2 == 0)
+							{
+								addCivilian(true);
+                            } else{
+								addCivilian(false);
+							}
                             setMission(null);
                         }
                     }

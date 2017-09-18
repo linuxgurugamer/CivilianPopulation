@@ -62,12 +62,22 @@ namespace CivilianPopulation.Domain
 
         public IEnumerable<CivilianKerbal> getMales()
 		{
-            return this.civilians.Where(kerbal => kerbal.isMale());
+            List<CivilianKerbal> res = new List<CivilianKerbal>();
+            foreach(CivilianKerbal kerbal in this.civilians.Where(kerbal => kerbal.isMale()))
+            {
+                res.Add(kerbal);
+            }
+            return res;
 		}
 
 		public IEnumerable<CivilianKerbal> getFemales()
 		{
-			return this.civilians.Where(kerbal => !kerbal.isMale());
+			List<CivilianKerbal> res = new List<CivilianKerbal>();
+			foreach (CivilianKerbal kerbal in this.civilians.Where(kerbal => !kerbal.isMale()))
+			{
+				res.Add(kerbal);
+			}
+			return res;
 		}
 	}
 }

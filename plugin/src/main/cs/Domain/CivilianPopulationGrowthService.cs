@@ -111,7 +111,7 @@ namespace CivilianPopulation.Domain
         {
             foreach (CivilianKerbal kerbal in females)
             {
-                if (kerbal.getExpectingBirthAt() < now)
+                if (kerbal.getExpectingBirthAt() > 0 && kerbal.getExpectingBirthAt() < now)
                 {
                     birth(kerbal);
                 }

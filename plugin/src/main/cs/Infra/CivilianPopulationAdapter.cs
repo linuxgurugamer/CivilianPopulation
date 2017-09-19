@@ -18,37 +18,71 @@ namespace CivilianPopulation.Infra
 			{
 				if (crew.trait == "Civilian")
 				{
-                    Boolean male = crew.gender == ProtoCrewMember.Gender.Male;
-                    CivilianKerbal kerbal = new CivilianKerbal(male);
+                    bool male = crew.gender == ProtoCrewMember.Gender.Male;
+                    CivilianKerbal kerbal = new CivilianKerbal(crew.name, male, -1);
                     civilians.Add(kerbal);
 				}
 			}
 
 			ContractorMission mission = null;
 
-			int capacity = 0;
-			foreach (VesselModule module in vessel.vesselModules)
-			{
-				if (module.GetType() == typeof(CivilianPopulationVesselModule))
-				{
-					CivilianPopulationVesselModule civPopModule = (CivilianPopulationVesselModule)module;
-					capacity += civPopModule.getCapacity();
-					for (int i = 0; i < civPopModule.getWaitingMales(); i++)
-					{
-						CivilianKerbal kerbal = new CivilianKerbal(true);
-						civilians.Add(kerbal);
-					}
-					for (int i = 0; i < civPopModule.getWaitingFemales(); i++)
-					{
-						CivilianKerbal kerbal = new CivilianKerbal(false);
-						civilians.Add(kerbal);
-					}
-					mission = civPopModule.getMission();
-				}
-			}
+			int dockCapacity = 0;
+            int maleIdx = 0;
+            int femaleIdx = 0;
+            foreach (VesselModule module in vessel.vesselModules)
+            {
+                if (module.GetType() == typeof(CivilianPopulationContractorVesselModule))
+                {
+                    CivilianPopulationContractorVesselModule civPopModule = (CivilianPopulationContractorVesselModule)module;
+                    dockCapacity += civPopModule.getCapacity();
+                    for (int i = 0; i < civPopModule.getWaitingMales(); i++)
+                    {
+                        CivilianKerbal kerbal = new CivilianKerbal("male-" + maleIdx, true, -1);
+                        maleIdx++;
+                        civilians.Add(kerbal);
+                    }
+                    for (int i = 0; i < civPopModule.getWaitingFemales(); i++)
+                    {
+                        CivilianKerbal kerbal = new CivilianKerbal("female-" + femaleIdx, false, -1);
+                        femaleIdx++;
+                        civilians.Add(kerbal);
+                    }
+                    mission = civPopModule.getMission();
+                }
+
+                if (module.GetType() == typeof(CivilianPopulationGrowthVesselModule))
+                {
+                    CivilianPopulationGrowthVesselModule civPopModule = (CivilianPopulationGrowthVesselModule)module;
+                    for (int i = 0; i < civPopModule.getWaitingMales(); i++)
+                    {
+                        CivilianKerbal kerbal = new CivilianKerbal("male-" + maleIdx, true, -1);
+                        maleIdx++;
+                        civilians.Add(kerbal);
+                    }
+                    for (int i = 0; i < civPopModule.getWaitingFemales(); i++)
+                    {
+                        CivilianKerbal kerbal = new CivilianKerbal("female-" + femaleIdx, false, -1);
+                        femaleIdx++;
+                        civilians.Add(kerbal);
+                    }
+
+                    Dictionary<string, double> data = civPopModule.getExpectations();
+                    if (data != null && data.Count > 0)
+                    {
+                        foreach (CivilianKerbal kerbal in civilians)
+                        {
+                            if (data.ContainsKey(kerbal.getName()))
+                            {
+                                kerbal.setExpectingBirthAt(data[kerbal.getName()]);
+                            }
+                        }
+                    }
+                }
+            }
+
 			CivilianVesselBuilder builder = new CivilianVesselBuilder();
 			builder.named(vessel.GetName())
-				   .withADockCapacityOf(capacity)
+				   .withADockCapacityOf(dockCapacity)
 				   .inOrbit(!vessel.LandedOrSplashed)
                    .on(new Domain.CelestialBody(vessel.mainBody.name, getBodyType(vessel.mainBody)))
 				   .targetedBy(mission);

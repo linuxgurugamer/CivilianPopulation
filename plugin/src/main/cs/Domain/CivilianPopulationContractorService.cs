@@ -7,10 +7,10 @@ namespace CivilianPopulation.Domain
 		private const double MISSION_DURATION = DAY_IN_SECONDS * 85;
 
 		private Action<ContractorMission> setMission;
-        private Action<Boolean> addCivilian;
+        private Action<bool> addCivilian;
 		private System.Random rng;
 
-		public CivilianPopulationContractorService(Action<ContractorMission> setMission, Action<Boolean> addCivilian)
+		public CivilianPopulationContractorService(Action<ContractorMission> setMission, Action<bool> addCivilian)
         {
 			this.setMission = setMission;
             this.addCivilian = addCivilian;

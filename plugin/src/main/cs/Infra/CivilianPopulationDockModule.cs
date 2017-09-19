@@ -24,9 +24,9 @@ namespace CivilianPopulation.Infra
             {
                 foreach (VesselModule module in vessel.vesselModules)
                 {
-                    if (module.GetType() == typeof(CivilianPopulationVesselModule))
+                    if (module.GetType() == typeof(CivilianPopulationContractorVesselModule))
                     {
-                        CivilianPopulationVesselModule civPopModule = (CivilianPopulationVesselModule)module;
+                        CivilianPopulationContractorVesselModule civPopModule = (CivilianPopulationContractorVesselModule)module;
                         civPopModule.updateCapacity();
                     }
                 }

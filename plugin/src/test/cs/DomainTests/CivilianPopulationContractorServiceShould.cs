@@ -152,7 +152,7 @@ namespace CivilianPopulation.Domain
             this.mission = newMission;
 		}
 
-        private void addCivilian(Boolean male)
+        private void addCivilian(bool male)
         {
             this.delivered++;
         }

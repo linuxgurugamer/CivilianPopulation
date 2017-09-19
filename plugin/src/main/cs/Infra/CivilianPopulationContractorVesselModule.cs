@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace CivilianPopulation.Infra
 {
-    public class CivilianPopulationVesselModule : VesselModule
+    public class CivilianPopulationContractorVesselModule : VesselModule
     {
         [KSPField(isPersistant = true, guiActive = false)]
         public string missionEndDate;
@@ -81,7 +81,7 @@ namespace CivilianPopulation.Infra
 
         public int getCapacity()
         {
-            return this.capacity - this.waitingMales - this.getWaitingFemales();
+            return this.capacity - this.getWaitingMales() - this.getWaitingFemales();
         }
 
 		public int getWaitingMales()
@@ -94,7 +94,7 @@ namespace CivilianPopulation.Infra
             return this.waitingFemales;
 		}
 
-		private void addCivilian(Boolean male)
+		private void addCivilian(bool male)
         {
             if (male) 
             {
@@ -148,7 +148,7 @@ namespace CivilianPopulation.Infra
             }
         }
 
-        private ProtoCrewMember createNewCrewMember(string kerbalTraitName, Boolean male)
+        private ProtoCrewMember createNewCrewMember(string kerbalTraitName, bool male)
         {
             KerbalRoster roster = HighLogic.CurrentGame.CrewRoster;
             ProtoCrewMember newKerbal = roster.GetNewKerbal(ProtoCrewMember.KerbalType.Crew);

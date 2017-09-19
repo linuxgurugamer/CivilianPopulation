@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using CivilianPopulation.Domain;
 using KSP.UI.Screens;
 using UnityEngine;
@@ -77,6 +78,12 @@ namespace CivilianPopulation.GUI
                 {
 					GUILayout.BeginHorizontal();
 					GUILayout.Label(getVesselStatus(vessel));
+					GUILayout.EndHorizontal();
+
+					GUILayout.BeginHorizontal();
+                    GUILayout.Label("M : " + vessel.getMales().Count() 
+                               + " - F : " + vessel.getFemales().Count() 
+                               + " (" + vessel.getFemales().Where(kerbal => kerbal.getExpectingBirthAt() > 0).Count()+ ")");
 					GUILayout.EndHorizontal();
 
 					GUILayout.BeginHorizontal();

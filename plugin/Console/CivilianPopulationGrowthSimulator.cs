@@ -8,12 +8,11 @@ namespace InfraConsole
     class CivilianPopulationGrowthSimulator
     {
 		private const double DAY_IN_SECONDS = 60 * 60 * 6;
-		private const int PREGNANCY_DURATION_IN_DAYS = 75;
 
 		private CivilianPopulationGrowthService service;
         private CivilianVessel vessel;
 		private System.Random rng;
-
+        private int idx;
 
 		public static void Main(string[] args)
         {
@@ -25,20 +24,22 @@ namespace InfraConsole
         {
             service = new CivilianPopulationGrowthService(setPregnant, birth);
             vessel = new CivilianVesselBuilder().build();
-			vessel.addCivilian(new CivilianKerbal(true));
-			vessel.addCivilian(new CivilianKerbal(false));
+			vessel.addCivilian(new CivilianKerbal("male-0", true, -1));
+			vessel.addCivilian(new CivilianKerbal("female-0", false, -1));
 			this.rng = new System.Random();
+            this.idx = 0;
 		}
 
 		public void setPregnant(CivilianKerbal kerbal, double at)
 		{
-			kerbal.setExpectingBirthAt(at + PREGNANCY_DURATION_IN_DAYS * DAY_IN_SECONDS);
+			kerbal.setExpectingBirthAt(at);
 		}
 
-		public void birth(CivilianKerbal mother)
+		public void birth(CivilianKerbal mother, bool male)
 		{
 			mother.setExpectingBirthAt(-1);
-            CivilianKerbal kerbal = new CivilianKerbal(rng.Next() % 2 == 0);
+            CivilianKerbal kerbal = new CivilianKerbal("kerbal-"+idx, male, -1);
+            idx = idx + 1;
             vessel.addCivilian(kerbal);
 		}
 

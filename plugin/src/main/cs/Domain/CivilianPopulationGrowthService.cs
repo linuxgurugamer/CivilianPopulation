@@ -14,14 +14,14 @@ namespace CivilianPopulation.Domain
 		private const int PREGNANCY_DURATION_IN_DAYS = 75;
 
 		private Action<CivilianKerbal, double> setPregnant;
-		private Action<CivilianKerbal> birth;
+        private Action<CivilianKerbal, bool> birth;
 
 		protected System.Random rng;
 		private double lastUpdate;
 
         public CivilianPopulationGrowthService(
             Action<CivilianKerbal, double> setPregnant,
-            Action<CivilianKerbal> birth)
+            Action<CivilianKerbal, bool> birth)
         {
 			this.setPregnant = setPregnant;
 			this.birth = birth;
@@ -99,7 +99,7 @@ namespace CivilianPopulation.Domain
                 {
                     if (rng.Next() % CHANCE_OF_PREGNANCY == 0)
                     {
-                        this.setPregnant(female, now);
+                        this.setPregnant(female, now + PREGNANCY_DURATION_IN_DAYS * DAY_IN_SECONDS);
                     }    
                 }
             }
@@ -113,7 +113,7 @@ namespace CivilianPopulation.Domain
             {
                 if (kerbal.getExpectingBirthAt() > 0 && kerbal.getExpectingBirthAt() < now)
                 {
-                    birth(kerbal);
+                    birth(kerbal, rng.Next() % 2 == 0);
                 }
             }
         }

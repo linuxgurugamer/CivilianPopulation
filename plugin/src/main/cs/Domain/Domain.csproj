@@ -42,6 +42,8 @@
     <Compile Include="CelestialBodyType.cs" />
     <Compile Include="CelestialBody.cs" />
     <Compile Include="CivilianPopulationRecruitmentService.cs" />
+    <Compile Include="JSON.cs" />
+    <Compile Include="CivilianKerbalRoster.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

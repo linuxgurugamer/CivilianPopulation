@@ -72,13 +72,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="CivilianPopulationModule.cs" />
     <Compile Include="CivilianPopulationDockModule.cs" />
-    <Compile Include="CivilianPopulationContractorVesselModule.cs" />
     <Compile Include="old\CivilianDockGrowth.cs" />
     <Compile Include="old\CivilianPopulationRegulator.cs" />
     <Compile Include="CivilianPopulationAdapter.cs" />
     <Compile Include="CivilianPopulationRecruitmentModule.cs" />
-    <Compile Include="CivilianPopulationGrowthVesselModule.cs" />
     <Compile Include="CivilianPopulationHousingModule.cs" />
+    <Compile Include="CivilianPopulationVesselModule.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Domain\Domain.csproj">

@@ -64,7 +64,7 @@ namespace CivilianPopulation.Domain
 			List<CivilianKerbal> males = new List<CivilianKerbal>();
 			for (int i = 0; i < 50; i++)
 			{
-				males.Add(new CivilianKerbal("male", true, -1));
+				males.Add(new CivilianKerbal("male", "Civilian", true, -1));
 			}
 			List<CivilianKerbal> females = new List<CivilianKerbal>();
 			IEnumerable<CivilianKerbalCouple> couples = service.testMakeCouples(males, females);
@@ -79,8 +79,8 @@ namespace CivilianPopulation.Domain
 			List<CivilianKerbal> females = new List<CivilianKerbal>();
 			for (int i = 0; i < 50; i++)
 			{
-				males.Add(new CivilianKerbal("male-"+i, true, -1));
-				females.Add(new CivilianKerbal("female-"+i, false, -1));
+				males.Add(new CivilianKerbal("male-"+i, "Civilian", true, -1));
+				females.Add(new CivilianKerbal("female-"+i, "Civilian", false, -1));
 			}
 			IEnumerable<CivilianKerbalCouple> couples = service.testMakeCouples(males, females);
             Assert.AreEqual(14, couples.Count());
@@ -106,8 +106,8 @@ namespace CivilianPopulation.Domain
 			List<CivilianKerbal> females = new List<CivilianKerbal>();
 			for (int i = 0; i < 50; i++)
 			{
-				males.Add(new CivilianKerbal("male-" + i, true, -1));
-				females.Add(new CivilianKerbal("female-" + i, false, -1));
+				males.Add(new CivilianKerbal("male-" + i, "Civilian", true, -1));
+				females.Add(new CivilianKerbal("female-" + i, "Civilian", false, -1));
 			}
 			IEnumerable<CivilianKerbalCouple> couples = service.testMakeCouples(males, females);
 			service.testTurnPregnantSomeFemales(0, couples);
@@ -122,10 +122,10 @@ namespace CivilianPopulation.Domain
             CivilianVessel vessel = new CivilianVesselBuilder().build();
 			for (int i = 0; i < 50; i++)
 			{
-				vessel.addCivilian(new CivilianKerbal("male-" + i, true, -1));
-				vessel.addCivilian(new CivilianKerbal("female-" + i, false, -1));
+				vessel.addCivilian(new CivilianKerbal("male-" + i, "Civilian", true, -1));
+				vessel.addCivilian(new CivilianKerbal("female-" + i, "Civilian", false, -1));
 			}
-            CivilianKerbal mother = new CivilianKerbal("mother", false, now);
+            CivilianKerbal mother = new CivilianKerbal("mother", "Civilian", false, now);
             vessel.addCivilian(mother);
 
             service.update(now, vessel);

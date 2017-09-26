@@ -9,3 +9,5 @@ target/
 .suo
 **/*.userprefs
 **/TestResult.xml
+.DS_Store
+**/.DS_Store

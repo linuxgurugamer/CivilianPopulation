@@ -36,6 +36,8 @@
     <Compile Include="FundsAccount.cs" />
     <Compile Include="CivilianPopulationContractorServiceShould.cs" />
     <Compile Include="CivilianPopulationRecruitmentServiceShould.cs" />
+    <Compile Include="CivilianKerbalRosterShould.cs" />
+    <Compile Include="CivilianKerbalShould.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

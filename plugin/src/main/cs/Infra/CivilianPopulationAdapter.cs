@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-
 using CivilianPopulation.Domain;
+using UnityEngine;
 
 namespace CivilianPopulation.Infra
 {
@@ -11,7 +11,92 @@ namespace CivilianPopulation.Infra
         {
         }
 
-        internal CivilianVessel asCivilianVessel(Vessel vessel)
+		/*
+[LOG 08:53:09.367] CivilianPopulationAdapter - -> asCivilianVessel(University of Duna (unloaded) (Vessel))
+[LOG 08:53:09.367] CivilianPopulationAdapter - GetName is : University of Duna
+[LOG 08:53:09.367] CivilianPopulationAdapter - GetDisplayName is : University of Duna
+[LOG 08:53:09.367] CivilianPopulationAdapter - id is : b544f275-f2de-4150-8e50-aa0eb1542973
+[LOG 08:53:09.367] CivilianPopulationAdapter - vessel has civ pop module
+[LOG 08:53:09.367] CivilianPopulationAdapter - crewJSON is : null
+[LOG 08:53:09.367] CivilianPopulationAdapter - mission is : 
+[LOG 08:53:09.367] CivilianPopulationAdapter - crewData is : 
+[LOG 08:53:09.367] CivilianPopulationAdapter - capacity is : 0
+[LOG 08:53:09.367] CivilianPopulationAdapter - GetName is : University of Duna
+[LOG 08:53:09.367] CivilianPopulationAdapter - dockCapacity is : 0
+[LOG 08:53:09.367] CivilianPopulationAdapter - LandedOrSplashed is : True
+[LOG 08:53:09.367] CivilianPopulationAdapter - LandedOrSplashed is : True
+[LOG 08:53:09.367] CivilianPopulationAdapter - vessel.mainBody.name is : Duna
+[LOG 08:53:09.367] CivilianPopulationAdapter - mission is : 
+[LOG 08:53:09.367] CivilianPopulationAdapter - crew is : System.Collections.Generic.List`1[CivilianPopulation.Domain.CivilianKerbal]
+[LOG 08:53:09.367] CivilianPopulationAdapter - <- asCivilianVessel(University of Duna (unloaded) (Vessel))
+*/
+		internal CivilianVessel asCivilianVessel(Vessel vessel)
+        {
+			//log("-> asCivilianVessel(" + vessel + ")");
+			//log("GetName is : " + vessel.GetName());
+            //log("GetDisplayName is : " + vessel.GetDisplayName());
+			//log("id is : " + vessel.id);
+			ContractorMission mission = null;
+            List<CivilianKerbal> crew = new List<CivilianKerbal>();
+            int capacity = 0;
+			int dockCapacity = 0;
+
+			foreach (VesselModule module in vessel.vesselModules)
+            {
+				if (module.GetType() == typeof(CivilianPopulationVesselModule))
+                {
+					//log("vessel has civ pop module");
+					CivilianPopulationVesselModule civModule = (CivilianPopulationVesselModule)module;
+
+                    CivilianKerbalRoster roster = new CivilianKerbalRoster(civModule.crewJSON);
+                    mission = civModule.getMission();
+					//log("mission is : " + mission);
+					//log("crewData is : " + crewData);
+                    if (roster.count() > 0)
+                    {
+						foreach (CivilianKerbal kerbal in roster.list())
+                        {
+							//log("kerbal is : " + kerbal);
+							crew.Add(kerbal);
+                        }
+                        capacity = civModule.capacity - crew.Count;
+                    }
+					//log("capacity is : " + capacity);
+					if (civModule.dockActivated)
+                    {
+						//log("capacity is : " + capacity);
+						dockCapacity = capacity;
+                    }
+				}
+			}
+
+			//log("GetName is : " + vessel.GetName());
+			//log("dockCapacity is : " + dockCapacity);
+			//log("LandedOrSplashed is : " + vessel.LandedOrSplashed);
+			//log("LandedOrSplashed is : " + vessel.LandedOrSplashed);
+			//log("vessel.mainBody.name is : " + vessel.mainBody.name);
+			//log("mission is : " + mission);
+			//log("crew is : " + crew);
+
+			CivilianVesselBuilder builder = new CivilianVesselBuilder();
+			builder.named(vessel.GetName())
+				   .withADockCapacityOf(dockCapacity)
+				   .inOrbit(!vessel.LandedOrSplashed)
+				   .on(new Domain.CelestialBody(vessel.mainBody.name, getBodyType(vessel.mainBody)))
+				   .targetedBy(mission);
+			CivilianVessel civVessel = builder.build();
+            foreach (CivilianKerbal kerbal in crew)
+            {
+                if (kerbal.getTrait() == "Civilian")
+                {
+                    civVessel.addCivilian(kerbal);
+                }
+			}
+			//log("<- asCivilianVessel(" + vessel + ")");
+            return civVessel;
+		}
+		/*
+        internal CivilianVessel asCivilianVesselOld(Vessel vessel)
         {
             List<CivilianKerbal> civilians = new List<CivilianKerbal>();
 			foreach (ProtoCrewMember crew in vessel.GetVesselCrew())
@@ -79,7 +164,6 @@ namespace CivilianPopulation.Infra
                     }
                 }
             }
-
 			CivilianVesselBuilder builder = new CivilianVesselBuilder();
 			builder.named(vessel.GetName())
 				   .withADockCapacityOf(dockCapacity)
@@ -93,6 +177,7 @@ namespace CivilianPopulation.Infra
             }
             return civVessel;
 		}
+*/
 
 		private CivilianPopulation.Domain.CelestialBodyType getBodyType(CelestialBody body)
 		{
@@ -138,5 +223,9 @@ namespace CivilianPopulation.Infra
 			return res;
 		}
 
+		private void log(string message)
+		{
+			Debug.Log(this.GetType().Name + " - " + message);
+		}
 	}
 }

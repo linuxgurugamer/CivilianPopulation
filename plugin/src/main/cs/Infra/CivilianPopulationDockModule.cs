@@ -20,18 +20,8 @@ namespace CivilianPopulation.Infra
 
         public void FixedUpdate()
         {
-            if (vessel != null)
-            {
-                foreach (VesselModule module in vessel.vesselModules)
-                {
-                    if (module.GetType() == typeof(CivilianPopulationContractorVesselModule))
-                    {
-                        CivilianPopulationContractorVesselModule civPopModule = (CivilianPopulationContractorVesselModule)module;
-                        civPopModule.updateCapacity();
-                    }
-                }
-            }
-        }
+			// log(" - FixedUpdate !");
+		}
 
         [KSPEvent(guiName = "Activate", active = true, guiActive = true)]
         public void activate()

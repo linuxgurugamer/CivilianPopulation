@@ -3,10 +3,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{7F6B09DD-B91B-4C5C-83E8-FFECDBCF9AC0}</ProjectGuid>
+    <ProjectGuid>{4AB19D88-1F3C-4059-9F93-C13128962464}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>Console</RootNamespace>
-    <AssemblyName>Console</AssemblyName>
+    <RootNamespace>InfraConsole</RootNamespace>
+    <AssemblyName>InfraConsole</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -30,11 +30,11 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CivilianPopulationGrowthSimulator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="CivilianPopulationGrowthSimulator.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\src\main\cs\Domain\Domain.csproj">
+    <ProjectReference Include="..\..\..\main\cs\Domain\Domain.csproj">
       <Project>{4F8C87CF-564B-4543-9FC4-CF03237D6466}</Project>
       <Name>Domain</Name>
     </ProjectReference>

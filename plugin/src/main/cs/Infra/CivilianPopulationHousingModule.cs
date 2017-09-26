@@ -15,17 +15,7 @@ namespace CivilianPopulation.Infra
 
 		public void FixedUpdate()
 		{
-			if (vessel != null)
-			{
-				foreach (VesselModule module in vessel.vesselModules)
-				{
-					if (module.GetType() == typeof(CivilianPopulationGrowthVesselModule))
-					{
-						CivilianPopulationGrowthVesselModule civPopModule = (CivilianPopulationGrowthVesselModule)module;
-						civPopModule.updateCapacity();
-					}
-				}
-			}
+			// log(" - FixedUpdate !");
 		}
 	}
 }

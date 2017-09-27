@@ -15,8 +15,9 @@ namespace CivilianPopulation.Infra
 
         public void Update()
         {
-            // log(" - Update !");
-        }
+			Events["activate"].active = !activated;
+			Events["deactivate"].active = activated;
+		}
 
         public void FixedUpdate()
         {
@@ -27,15 +28,15 @@ namespace CivilianPopulation.Infra
         public void activate()
         {
             this.activated = true;
-        }
+		}
 
-        [KSPEvent(guiName = "Deactivate", active = true, guiActive = true)]
+        [KSPEvent(guiName = "Deactivate", active = false, guiActive = true)]
         public void deactivate()
         {
             this.activated = false;
         }
 
-        public bool isActivated() 
+		public bool isActivated() 
         {
             return this.activated;
         }

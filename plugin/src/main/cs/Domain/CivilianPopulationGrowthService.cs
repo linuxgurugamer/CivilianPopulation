@@ -47,7 +47,7 @@ namespace CivilianPopulation.Domain
             // make couples
             IEnumerable<CivilianKerbalCouple> couples = makeCouples(males, females);
             // change females state
-            turnPregnantSomeFemales(currentDate, couples);
+            turnPregnantSomeFemales(currentDate, couples, vessel.isBreedingAllowed());
             // birth
             birthOfNewCivilans(currentDate, females);
         }
@@ -89,18 +89,22 @@ namespace CivilianPopulation.Domain
         }
 
         protected virtual void turnPregnantSomeFemales(
-            double now, 
-            IEnumerable<CivilianKerbalCouple> couples)
-        {
-            foreach (CivilianKerbalCouple couple in couples)
+            double now,
+    		IEnumerable<CivilianKerbalCouple> couples,
+    		bool breedingAllowed)
+		{
+            if (breedingAllowed)
             {
-                CivilianKerbal female = couple.getFemale();
-                if (female.getExpectingBirthAt() < 0)
+                foreach (CivilianKerbalCouple couple in couples)
                 {
-                    if (rng.Next() % CHANCE_OF_PREGNANCY == 0)
+                    CivilianKerbal female = couple.getFemale();
+                    if (female.getExpectingBirthAt() < 0)
                     {
-                        this.setPregnant(female, now + PREGNANCY_DURATION_IN_DAYS * DAY_IN_SECONDS);
-                    }    
+                        if (rng.Next() % CHANCE_OF_PREGNANCY == 0)
+                        {
+                            this.setPregnant(female, now + PREGNANCY_DURATION_IN_DAYS * DAY_IN_SECONDS);
+                        }
+                    }
                 }
             }
         }

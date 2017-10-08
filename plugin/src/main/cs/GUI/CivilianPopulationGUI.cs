@@ -74,7 +74,7 @@ namespace CivilianPopulation.GUI
 
 			foreach (CivilianVessel vessel in vessels)
 			{
-                if (vessel.getCivilianCount() > 0 || vessel.getDocksCapacity() > 0)
+                if (vessel.getCivilianCount() > 0 || vessel.getHousingCapacity() > 0)
                 {
 					GUILayout.BeginHorizontal();
 					GUILayout.Label(getVesselStatus(vessel));
@@ -87,7 +87,7 @@ namespace CivilianPopulation.GUI
 					GUILayout.EndHorizontal();
 
 					GUILayout.BeginHorizontal();
-					GUILayout.Label("  Docks capacity : " + vessel.getDocksCapacity());
+					GUILayout.Label("  Housing capacity : " + vessel.getHousingCapacity());
 					GUILayout.EndHorizontal();
 
                     if (vessel.getMission() != null)

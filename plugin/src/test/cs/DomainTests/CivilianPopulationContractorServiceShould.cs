@@ -30,7 +30,10 @@ namespace CivilianPopulation.Domain
             mission = null;
             delivered = 0;
 
-            builder = new CivilianVesselBuilder().withADockCapacityOf(4).inOrbit(true);
+            builder = new CivilianVesselBuilder()
+                .withAHousingCapacityOf(4)
+                .inOrbit(true)
+                .allowingDocking(true);
 			service = new CivilianPopulationContractorService(setMission, addCivilian);
 		}
 
@@ -126,10 +129,14 @@ namespace CivilianPopulation.Domain
 		public void cancel_civilian_delivery_mission_if_docks_are_full()
 		{
 			mission = new ContractorMission(DAY_IN_SECONDS * 12, CelestialBodyType.HOMEWORLD);
-            builder.targetedBy(mission)
-                   .withADockCapacityOf(0);
+            builder.targetedBy(mission);
+            CivilianVessel vessel = builder.build();
+			vessel.addCivilian(new CivilianKerbal("Kerbal 1", "Civilian", true, -1));
+			vessel.addCivilian(new CivilianKerbal("Kerbal 2", "Civilian", true, -1));
+			vessel.addCivilian(new CivilianKerbal("Kerbal 3", "Civilian", true, -1));
+			vessel.addCivilian(new CivilianKerbal("Kerbal 4", "Civilian", true, -1));
 
-			service.update(currentDate, builder.build());
+            service.update(currentDate, vessel);
 
 			Assert.Null(mission);
 		}
@@ -147,7 +154,30 @@ namespace CivilianPopulation.Domain
             Assert.AreEqual(1, delivered);
 		}
 
-        private void setMission(ContractorMission newMission)
+		[Test()]
+		public void cancel_civilian_delivery_mission_if_vessel_is_not_allowing_docking()
+		{
+			mission = new ContractorMission(DAY_IN_SECONDS * 30, CelestialBodyType.HOMEWORLD);
+            builder.allowingDocking(false)
+				   .targetedBy(mission);
+
+			service.update(currentDate, builder.build());
+
+			Assert.Null(mission);
+		}
+
+		[Test()]
+		public void not_launch_civilian_delivery_mission_if_vessel_is_not_allowing_docking()
+		{
+            builder.allowingDocking(false);
+
+            service.update(currentDate, builder.build());
+
+			Assert.Null(mission);
+		}
+
+
+		private void setMission(ContractorMission newMission)
 		{
             this.mission = newMission;
 		}

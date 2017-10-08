@@ -8,14 +8,18 @@ namespace CivilianPopulation.Domain
     {
         private readonly string name;
 		private readonly List<CivilianKerbal> civilians;
-		private readonly int docksCapacity;
+		private readonly int housingCapacity;
+		private readonly bool dockingAllowed;
+		private readonly bool breedingAllowed;
 		private readonly bool orbiting;
 		private readonly CelestialBody body;
 		private readonly ContractorMission missionInProgress;
 
 		public CivilianVessel(
-            string name, 
-            int docksCapacity,
+            string name,
+			int housingCapacity,
+			bool dockingAllowed,
+			bool breedingAllowed,
             bool orbiting,
             CelestialBody body,
             ContractorMission missionInProgress
@@ -23,7 +27,9 @@ namespace CivilianPopulation.Domain
         {
 			this.name = name;
             this.civilians = new List<CivilianKerbal>();
-			this.docksCapacity = docksCapacity;
+			this.housingCapacity = housingCapacity;
+			this.dockingAllowed = dockingAllowed;
+			this.breedingAllowed = breedingAllowed;
 			this.orbiting = orbiting;
 			this.body = body;
 			this.missionInProgress = missionInProgress;
@@ -38,10 +44,18 @@ namespace CivilianPopulation.Domain
 		{
             return this.civilians.Count();
 		}
-        public int getDocksCapacity()
-        {
-            return docksCapacity;
-        }
+		public int getHousingCapacity()
+		{
+			return housingCapacity;
+		}
+		public bool isDockingAllowed()
+		{
+			return dockingAllowed;
+		}
+		public bool isBreedingAllowed()
+		{
+			return breedingAllowed;
+		}
 		public bool isOrbiting()
 		{
 			return this.orbiting;

@@ -21,7 +21,8 @@ namespace CivilianPopulation.Domain
 		{
             if (vessel.isOrbiting() 
                 && vessel.getBody().getType() != CelestialBodyType.OTHERS
-                && vessel.getDocksCapacity() > 0)
+                && vessel.isDockingAllowed()
+                && vessel.getHousingCapacity() > vessel.getCivilianCount())
             {
                 if (vessel.getMission() == null)
                 {

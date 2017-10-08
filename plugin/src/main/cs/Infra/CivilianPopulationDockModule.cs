@@ -24,13 +24,13 @@ namespace CivilianPopulation.Infra
 			// log(" - FixedUpdate !");
 		}
 
-        [KSPEvent(guiName = "Activate", active = true, guiActive = true)]
+        [KSPEvent(guiName = "Allow contractors", active = true, guiActive = true)]
         public void activate()
         {
             this.activated = true;
 		}
 
-        [KSPEvent(guiName = "Deactivate", active = false, guiActive = true)]
+        [KSPEvent(guiName = "Refuse contractors", active = false, guiActive = true)]
         public void deactivate()
         {
             this.activated = false;

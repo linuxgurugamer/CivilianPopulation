@@ -38,34 +38,31 @@ namespace CivilianPopulation.Infra
 			//log("id is : " + vessel.id);
 			ContractorMission mission = null;
             List<CivilianKerbal> crew = new List<CivilianKerbal>();
-            int capacity = 0;
-			int dockCapacity = 0;
-
+			int capacity = 0;
+            bool allowDocking = false;
+            bool allowBreeding = false;
 			foreach (VesselModule module in vessel.vesselModules)
             {
 				if (module.GetType() == typeof(CivilianPopulationVesselModule))
                 {
 					//log("vessel has civ pop module");
 					CivilianPopulationVesselModule civModule = (CivilianPopulationVesselModule)module;
-
-                    CivilianKerbalRoster roster = new CivilianKerbalRoster(civModule.crewJSON);
+					capacity = civModule.capacity;
                     mission = civModule.getMission();
+
+                    allowDocking = civModule.isAllowDocking();
+                    allowBreeding = civModule.isAllowBreeding();
+
 					//log("mission is : " + mission);
+					CivilianKerbalRoster roster = new CivilianKerbalRoster(civModule.crewJSON);
 					//log("crewData is : " + crewData);
-                    if (roster.count() > 0)
+					if (roster.count() > 0)
                     {
 						foreach (CivilianKerbal kerbal in roster.list())
                         {
 							//log("kerbal is : " + kerbal);
 							crew.Add(kerbal);
                         }
-                        capacity = civModule.capacity - crew.Count;
-                    }
-					//log("capacity is : " + capacity);
-					if (civModule.dockActivated)
-                    {
-						//log("capacity is : " + capacity);
-						dockCapacity = capacity;
                     }
 				}
 			}
@@ -80,7 +77,9 @@ namespace CivilianPopulation.Infra
 
 			CivilianVesselBuilder builder = new CivilianVesselBuilder();
 			builder.named(vessel.GetName())
-				   .withADockCapacityOf(dockCapacity)
+                   .withAHousingCapacityOf(capacity)
+                   .allowingDocking(allowDocking)
+                   .allowingBreeding(allowBreeding)
 				   .inOrbit(!vessel.LandedOrSplashed)
 				   .on(new Domain.CelestialBody(vessel.mainBody.name, getBodyType(vessel.mainBody)))
 				   .targetedBy(mission);

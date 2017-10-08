@@ -4,16 +4,20 @@ namespace CivilianPopulation.Domain
     public class CivilianVesselBuilder
     {
 		private string name = "unknown";
-		private int docksCapacity = 0;
-        private bool orbiting = false;
-        private CelestialBody body = new CelestialBody("Kerbin", CelestialBodyType.HOMEWORLD);
+		private int housingCapacity = 0;
+		private bool dockingAllowed = false;
+		private bool breedingAllowed = false;
+		private bool orbiting = false;
+		private CelestialBody body = new CelestialBody("Kerbin", CelestialBodyType.HOMEWORLD);
 		private ContractorMission missionInProgress = null;
-		
-        public CivilianVessel build()
+
+		public CivilianVessel build()
         {
             return new CivilianVessel(
                 name,
-                docksCapacity,
+                housingCapacity,
+                dockingAllowed,
+                breedingAllowed,
                 orbiting,
                 body,
                 missionInProgress
@@ -26,9 +30,21 @@ namespace CivilianPopulation.Domain
             return this;
         }
 
-		public CivilianVesselBuilder withADockCapacityOf(int number)
+		public CivilianVesselBuilder withAHousingCapacityOf(int number)
 		{
-			this.docksCapacity = number;
+			this.housingCapacity = number;
+			return this;
+		}
+
+		public CivilianVesselBuilder allowingDocking(bool allow)
+		{
+			this.dockingAllowed = allow;
+			return this;
+		}
+
+		public CivilianVesselBuilder allowingBreeding(bool allow)
+		{
+			this.breedingAllowed = allow;
 			return this;
 		}
 

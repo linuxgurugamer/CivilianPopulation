@@ -16,7 +16,9 @@ namespace CivilianPopulation.Infra
 		public int capacity;
 
 		[KSPField(isPersistant = true, guiActive = false)]
-        public bool dockActivated;
+		public bool allowDocking;
+		[KSPField(isPersistant = true, guiActive = false)]
+		public bool allowBreeding;
 		[KSPField(isPersistant = true, guiActive = false)]
 		public string missionEndDate;
 		[KSPField(isPersistant = true, guiActive = false)]
@@ -63,7 +65,8 @@ namespace CivilianPopulation.Infra
                 createNewKSPCrewMembersFromCrewData();
                 cleanUpCrewDataToMatchKSPCrew();
                 this.capacity = updateVesselCapacity();
-                this.dockActivated = updateDockStatus();
+				this.allowDocking = updateDockingStatus();
+				this.allowDocking = updateBreedingStatus();
 			}
 
             growth.update(Planetarium.GetUniversalTime(), adapter.asCivilianVessel(vessel));
@@ -91,6 +94,16 @@ namespace CivilianPopulation.Infra
 				}
 			}
 			return mission;
+		}
+
+		public bool isAllowDocking()
+		{
+			return allowDocking;
+		}
+
+		public bool isAllowBreeding()
+		{
+			return allowBreeding;
 		}
 
 		private void addAllKSPCrewToCrewData()
@@ -158,7 +171,7 @@ namespace CivilianPopulation.Infra
             return res;
 		}
 
-        private bool updateDockStatus()
+        private bool updateDockingStatus()
         {
             bool res = false;
             List<CivilianPopulationDockModule> docks = FlightGlobals.ActiveVessel.FindPartModulesImplementing<CivilianPopulationDockModule>();
@@ -172,6 +185,22 @@ namespace CivilianPopulation.Infra
             }
             return res;
 		}
+
+        private bool updateBreedingStatus()
+        {
+			bool res = false;
+			List<CivilianPopulationHousingModule> houses = FlightGlobals.ActiveVessel.FindPartModulesImplementing<CivilianPopulationHousingModule>();
+			foreach (CivilianPopulationHousingModule house in houses)
+			{
+				if (house.isActivated())
+				{
+					res = true;
+					break;
+				}
+			}
+			return res;
+		}
+
 
 		private ProtoCrewMember createNewCrewMember(string kerbalName, string kerbalTraitName, bool male)
 		{

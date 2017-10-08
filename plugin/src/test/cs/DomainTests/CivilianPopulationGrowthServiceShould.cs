@@ -79,11 +79,11 @@ namespace CivilianPopulation.Domain
 			List<CivilianKerbal> females = new List<CivilianKerbal>();
 			for (int i = 0; i < 50; i++)
 			{
-				males.Add(new CivilianKerbal("male-"+i, "Civilian", true, -1));
-				females.Add(new CivilianKerbal("female-"+i, "Civilian", false, -1));
+				males.Add(new CivilianKerbal("male-" + i, "Civilian", true, -1));
+				females.Add(new CivilianKerbal("female-" + i, "Civilian", false, -1));
 			}
 			IEnumerable<CivilianKerbalCouple> couples = service.testMakeCouples(males, females);
-            Assert.AreEqual(14, couples.Count());
+			Assert.AreEqual(14, couples.Count());
 		}
 
 		[Test()]
@@ -94,7 +94,7 @@ namespace CivilianPopulation.Domain
 
 			CivilianPopulationGrowthTestService service = new CivilianPopulationGrowthTestService(setPregnant, birth);
 			IEnumerable<CivilianKerbalCouple> couples = service.testMakeCouples(males, females);
-			service.testTurnPregnantSomeFemales(0, couples);
+			service.testTurnPregnantSomeFemales(0, couples, true);
 			Assert.AreEqual(0, females.Where(female => female.getExpectingBirthAt() > 0).Count());
 		}
 
@@ -110,11 +110,27 @@ namespace CivilianPopulation.Domain
 				females.Add(new CivilianKerbal("female-" + i, "Civilian", false, -1));
 			}
 			IEnumerable<CivilianKerbalCouple> couples = service.testMakeCouples(males, females);
-			service.testTurnPregnantSomeFemales(0, couples);
+			service.testTurnPregnantSomeFemales(0, couples, true);
 			Assert.AreEqual(3, females.Where(female => female.getExpectingBirthAt() > 0).Count());
 		}
 
-        [Test()]
+		[Test()]
+		public void turn_pregnant_some_female_when_breeding_is_not_allowed()
+		{
+			CivilianPopulationGrowthTestService service = new CivilianPopulationGrowthTestService(setPregnant, birth);
+			List<CivilianKerbal> males = new List<CivilianKerbal>();
+			List<CivilianKerbal> females = new List<CivilianKerbal>();
+			for (int i = 0; i < 50; i++)
+			{
+				males.Add(new CivilianKerbal("male-" + i, "Civilian", true, -1));
+				females.Add(new CivilianKerbal("female-" + i, "Civilian", false, -1));
+			}
+			IEnumerable<CivilianKerbalCouple> couples = service.testMakeCouples(males, females);
+			service.testTurnPregnantSomeFemales(0, couples, false);
+			Assert.AreEqual(0, females.Where(female => female.getExpectingBirthAt() > 0).Count());
+		}
+
+		[Test()]
         public void make_female_give_birth_after_pregnancy_duration()
         {
             double now = 1;
@@ -184,9 +200,10 @@ namespace CivilianPopulation.Domain
 		}
 
 		public void testTurnPregnantSomeFemales(double date,
-                                                IEnumerable<CivilianKerbalCouple> couples)
+                                                IEnumerable<CivilianKerbalCouple> couples,
+                                                bool breedingAllowed)
 		{
-			base.turnPregnantSomeFemales(date, couples);
+			base.turnPregnantSomeFemales(date, couples, breedingAllowed);
 		}
 
 		public void testBirthOfNewCivilans(double date,

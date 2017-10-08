@@ -24,8 +24,8 @@ namespace InfraConsole
         {
             service = new CivilianPopulationGrowthService(setPregnant, birth);
             vessel = new CivilianVesselBuilder().build();
-			vessel.addCivilian(new CivilianKerbal("male-0", "Civilian", true, -1));
-			vessel.addCivilian(new CivilianKerbal("female-0", "Civilian", false, -1));
+			vessel.addCrew(new CivilianKerbal("male-0", "Civilian", true, -1));
+			vessel.addCrew(new CivilianKerbal("female-0", "Civilian", false, -1));
 			this.rng = new System.Random();
             this.idx = 0;
 		}
@@ -40,7 +40,7 @@ namespace InfraConsole
 			mother.setExpectingBirthAt(-1);
             CivilianKerbal kerbal = new CivilianKerbal("kerbal-"+idx, "Civilian", male, -1);
             idx = idx + 1;
-            vessel.addCivilian(kerbal);
+            vessel.addCrew(kerbal);
 		}
 
 		public void run(int days)

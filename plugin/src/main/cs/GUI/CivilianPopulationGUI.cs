@@ -96,6 +96,13 @@ namespace CivilianPopulation.GUI
                         GUILayout.Label("  Mission arrival : " + formatter.format(vessel.getMission().getEndDate() - currentDate));
                         GUILayout.EndHorizontal();
                     }
+
+                    foreach (CivilianKerbal female in vessel.getFemales().Where(kerbal => kerbal.getExpectingBirthAt() > 0))
+                    {
+						GUILayout.BeginHorizontal();
+                        GUILayout.Label("  " + female.getName() + " will give birth in " + formatter.format(female.getExpectingBirthAt() - currentDate));
+						GUILayout.EndHorizontal();
+					}
                 }
 			}
 

@@ -27,19 +27,34 @@ namespace CivilianPopulation.Infra
         [KSPEvent(guiName = "Allow contractors", active = true, guiActive = true)]
         public void activate()
         {
-            this.activated = true;
+			this.getCivilianPopulationVesselModule().setAllowDocking(true);
+			this.activated = true;
 		}
 
         [KSPEvent(guiName = "Refuse contractors", active = false, guiActive = true)]
         public void deactivate()
         {
-            this.activated = false;
+            this.getCivilianPopulationVesselModule().setAllowDocking(false);
+			this.activated = false;
         }
 
 		public bool isActivated() 
         {
             return this.activated;
         }
+
+        private CivilianPopulationVesselModule getCivilianPopulationVesselModule()
+        {
+			foreach (VesselModule module in vessel.vesselModules)
+			{
+				if (module.GetType() == typeof(CivilianPopulationVesselModule))
+				{
+					CivilianPopulationVesselModule civPopModule = (CivilianPopulationVesselModule)module;
+                    return civPopModule;
+				}
+			}
+			return null;
+		}
 
         private void log(string message)
         {

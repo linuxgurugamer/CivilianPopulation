@@ -21,7 +21,8 @@ namespace CivilianPopulation.Infra
 		public bool allowBreeding;
 		[KSPField(isPersistant = true, guiActive = false)]
 		public string missionEndDate;
-		[KSPField(isPersistant = true, guiActive = false)]
+
+        [KSPField(isPersistant = true, guiActive = false)]
 		public int missionTargetType;
 
 		private CivilianPopulationGrowthService growth;
@@ -65,8 +66,6 @@ namespace CivilianPopulation.Infra
                 createNewKSPCrewMembersFromCrewData();
                 cleanUpCrewDataToMatchKSPCrew();
                 this.capacity = updateVesselCapacity();
-				this.allowDocking = updateDockingStatus();
-				this.allowDocking = updateBreedingStatus();
 			}
 
             growth.update(Planetarium.GetUniversalTime(), adapter.asCivilianVessel(vessel));
@@ -171,36 +170,25 @@ namespace CivilianPopulation.Infra
             return res;
 		}
 
-        private bool updateDockingStatus()
-        {
-            bool res = false;
-            List<CivilianPopulationDockModule> docks = FlightGlobals.ActiveVessel.FindPartModulesImplementing<CivilianPopulationDockModule>();
-            foreach(CivilianPopulationDockModule dock in docks)
-            {
-                if (dock.isActivated())
-                {
-                    res = true;
-                    break;
-                }
-            }
-            return res;
+		public void setAllowDocking(bool allow)
+		{
+			this.allowDocking = allow;
+			List<CivilianPopulationDockModule> docks = FlightGlobals.ActiveVessel.FindPartModulesImplementing<CivilianPopulationDockModule>();
+			foreach (CivilianPopulationDockModule dock in docks)
+			{
+				dock.activated = allow;
+			}
 		}
 
-        private bool updateBreedingStatus()
-        {
-			bool res = false;
+		public void setAllowBreeding(bool allow)
+		{
+			this.allowBreeding = allow;
 			List<CivilianPopulationHousingModule> houses = FlightGlobals.ActiveVessel.FindPartModulesImplementing<CivilianPopulationHousingModule>();
 			foreach (CivilianPopulationHousingModule house in houses)
 			{
-				if (house.isActivated())
-				{
-					res = true;
-					break;
-				}
+				house.activated = allow;
 			}
-			return res;
 		}
-
 
 		private ProtoCrewMember createNewCrewMember(string kerbalName, string kerbalTraitName, bool male)
 		{

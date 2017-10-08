@@ -7,7 +7,7 @@ namespace CivilianPopulation.Domain
     public class CivilianVessel
     {
         private readonly string name;
-		private readonly List<CivilianKerbal> civilians;
+		private readonly List<CivilianKerbal> crew;
 		private readonly int housingCapacity;
 		private readonly bool dockingAllowed;
 		private readonly bool breedingAllowed;
@@ -26,7 +26,7 @@ namespace CivilianPopulation.Domain
         )
         {
 			this.name = name;
-            this.civilians = new List<CivilianKerbal>();
+            this.crew = new List<CivilianKerbal>();
 			this.housingCapacity = housingCapacity;
 			this.dockingAllowed = dockingAllowed;
 			this.breedingAllowed = breedingAllowed;
@@ -42,7 +42,7 @@ namespace CivilianPopulation.Domain
 
         public int getCivilianCount()
 		{
-            return this.civilians.Count();
+            return this.crew.Count();
 		}
 		public int getHousingCapacity()
 		{
@@ -69,15 +69,15 @@ namespace CivilianPopulation.Domain
 			return this.missionInProgress;
 		}
 
-		public void addCivilian(CivilianKerbal kerbal)
+		public void addCrew(CivilianKerbal kerbal)
 		{
-            this.civilians.Add((kerbal));
+            this.crew.Add((kerbal));
 		}
 
         public IEnumerable<CivilianKerbal> getMales()
 		{
             List<CivilianKerbal> res = new List<CivilianKerbal>();
-            foreach(CivilianKerbal kerbal in this.civilians.Where(kerbal => kerbal.isMale()))
+            foreach(CivilianKerbal kerbal in this.crew.Where(kerbal => kerbal.isMale()))
             {
                 res.Add(kerbal);
             }
@@ -87,7 +87,7 @@ namespace CivilianPopulation.Domain
 		public IEnumerable<CivilianKerbal> getFemales()
 		{
 			List<CivilianKerbal> res = new List<CivilianKerbal>();
-			foreach (CivilianKerbal kerbal in this.civilians.Where(kerbal => !kerbal.isMale()))
+			foreach (CivilianKerbal kerbal in this.crew.Where(kerbal => !kerbal.isMale()))
 			{
 				res.Add(kerbal);
 			}

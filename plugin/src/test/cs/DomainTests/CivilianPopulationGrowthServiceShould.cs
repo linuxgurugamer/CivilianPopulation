@@ -138,11 +138,11 @@ namespace CivilianPopulation.Domain
             CivilianVessel vessel = new CivilianVesselBuilder().build();
 			for (int i = 0; i < 50; i++)
 			{
-				vessel.addCivilian(new CivilianKerbal("male-" + i, "Civilian", true, -1));
-				vessel.addCivilian(new CivilianKerbal("female-" + i, "Civilian", false, -1));
+				vessel.addCrew(new CivilianKerbal("male-" + i, "Civilian", true, -1));
+				vessel.addCrew(new CivilianKerbal("female-" + i, "Civilian", false, -1));
 			}
             CivilianKerbal mother = new CivilianKerbal("mother", "Civilian", false, now);
-            vessel.addCivilian(mother);
+            vessel.addCrew(mother);
 
             service.update(now, vessel);
 			now = now + DAY_IN_SECONDS;

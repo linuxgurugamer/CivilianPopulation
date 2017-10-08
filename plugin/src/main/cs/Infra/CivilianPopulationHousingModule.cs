@@ -27,18 +27,33 @@ namespace CivilianPopulation.Infra
 		[KSPEvent(guiName = "Allow breeding", active = true, guiActive = true)]
 		public void activate()
 		{
+			this.getCivilianPopulationVesselModule().setAllowBreeding(true);
 			this.activated = true;
 		}
 
 		[KSPEvent(guiName = "Forbid breeding", active = false, guiActive = true)]
 		public void deactivate()
 		{
+            this.getCivilianPopulationVesselModule().setAllowBreeding(false);
 			this.activated = false;
 		}
 
 		public bool isActivated()
 		{
 			return this.activated;
+		}
+
+		private CivilianPopulationVesselModule getCivilianPopulationVesselModule()
+		{
+			foreach (VesselModule module in vessel.vesselModules)
+			{
+				if (module.GetType() == typeof(CivilianPopulationVesselModule))
+				{
+					CivilianPopulationVesselModule civPopModule = (CivilianPopulationVesselModule)module;
+					return civPopModule;
+				}
+			}
+            return null;
 		}
 
 		private void log(string message)

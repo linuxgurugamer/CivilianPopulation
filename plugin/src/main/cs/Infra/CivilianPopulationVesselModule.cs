@@ -11,8 +11,6 @@ namespace CivilianPopulation.Infra
 		[KSPField(isPersistant = true, guiActive = false)]
 		public string crewJSON;
 		[KSPField(isPersistant = true, guiActive = false)]
-		public string stringField;
-		[KSPField(isPersistant = true, guiActive = false)]
 		public int capacity;
 
 		[KSPField(isPersistant = true, guiActive = false)]

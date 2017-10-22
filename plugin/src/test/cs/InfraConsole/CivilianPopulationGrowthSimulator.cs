@@ -53,7 +53,7 @@ namespace InfraConsole
                 service.update(now, vessel);
                 Console.WriteLine(
                     today 
-                    + "\t" + vessel.getCivilianCount()
+                    + "\t" + vessel.getCrewCount()
 					+ "\t" + vessel.getMales().Count()
 					+ "\t" + vessel.getFemales().Count()
 					+ "\t" + vessel.getFemales().Where(kerbal => kerbal.getExpectingBirthAt() > 0).Count()

@@ -74,7 +74,7 @@ namespace CivilianPopulation.GUI
 
 			foreach (CivilianVessel vessel in vessels)
 			{
-                if (vessel.getCivilianCount() > 0 || vessel.getHousingCapacity() > 0)
+                if (vessel.getCrewCount() > 0 || vessel.getHousingCapacity() > 0)
                 {
 					GUILayout.BeginHorizontal();
 					GUILayout.Label(getVesselStatus(vessel));
@@ -107,7 +107,17 @@ namespace CivilianPopulation.GUI
 			}
 
 			GUILayout.BeginHorizontal();
-			if (GUILayout.Button("Close", GUILayout.Width(200f)))
+            /** CHEATS **
+            if (GUILayout.Button("Funds", GUILayout.Width(100f)))
+            {
+                Funding.Instance.AddFunds(100000, TransactionReasons.Cheating);
+            }
+            if (GUILayout.Button("Science", GUILayout.Width(100f)))
+            {
+                ResearchAndDevelopment.Instance.AddScience(100, TransactionReasons.Cheating);
+            }
+            /** CHEATS **/
+            if (GUILayout.Button("Close", GUILayout.Width(100f)))
 			{
 				windowShown = false;
 			}

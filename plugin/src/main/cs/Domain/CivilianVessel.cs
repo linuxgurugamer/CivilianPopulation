@@ -39,8 +39,11 @@ namespace CivilianPopulation.Domain
 		{
 			return name;
 		}
-
         public int getCivilianCount()
+        {
+            return this.crew.FindAll(k => k.getTrait() == "Civilian").Count();
+        }
+        public int getCrewCount()
 		{
             return this.crew.Count();
 		}

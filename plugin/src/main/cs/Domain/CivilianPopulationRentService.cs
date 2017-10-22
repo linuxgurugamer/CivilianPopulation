@@ -34,7 +34,7 @@ namespace CivilianPopulation.Domain
 			int res = 0;
 			foreach (CivilianVessel vessel in vessels)
 			{
-				res += vessel.getCivilianCount();
+                res += vessel.getCivilianCount();
 			}
 			return res;
 		}

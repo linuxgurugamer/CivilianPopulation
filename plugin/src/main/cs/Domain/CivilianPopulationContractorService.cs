@@ -22,7 +22,7 @@ namespace CivilianPopulation.Domain
             if (vessel.isOrbiting() 
                 && vessel.getBody().getType() != CelestialBodyType.OTHERS
                 && vessel.isDockingAllowed()
-                && vessel.getHousingCapacity() > vessel.getCivilianCount())
+                && vessel.getHousingCapacity() > vessel.getCrewCount())
             {
                 if (vessel.getMission() == null)
                 {

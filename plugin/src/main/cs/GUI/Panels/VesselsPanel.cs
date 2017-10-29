@@ -13,12 +13,19 @@ namespace CivilianPopulation.GUI
         private double currentDate;
         private List<CivilianVessel> vessels;
 
-        public VesselsPanel(double currentDate, List<CivilianVessel> vessels)
+        public VesselsPanel()
+        {
+            this.formatter = new TimeFormatter();
+        }
+
+        public void setVessels(List<CivilianVessel> vessels)
+        {
+            this.vessels = vessels;
+        }
+
+        public void setCurrentDate(double currentDate)
         {
             this.currentDate = currentDate;
-            this.vessels = vessels;
-
-            this.formatter = new TimeFormatter();
         }
 
         public void draw()

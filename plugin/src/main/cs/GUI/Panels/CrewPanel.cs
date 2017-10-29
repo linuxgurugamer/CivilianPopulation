@@ -1,19 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace CivilianPopulation.GUI
 {
     public class CrewPanel
     {
+        private Grid grid;
+
         public CrewPanel()
         {
-        }
-
-        public void draw()
-        {
-            GUILayout.BeginVertical();
-            GUILayout.Label("Crew window.");
-
             string[] headers = {
                 "Name",
                 "Trait",
@@ -22,6 +18,21 @@ namespace CivilianPopulation.GUI
                 "Age",
                 "Childbirth"
             };
+            grid = new Grid();
+            grid.setHeaders(headers);
+
+        }
+
+        public void draw()
+        {
+            Dictionary<string, string> crewVessels = new Dictionary<string, string>();
+            foreach (Vessel vessel in FlightGlobals.Vessels)
+            {
+                foreach (ProtoCrewMember crew in vessel.GetVesselCrew())
+                {
+                    crewVessels.Add(crew.name, vessel.GetName());
+                }
+            }
 
             KerbalRoster kspRoster = HighLogic.CurrentGame.CrewRoster;
             string[,] data = new string[HighLogic.CurrentGame.CrewRoster.Count, 6];
@@ -31,15 +42,20 @@ namespace CivilianPopulation.GUI
             {
                 data[i, 0] = crew.name;
                 data[i, 1] = crew.trait;
-                data[i, 2] = "?"; // Location
+                data[i, 2] = "KSC";
+                if (crewVessels.ContainsKey(crew.name))
+                {
+                    data[i, 2] = crewVessels[crew.name];
+                }
                 data[i, 3] = crew.gender.displayDescription(); 
                 data[i, 4] = "?"; // Age
                 data[i, 5] = "?"; // Childbirth
                 i++;
             }
-            Grid grid = new Grid(headers, data);
-            grid.draw();
 
+            GUILayout.BeginVertical();
+            grid.setData(data);
+            grid.draw();
             GUILayout.EndVertical();
         }
     }

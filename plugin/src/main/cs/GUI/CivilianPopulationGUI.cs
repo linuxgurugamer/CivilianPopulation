@@ -19,10 +19,19 @@ namespace CivilianPopulation.GUI
         private double currentDate;
 		private List<CivilianVessel> vessels;
 
+        CheatPanel cheatPanel = new CheatPanel();
+        CrewPanel crewPanel = new CrewPanel();
+        VesselsPanel vesselsPanel = new VesselsPanel();
+
+
 		public CivilianPopulationGUI()
         {
 			GameEvents.onGUIApplicationLauncherReady.Add(onAppLauncherReady);//when AppLauncher can take apps, give it OnAppLauncherReady (mine)
 			GameEvents.onGUIApplicationLauncherDestroyed.Add(onAppLauncherDestroyed);//Not sure what this does
+
+            cheatPanel = new CheatPanel();
+            crewPanel = new CrewPanel();
+            vesselsPanel = new VesselsPanel();
 		}
 
         public void update(double currentDate, List<CivilianVessel> vessels)
@@ -93,18 +102,17 @@ namespace CivilianPopulation.GUI
 
             if (window == CivilianPopulationWindow.CHEAT)
             {
-                CheatPanel panel = new CheatPanel();
-                panel.draw();
+                cheatPanel.draw();
             }
             if (window == CivilianPopulationWindow.CREW)
             {
-                CrewPanel panel = new CrewPanel();
-                panel.draw();
+                crewPanel.draw();
             }
             if (window == CivilianPopulationWindow.VESSELS)
             {
-                VesselsPanel panel = new VesselsPanel(currentDate, vessels);
-                panel.draw();
+                vesselsPanel.setCurrentDate(currentDate);
+                vesselsPanel.setVessels(vessels);
+                vesselsPanel.draw();
             }
 
             GUILayout.EndScrollView();

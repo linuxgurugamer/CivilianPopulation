@@ -72,12 +72,21 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="CivilianPopulationGUI.cs" />
     <Compile Include="TimeFormatter.cs" />
+    <Compile Include="CivilianPopulationWindow.cs" />
+    <Compile Include="Panels\CheatPanel.cs" />
+    <Compile Include="Panels\CrewPanel.cs" />
+    <Compile Include="Panels\VesselsPanel.cs" />
+    <Compile Include="Components\Grid.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Domain\Domain.csproj">
       <Project>{4F8C87CF-564B-4543-9FC4-CF03237D6466}</Project>
       <Name>Domain</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Panels\" />
+    <Folder Include="Components\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

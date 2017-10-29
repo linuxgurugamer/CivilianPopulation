@@ -22,7 +22,7 @@ namespace CivilianPopulation.Infra
 		}
 
 
-		public void FixedUpdate()
+        public override void FixedUpdate()
 		{
 			if (!HighLogic.LoadedSceneIsFlight)
 				return;
@@ -103,7 +103,7 @@ namespace CivilianPopulation.Infra
 							recruitmentRateModifier = 0.5;//case for moon in orbit aroudn Kerbin/home world
 						}
 					}
-					catch (NullReferenceException error)
+					catch (NullReferenceException)
 					{//case for if in orbit around home body's star
 					 //Debug.Log (debuggingClass.modName + "Problem finding SoI body!");
 						recruitmentRateModifier = 0.0;//case for orbit around central star (which Kerbin/home world orbits)

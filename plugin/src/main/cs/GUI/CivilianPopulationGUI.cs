@@ -9,10 +9,10 @@ namespace CivilianPopulation.GUI
 {
     public class CivilianPopulationGUI
     {
-        private TimeFormatter formatter;
 
 		private ApplicationLauncherButton button = null;
 		private bool windowShown = false;
+        private CivilianPopulationWindow window = CivilianPopulationWindow.EMPTY;
 		private Rect windowPosition = new Rect(Screen.width / 2 - 250, Screen.height / 2 - 250, 500, 300);
 		private Vector2 scrollPosition;
 
@@ -21,8 +21,6 @@ namespace CivilianPopulation.GUI
 
 		public CivilianPopulationGUI()
         {
-            this.formatter = new TimeFormatter();
-
 			GameEvents.onGUIApplicationLauncherReady.Add(onAppLauncherReady);//when AppLauncher can take apps, give it OnAppLauncherReady (mine)
 			GameEvents.onGUIApplicationLauncherDestroyed.Add(onAppLauncherDestroyed);//Not sure what this does
 		}
@@ -67,89 +65,54 @@ namespace CivilianPopulation.GUI
 			windowShown = !windowShown;
 		}
 
-		private void drawWindow(int windowId)
-		{
-			GUILayout.BeginVertical();
-			scrollPosition = GUILayout.BeginScrollView(scrollPosition, GUILayout.Width(500), GUILayout.Height(300));
-
-			foreach (CivilianVessel vessel in vessels)
-			{
-                if (vessel.getCrewCount() > 0 || vessel.getHousingCapacity() > 0)
-                {
-					GUILayout.BeginHorizontal();
-					GUILayout.Label(getVesselStatus(vessel));
-					GUILayout.EndHorizontal();
-
-					GUILayout.BeginHorizontal();
-                    GUILayout.Label("M : " + vessel.getMales().Count() 
-                               + " - F : " + vessel.getFemales().Count() 
-                               + " (" + vessel.getFemales().Where(kerbal => kerbal.getExpectingBirthAt() > 0).Count()+ ")");
-					GUILayout.EndHorizontal();
-
-					GUILayout.BeginHorizontal();
-					GUILayout.Label("  Housing capacity : " + vessel.getHousingCapacity());
-					GUILayout.EndHorizontal();
-
-                    if (vessel.getMission() != null)
-                    {
-                        GUILayout.BeginHorizontal();
-                        GUILayout.Label("  Mission arrival : " + formatter.format(vessel.getMission().getEndDate() - currentDate));
-                        GUILayout.EndHorizontal();
-                    }
-
-                    foreach (CivilianKerbal female in vessel.getFemales().Where(kerbal => kerbal.getExpectingBirthAt() > 0))
-                    {
-						GUILayout.BeginHorizontal();
-                        GUILayout.Label("  " + female.getName() + " will give birth in " + formatter.format(female.getExpectingBirthAt() - currentDate));
-						GUILayout.EndHorizontal();
-					}
-                }
-			}
-
-			GUILayout.BeginHorizontal();
-            /** CHEATS **
-            if (GUILayout.Button("Funds", GUILayout.Width(100f)))
-            {
-                Funding.Instance.AddFunds(100000, TransactionReasons.Cheating);
-            }
-            if (GUILayout.Button("Science", GUILayout.Width(100f)))
-            {
-                ResearchAndDevelopment.Instance.AddScience(100, TransactionReasons.Cheating);
-            }
-            /** CHEATS **/
-            if (GUILayout.Button("Close", GUILayout.Width(100f)))
-			{
-				windowShown = false;
-			}
-			GUILayout.EndHorizontal();
-			GUILayout.EndScrollView();
-			GUILayout.EndVertical();
-			UnityEngine.GUI.DragWindow();
-		}
-
-        private string getVesselStatus(CivilianVessel vessel)
+        private void drawWindow(int windowId)
         {
-            string res = vessel.getName();
-            res += " - ";
-            if (vessel.isOrbiting())
-            {
-                res += "in orbit around ";
-            }
-            else
-            {
-                res += "on surface of ";
-            }
-            res += vessel.getBody().getName();
-			res += " - ";
-            res += vessel.getCivilianCount() + " civilian";
-            if (vessel.getCivilianCount() > 1)
-            {
-				res += "s";
-			}
-            return res;
-		}
+            GUILayout.BeginVertical();
+            scrollPosition = GUILayout.BeginScrollView(scrollPosition, GUILayout.Width(500), GUILayout.Height(300));
 
-		private void log(string message)
+            GUILayout.BeginHorizontal();
+
+            if (GUILayout.Button("x", GUILayout.Width(100f)))
+            {
+                windowShown = false;
+            }
+            /*
+            if (GUILayout.Button("Cheat", GUILayout.Width(100f)))
+            {
+                window = CivilianPopulationWindow.CHEAT;
+            }*/
+            if (GUILayout.Button("Crew", GUILayout.Width(100f)))
+            {
+                window = CivilianPopulationWindow.CREW;
+            }
+            if (GUILayout.Button("Vessels", GUILayout.Width(100f)))
+            {
+                window = CivilianPopulationWindow.VESSELS;
+            }
+            GUILayout.EndHorizontal();
+
+            if (window == CivilianPopulationWindow.CHEAT)
+            {
+                CheatPanel panel = new CheatPanel();
+                panel.draw();
+            }
+            if (window == CivilianPopulationWindow.CREW)
+            {
+                CrewPanel panel = new CrewPanel();
+                panel.draw();
+            }
+            if (window == CivilianPopulationWindow.VESSELS)
+            {
+                VesselsPanel panel = new VesselsPanel(currentDate, vessels);
+                panel.draw();
+            }
+
+            GUILayout.EndScrollView();
+            GUILayout.EndVertical();
+            UnityEngine.GUI.DragWindow();
+        }
+
+        private void log(string message)
 		{
 			Debug.Log(this.GetType().Name + message);
 		}

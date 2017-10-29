@@ -30,7 +30,7 @@ namespace CivilianPopulation.Infra
 
         private CivilianKerbalRoster roster;
 
-		public void Start()
+        new public void Start()
         {
 			if (growth == null)
 			{

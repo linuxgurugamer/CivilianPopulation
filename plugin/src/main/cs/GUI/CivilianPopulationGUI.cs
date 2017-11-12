@@ -17,7 +17,8 @@ namespace CivilianPopulation.GUI
 		private Vector2 scrollPosition;
 
         private double currentDate;
-		private List<CivilianVessel> vessels;
+        private List<CivilianVessel> vessels;
+        private CivilianKerbalRoster roster;
 
         CheatPanel cheatPanel = new CheatPanel();
         CrewPanel crewPanel = new CrewPanel();
@@ -34,12 +35,13 @@ namespace CivilianPopulation.GUI
             vesselsPanel = new VesselsPanel();
 		}
 
-        public void update(double currentDate, List<CivilianVessel> vessels)
+        public void update(double currentDate, List<CivilianVessel> vessels, CivilianKerbalRoster roster)
         {
 			if (windowShown)
 			{
                 this.currentDate = currentDate;
 				this.vessels = vessels;
+                this.roster = roster;
 				windowPosition = GUILayout.Window(0, windowPosition, drawWindow, "Civilian Population");
 			}
 		}
@@ -85,11 +87,10 @@ namespace CivilianPopulation.GUI
             {
                 windowShown = false;
             }
-            /*
             if (GUILayout.Button("Cheat", GUILayout.Width(100f)))
             {
                 window = CivilianPopulationWindow.CHEAT;
-            }*/
+            }
             if (GUILayout.Button("Crew", GUILayout.Width(100f)))
             {
                 window = CivilianPopulationWindow.CREW;
@@ -106,6 +107,8 @@ namespace CivilianPopulation.GUI
             }
             if (window == CivilianPopulationWindow.CREW)
             {
+                crewPanel.setCurrentDate(currentDate);
+                crewPanel.setRoster(roster);
                 crewPanel.draw();
             }
             if (window == CivilianPopulationWindow.VESSELS)

@@ -109,7 +109,7 @@ namespace CivilianPopulation.Infra
 			{
 				if (!roster.exists(crew.name))
 				{
-                    roster.add(new CivilianKerbal(crew.name, crew.trait, crew.gender == ProtoCrewMember.Gender.Male, -1));
+                    roster.add(new CivilianKerbal(crew.name, crew.trait, crew.gender == ProtoCrewMember.Gender.Male, Planetarium.GetUniversalTime(), -1));
 				}
 			}
 		}
@@ -231,7 +231,7 @@ namespace CivilianPopulation.Infra
                 {
                     kerbalName = CrewGenerator.GetRandomName(ProtoCrewMember.Gender.Female);
                 }
-				CivilianKerbal kerbal = new CivilianKerbal(kerbalName, "Civilian", male, -1);
+                CivilianKerbal kerbal = new CivilianKerbal(kerbalName, "Civilian", male, Planetarium.GetUniversalTime(), -1);
 				roster.add(kerbal);
 				log("addNewCivilian : " + kerbalName + " - " + male + " - " + " -1 ");
 			}

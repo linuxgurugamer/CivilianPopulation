@@ -131,10 +131,10 @@ namespace CivilianPopulation.Domain
 			mission = new ContractorMission(DAY_IN_SECONDS * 12, CelestialBodyType.HOMEWORLD);
             builder.targetedBy(mission);
             CivilianVessel vessel = builder.build();
-			vessel.addCrew(new CivilianKerbal("Kerbal 1", "Civilian", true, -1));
-			vessel.addCrew(new CivilianKerbal("Kerbal 2", "Civilian", true, -1));
-			vessel.addCrew(new CivilianKerbal("Kerbal 3", "Civilian", true, -1));
-			vessel.addCrew(new CivilianKerbal("Kerbal 4", "Civilian", true, -1));
+            vessel.addCrew(new CivilianKerbal("Kerbal 1", "Civilian", true, -1, -1));
+            vessel.addCrew(new CivilianKerbal("Kerbal 2", "Civilian", true, -1, -1));
+            vessel.addCrew(new CivilianKerbal("Kerbal 3", "Civilian", true, -1, -1));
+            vessel.addCrew(new CivilianKerbal("Kerbal 4", "Civilian", true, -1, -1));
 
             service.update(currentDate, vessel);
 

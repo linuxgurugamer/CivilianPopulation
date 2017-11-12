@@ -1,10 +1,29 @@
 ﻿using System;
+using CivilianPopulation.Domain;
+
 namespace CivilianPopulation.GUI
 {
+    public enum TimeFormat
+    {
+        TIME,
+        AGE
+    }
+
     public class TimeFormatter
     {
-		private const int HOURS_PER_DAYS = 6;
-		private const int DAYS_PER_YEARS = 426;
+        public string format(double time, TimeFormat format)
+        {
+            string res;
+            if (format == TimeFormat.AGE)
+            {
+                res = this.formatAge(time);
+            }
+            else
+            {
+                res = this.format(time);
+            }
+            return res;
+        }
 
 		public string format(double time)
         {
@@ -23,15 +42,15 @@ namespace CivilianPopulation.GUI
 				hour = min / 60;
 				min = min - hour * 60;
 			}
-			if (hour >= HOURS_PER_DAYS)
+            if (hour >= TimeUnit.HOURS_PER_DAYS)
 			{
-				days = hour / HOURS_PER_DAYS;
-				hour = hour - days * HOURS_PER_DAYS;
+                days = hour / TimeUnit.HOURS_PER_DAYS;
+                hour = hour - days * TimeUnit.HOURS_PER_DAYS;
 			}
-            if (days >= DAYS_PER_YEARS)
+            if (days >= TimeUnit.DAYS_PER_YEARS)
             {
-                years = days / DAYS_PER_YEARS;
-                days = days - years * DAYS_PER_YEARS;
+                years = days / TimeUnit.DAYS_PER_YEARS;
+                days = days - years * TimeUnit.DAYS_PER_YEARS;
             }
 
 			string secAsString = sec.ToString("D2");
@@ -61,6 +80,36 @@ namespace CivilianPopulation.GUI
 				}
 			}
 			return res;
+        }
+
+        public string formatAge(double time)
+        {
+            string res;
+            if (time < 1 * TimeUnit.YEAR)
+            {
+                res = "Young (" + (int)(time / TimeUnit.DAY) + " days)";
+            }
+            else if (time < 15 * TimeUnit.YEAR)
+            {
+                res = "Young (" + (int)(time / TimeUnit.YEAR) + " years)";
+            }
+            else if (time < 30 * TimeUnit.YEAR)
+            {
+                res = "Young adult (" + (int)(time / TimeUnit.YEAR) + " years)";
+            }
+            else if (time < 45 * TimeUnit.YEAR)
+            {
+                res = "Adult (" + (int)(time / TimeUnit.YEAR) + " years)";
+            }
+            else if (time < 60 * TimeUnit.YEAR)
+            {
+                res = "Senior (" + (int)(time / TimeUnit.YEAR) + " years)";
+            }
+            else
+            {
+                res = "Ancient (" + (int)(time / TimeUnit.YEAR) + " years)";
+            }
+            return res;
         }
     }
 }

@@ -54,7 +54,7 @@ namespace CivilianPopulation.GUI
             bool res = false;
             for (int i = 0; i < headers.Length; i++)
             {
-                if (data[j, i] != null && data[j, i].Contains(filter))
+                if (data[j, i] != null && data[j, i].ToLower().Contains(filter.ToLower()))
                 {
                     res = true;
                 }

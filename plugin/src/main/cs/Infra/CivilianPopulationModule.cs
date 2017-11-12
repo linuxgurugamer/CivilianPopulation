@@ -9,31 +9,70 @@ namespace CivilianPopulation.Infra
 	[KSPScenario(ScenarioCreationOptions.AddToAllGames, GameScenes.FLIGHT, GameScenes.TRACKSTATION, GameScenes.SPACECENTER, GameScenes.EDITOR)]
 	public class CivilianPopulationModule : ScenarioModule
     {
-		private static CivilianPopulationRentService service;
+
+        private static CivilianPopulationRentService rentService;
 		private static CivilianPopulationAdapter adapter;
 		private static CivilianPopulationGUI gui;
 
+        protected System.Random rng;
+
+        [KSPField(isPersistant = true, guiActive = false)]
+        public string rosterJSON;
+
 		public void Start()
 		{
-            if (service == null)
+            if (rentService == null)
             {
-                service = new CivilianPopulationRentService(this.addFunds);
+                rentService = new CivilianPopulationRentService(this.addFunds);
                 adapter = new CivilianPopulationAdapter();
                 gui = new CivilianPopulationGUI();
             }
+            this.rng = new System.Random();
 		}
 
         public void OnGUI()
 		{
-			gui.update(Planetarium.GetUniversalTime(), getVessels());
+			gui.update(Planetarium.GetUniversalTime(), getVessels(), getRoster());
 		}
 
 		public void FixedUpdate()
         {
+            CivilianKerbalRoster roster = getRoster();
+
+            KerbalRoster kspRoster = HighLogic.CurrentGame.CrewRoster;
+            ProtoCrewMember.KerbalType type = ProtoCrewMember.KerbalType.Crew;
+            //ProtoCrewMember.KerbalType.Applicant;
+            //ProtoCrewMember.KerbalType.Crew;
+            //ProtoCrewMember.KerbalType.Tourist;
+            //ProtoCrewMember.KerbalType.Unowned;
+
+            ProtoCrewMember.RosterStatus[] statuses = {
+                ProtoCrewMember.RosterStatus.Assigned,
+                ProtoCrewMember.RosterStatus.Available,    
+                ProtoCrewMember.RosterStatus.Dead,    
+                ProtoCrewMember.RosterStatus.Missing    
+            };
+
+            foreach (ProtoCrewMember kerbal in kspRoster.Kerbals(type, statuses))
+            {
+                if (!roster.exists(kerbal.name))
+                {
+                    bool isMale = true;
+                    if (kerbal.gender.Equals(ProtoCrewMember.Gender.Female))
+                    {
+                        isMale = false;
+                    }
+                    double birth = Planetarium.GetUniversalTime() - 15 * TimeUnit.YEAR - rng.Next(15 * TimeUnit.YEAR);
+                    CivilianKerbal civKerbal = new CivilianKerbal(kerbal.name, kerbal.trait, isMale, birth, -1);
+                    roster.add(civKerbal);
+                }
+            }
+
             if (HighLogic.CurrentGame.Mode == Game.Modes.CAREER)
             {
-                service.update(Planetarium.GetUniversalTime(), getVessels());
+                rentService.update(Planetarium.GetUniversalTime(), getVessels());
             }
+            rosterJSON = roster.toString();
         }
 
         private List<CivilianVessel> getVessels()
@@ -46,13 +85,23 @@ namespace CivilianPopulation.Infra
             return vessels;
 		}
 
+        private CivilianKerbalRoster getRoster()
+        {
+            CivilianKerbalRoster res = new CivilianKerbalRoster();
+            if (rosterJSON != null)
+            {
+                res = new CivilianKerbalRoster(rosterJSON.Replace(']', '}').Replace('[', '{'));
+            }
+            return res;
+        }
+
         private void addFunds(int amount) {
 			Funding.Instance.AddFunds(amount, TransactionReasons.Progression);
 		}
 
 		private void log(string message)
 		{
-			Debug.Log(this.GetType().Name + message);
+			Debug.Log(this.GetType().Name + " - " + message);
 		}
     }
 }

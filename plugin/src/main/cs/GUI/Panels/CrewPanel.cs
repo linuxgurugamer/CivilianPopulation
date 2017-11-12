@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using CivilianPopulation.Domain;
 using UnityEngine;
 
 namespace CivilianPopulation.GUI
@@ -7,6 +8,10 @@ namespace CivilianPopulation.GUI
     public class CrewPanel
     {
         private Grid grid;
+        private TimeFormatter formatter;
+
+        private CivilianKerbalRoster roster;
+        private double currentDate;
 
         public CrewPanel()
         {
@@ -20,7 +25,17 @@ namespace CivilianPopulation.GUI
             };
             grid = new Grid();
             grid.setHeaders(headers);
+            this.formatter = new TimeFormatter();
+        }
 
+        public void setRoster(CivilianKerbalRoster roster)
+        {
+            this.roster = roster;
+        }
+
+        public void setCurrentDate(double currentDate)
+        {
+            this.currentDate = currentDate;
         }
 
         public void draw()
@@ -48,8 +63,8 @@ namespace CivilianPopulation.GUI
                     data[i, 2] = crewVessels[crew.name];
                 }
                 data[i, 3] = crew.gender.displayDescription(); 
-                data[i, 4] = "?"; // Age
-                data[i, 5] = "?"; // Childbirth
+                data[i, 4] = getAge(crew.name);
+                data[i, 5] = getChildbirth(crew.name);
                 i++;
             }
 
@@ -57,6 +72,31 @@ namespace CivilianPopulation.GUI
             grid.setData(data);
             grid.draw();
             GUILayout.EndVertical();
+        }
+
+        private string getAge(string name)
+        {
+            string res = "?";
+            if (roster.exists(name)) 
+            {
+                CivilianKerbal kerbal = roster.get(name);
+                res = formatter.format(currentDate - kerbal.getBirthDate(), TimeFormat.AGE);
+            }
+            return res;
+        }
+
+        private string getChildbirth(string name)
+        {
+            string res = "-";
+            if (roster.exists(name))
+            {
+                CivilianKerbal kerbal = roster.get(name);
+                if (kerbal.getExpectingBirthAt() > -1)
+                {
+                    res = formatter.format(kerbal.getExpectingBirthAt() - currentDate);
+                }
+            }
+            return res;
         }
     }
 }

@@ -52,6 +52,9 @@
     <Compile Include="Repository\CivPopVessel.cs" />
     <Compile Include="Services\CivPopServiceRent.cs" />
     <Compile Include="Services\CivPopOncePerDayService.cs" />
+    <Compile Include="Services\CivPopServiceContractors.cs" />
+    <Compile Include="Repository\CivPopKerbalGender.cs" />
+    <Compile Include="Services\CivPopKerbalBuilder.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Repository\" />

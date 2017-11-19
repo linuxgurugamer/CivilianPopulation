@@ -57,9 +57,24 @@ namespace CivilianPopulation.Domain.Repository
             return roster.Values;
         }
 
+        public IEnumerable<CivPopKerbal> GetRosterForVessel(string vesselId)
+        {
+            return roster.Values.Where(k => vesselId.Equals(k.GetVesselId()));
+        }
+
         public void Add(CivPopVessel vessel)
         {
             fleet.Add(vessel.GetId(), vessel);
+        }
+
+        public IEnumerable<CivPopVessel> GetVessels()
+        {
+            return fleet.Values;
+        }
+
+        public CivPopVessel GetVessel(string vesselId)
+        {
+            return fleet[vesselId];
         }
 
         public string ToJson()

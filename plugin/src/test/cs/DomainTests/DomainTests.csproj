@@ -41,6 +41,7 @@
     <Compile Include="CivilianPopulationDeathServiceShould.cs" />
     <Compile Include="Repository\CivPopRepositoryShould.cs" />
     <Compile Include="Services\CivPopServiceRentShould.cs" />
+    <Compile Include="Services\CivPopServiceContractorsShould.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

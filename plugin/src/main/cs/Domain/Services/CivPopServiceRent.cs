@@ -6,8 +6,11 @@ namespace CivilianPopulation.Domain.Services
 {
     public class CivPopServiceRent : CivPopOncePerDayService
     {
+        private long rent;
+
         public CivPopServiceRent()
         {
+            this.rent = 200;
         }
 
         protected override void DoUpdate(double date, CivPopRepository repo)
@@ -17,7 +20,7 @@ namespace CivilianPopulation.Domain.Services
                             .Where(kerbal => kerbal.GetVesselId() != null)
                             .Count()
                             ;
-            repo.AddFunds(200 * count);
+            repo.AddFunds(this.rent * count);
         }
     }
 }

@@ -57,7 +57,7 @@ namespace CivilianPopulation.Domain.Services
                         {
                             if (date > vessel.GetMissionArrival())
                             {
-                                CivPopKerbal kerbal = builder.build();
+                                CivPopKerbal kerbal = builder.build(date);
                                 kerbal.SetVesselId(vessel.GetId());
                                 repo.Add(kerbal);
                                 CancelMission(vessel);

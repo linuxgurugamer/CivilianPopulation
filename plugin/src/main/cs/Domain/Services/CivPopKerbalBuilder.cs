@@ -14,18 +14,21 @@ namespace CivilianPopulation.Domain.Services
             this.rng = new System.Random();
         }
 
-        public CivPopKerbal build()
+        public CivPopKerbalBuilder(Func<CivPopKerbalGender, string> getName, System.Random rng)
         {
-            string name;
+            this.getName = getName;
+            this.rng = rng;
+        }
+
+        public CivPopKerbal build(double date)
+        {
+            CivPopKerbalGender gender = CivPopKerbalGender.FEMALE;
             if (rng.Next() % 2 == 0)
             {
-                name = getName(CivPopKerbalGender.MALE);
+                gender = CivPopKerbalGender.MALE;
             }
-            else
-            {
-                name = getName(CivPopKerbalGender.FEMALE);
-            }
-            return new CivPopKerbal(name, true);
+            double age = date - 15 * TimeUnit.YEAR - rng.Next(15 * TimeUnit.YEAR);
+            return new CivPopKerbal(getName(gender), gender, age, true);
         }
     }
 }

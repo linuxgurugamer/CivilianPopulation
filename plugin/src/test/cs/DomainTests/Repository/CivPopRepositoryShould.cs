@@ -24,7 +24,7 @@ namespace CivilianPopulation.Domain.Repository
         public void encode_and_decode_repository_having_roster_and_fleet()
         {
             CivPopRepository repo = new CivPopRepository();
-            repo.Add(new CivPopKerbal("Valentina", true));
+            repo.Add(new CivPopKerbal("Valentina", CivPopKerbalGender.FEMALE, 0, true));
             repo.Add(new CivPopVessel(Guid.NewGuid().ToString()));
 
             string json = repo.ToJson();

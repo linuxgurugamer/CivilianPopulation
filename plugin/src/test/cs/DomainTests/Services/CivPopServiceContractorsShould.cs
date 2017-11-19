@@ -155,7 +155,7 @@ namespace CivilianPopulation.Domain.Services
 
             for (int i = 0; i < 4; i++)
             {
-                CivPopKerbal kerbal = new CivPopKerbal("kerbal"+i, true);
+                CivPopKerbal kerbal = new CivPopKerbal("kerbal"+i, CivPopKerbalGender.FEMALE, 0, true);
                 repo.Add(kerbal);
                 kerbal.SetVesselId(vessel.GetId());
             }

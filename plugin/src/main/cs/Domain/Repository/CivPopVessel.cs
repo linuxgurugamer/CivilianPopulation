@@ -11,6 +11,7 @@ namespace CivilianPopulation.Domain.Repository
         private string id;
         private double capacity;
         private bool allowDocking;
+        private bool allowBreeding;
         private double missionArrival;
         private string missionType;
 
@@ -19,6 +20,7 @@ namespace CivilianPopulation.Domain.Repository
             this.id = id;
             this.capacity = 0;
             this.allowDocking = false;
+            this.allowBreeding = false;
             this.missionArrival = -1;
             this.missionType = null;
         }
@@ -47,6 +49,15 @@ namespace CivilianPopulation.Domain.Repository
             else
             {
                 this.allowDocking = (bool)value["allowDocking"];
+            }
+
+            if (!value.Contains("allowBreeding"))
+            {
+                this.allowBreeding = false;
+            }
+            else
+            {
+                this.allowBreeding = (bool)value["allowBreeding"];
             }
 
             if (!value.Contains("missionArrival"))
@@ -103,6 +114,16 @@ namespace CivilianPopulation.Domain.Repository
             this.allowDocking = allow;
         }
 
+        public bool IsAllowBreeding()
+        {
+            return this.allowBreeding;
+        }
+
+        public void SetAllowBreeding(bool allow)
+        {
+            this.allowBreeding = allow;
+        }
+
         public CelestialBody GetBody()
         {
             return this.body;
@@ -139,6 +160,7 @@ namespace CivilianPopulation.Domain.Repository
             table.Add("id", id);
             table.Add("capacity", capacity);
             table.Add("allowDocking", allowDocking);
+            table.Add("allowBreeding", allowBreeding);
             table.Add("missionArrival", missionArrival);
             table.Add("missionType", missionType);
             return table;

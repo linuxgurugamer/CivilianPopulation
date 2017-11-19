@@ -14,11 +14,11 @@ namespace CivilianPopulation.Domain.Services
 
             repo.Add(new CivPopVessel("vessel"));
 
-            CivPopKerbal valentina = new CivPopKerbal("Valentina", true);
+            CivPopKerbal valentina = new CivPopKerbal("Valentina", CivPopKerbalGender.FEMALE, 0, true);
             repo.Add(valentina);
             valentina.SetVesselId("vessel");
 
-            CivPopKerbal bill = new CivPopKerbal("Bill", true);
+            CivPopKerbal bill = new CivPopKerbal("Bill", CivPopKerbalGender.MALE, 0, true);
             repo.Add(bill);
             bill.SetVesselId("vessel");
 
@@ -49,11 +49,11 @@ namespace CivilianPopulation.Domain.Services
 
             repo.Add(new CivPopVessel("vessel"));
 
-            CivPopKerbal valentina = new CivPopKerbal("Valentina", true);
+            CivPopKerbal valentina = new CivPopKerbal("Valentina", CivPopKerbalGender.FEMALE, 0, true);
             repo.Add(valentina);
             valentina.SetVesselId("vessel");
 
-            CivPopKerbal bill = new CivPopKerbal("Bill", false);
+            CivPopKerbal bill = new CivPopKerbal("Bill", CivPopKerbalGender.MALE, 0, false);
             repo.Add(bill);
             bill.SetVesselId("vessel");
 
@@ -81,7 +81,7 @@ namespace CivilianPopulation.Domain.Services
         public void not_add_rent_for_1_civilians_on_KSC()
         {
             CivPopRepository repo = new CivPopRepository();
-            repo.Add(new CivPopKerbal("Valentina", true));
+            repo.Add(new CivPopKerbal("Valentina", CivPopKerbalGender.FEMALE, 0, true));
 
             CivPopServiceRent service = new CivPopServiceRent();
 

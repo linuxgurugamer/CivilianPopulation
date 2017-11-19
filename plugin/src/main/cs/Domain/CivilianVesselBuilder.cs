@@ -3,7 +3,8 @@ namespace CivilianPopulation.Domain
 {
     public class CivilianVesselBuilder
     {
-		private string name = "unknown";
+        private Guid id;
+        private string name = "unknown";
 		private int housingCapacity = 0;
 		private bool dockingAllowed = false;
 		private bool breedingAllowed = false;
@@ -14,6 +15,7 @@ namespace CivilianPopulation.Domain
 		public CivilianVessel build()
         {
             return new CivilianVessel(
+                id,
                 name,
                 housingCapacity,
                 dockingAllowed,
@@ -24,7 +26,13 @@ namespace CivilianPopulation.Domain
             );
         }
 
-		public CivilianVesselBuilder named(string name)
+        public CivilianVesselBuilder identified(Guid id)
+        {
+            this.id = id;
+            return this;
+        }
+
+        public CivilianVesselBuilder named(string name)
         {
             this.name = name;
             return this;

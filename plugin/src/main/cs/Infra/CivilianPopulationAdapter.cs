@@ -11,7 +11,7 @@ namespace CivilianPopulation.Infra
         {
         }
 
-		internal CivilianVessel asCivilianVessel(Vessel vessel)
+        internal CivilianVessel asCivilianVessel(Vessel vessel, CivilianKerbalRoster roster)
         {
 			//log("-> asCivilianVessel(" + vessel + ")");
 			//log("GetName is : " + vessel.GetName());
@@ -35,6 +35,7 @@ namespace CivilianPopulation.Infra
                     allowBreeding = civModule.isAllowBreeding();
 
 					//log("mission is : " + mission);
+                    /*
 					CivilianKerbalRoster roster = new CivilianKerbalRoster(civModule.crewJSON);
 					//log("crewData is : " + crewData);
 					if (roster.count() > 0)
@@ -44,7 +45,7 @@ namespace CivilianPopulation.Infra
 							//log("kerbal is : " + kerbal);
 							crew.Add(kerbal);
                         }
-                    }
+                    }*/
 				}
 			}
 
@@ -57,7 +58,8 @@ namespace CivilianPopulation.Infra
 			//log("crew is : " + crew);
 
 			CivilianVesselBuilder builder = new CivilianVesselBuilder();
-			builder.named(vessel.GetName())
+            builder.identified(vessel.id)
+                   .named(vessel.GetName())
                    .withAHousingCapacityOf(capacity)
                    .allowingDocking(allowDocking)
                    .allowingBreeding(allowBreeding)
@@ -65,10 +67,11 @@ namespace CivilianPopulation.Infra
 				   .on(new Domain.CelestialBody(vessel.mainBody.name, getBodyType(vessel.mainBody)))
 				   .targetedBy(mission);
 			CivilianVessel civVessel = builder.build();
-            foreach (CivilianKerbal kerbal in crew)
+
+            foreach (ProtoCrewMember member in vessel.GetVesselCrew())
             {
-                civVessel.addCrew(kerbal);
-			}
+                civVessel.addCrew(roster.get(member.name));
+            }
 			//log("<- asCivilianVessel(" + vessel + ")");
             return civVessel;
 		}

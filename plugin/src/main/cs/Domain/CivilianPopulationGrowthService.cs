@@ -7,21 +7,20 @@ namespace CivilianPopulation.Domain
 {
     public class CivilianPopulationGrowthService
     {
-		private const double DAY_IN_SECONDS = 60 * 60 * 6;
 		private const int MALE_AVAILABILITY = 3;
 		private const int FEMALE_AVAILABILITY = 3;
 		private const int CHANCE_OF_PREGNANCY = 10;
-		private const int PREGNANCY_DURATION_IN_DAYS = 75;
+        private const int PREGNANCY_DURATION_IN_DAYS = TimeUnit.DAYS_PER_YEARS * 3 / 4;
 
 		private Action<CivilianKerbal, double> setPregnant;
-        private Action<CivilianKerbal, bool> birth;
+        private Action<CivilianVessel, CivilianKerbal, bool> birth;
 
 		protected System.Random rng;
 		private double lastUpdate;
 
         public CivilianPopulationGrowthService(
             Action<CivilianKerbal, double> setPregnant,
-            Action<CivilianKerbal, bool> birth)
+            Action<CivilianVessel, CivilianKerbal, bool> birth)
         {
 			this.setPregnant = setPregnant;
 			this.birth = birth;
@@ -45,21 +44,23 @@ namespace CivilianPopulation.Domain
             // select females
             IEnumerable<CivilianKerbal> females = vessel.getFemales();
             // make couples
-            IEnumerable<CivilianKerbalCouple> couples = makeCouples(males, females);
+            IEnumerable<CivilianKerbalCouple> couples = makeCouples(currentDate, males, females);
             // change females state
             turnPregnantSomeFemales(currentDate, couples, vessel.isBreedingAllowed());
             // birth
-            birthOfNewCivilans(currentDate, females);
+            birthOfNewCivilans(vessel, currentDate, females);
         }
 
         protected virtual IEnumerable<CivilianKerbalCouple> makeCouples(
+            double currentDate,
             IEnumerable<CivilianKerbal> males, 
             IEnumerable<CivilianKerbal> females)
         {
             List<CivilianKerbal> availableMales = new List<CivilianKerbal>();
             foreach (CivilianKerbal kerbal in males)
             {
-                if (rng.Next() % MALE_AVAILABILITY == 0)
+                if (kerbal.getAge(currentDate) != CivilianKerbalAge.YOUNG 
+                    && rng.Next() % MALE_AVAILABILITY == 0)
                 {
                     availableMales.Add(kerbal);
                 }
@@ -68,7 +69,8 @@ namespace CivilianPopulation.Domain
             List<CivilianKerbal> availableFemales = new List<CivilianKerbal>();
             foreach (CivilianKerbal kerbal in females)
             {
-                if (rng.Next() % FEMALE_AVAILABILITY == 0)
+                if (kerbal.getAge(currentDate) != CivilianKerbalAge.YOUNG 
+                    && rng.Next() % FEMALE_AVAILABILITY == 0)
                 {
                     availableFemales.Add(kerbal);
                 }
@@ -98,11 +100,15 @@ namespace CivilianPopulation.Domain
                 foreach (CivilianKerbalCouple couple in couples)
                 {
                     CivilianKerbal female = couple.getFemale();
-                    if (female.getExpectingBirthAt() < 0)
+                    if (female.getAge(now) == CivilianKerbalAge.YOUNG_ADULT
+                        || female.getAge(now) == CivilianKerbalAge.ADULT)
                     {
-                        if (rng.Next() % CHANCE_OF_PREGNANCY == 0)
+                        if (female.getExpectingBirthAt() < 0)
                         {
-                            this.setPregnant(female, now + PREGNANCY_DURATION_IN_DAYS * DAY_IN_SECONDS);
+                            if (rng.Next() % CHANCE_OF_PREGNANCY == 0)
+                            {
+                                this.setPregnant(female, now + PREGNANCY_DURATION_IN_DAYS * TimeUnit.DAY);
+                            }
                         }
                     }
                 }
@@ -110,6 +116,7 @@ namespace CivilianPopulation.Domain
         }
 
         protected virtual void birthOfNewCivilans(
+            CivilianVessel vessel,
 			double now,
 			IEnumerable<CivilianKerbal> females)
         {
@@ -117,14 +124,14 @@ namespace CivilianPopulation.Domain
             {
                 if (kerbal.getExpectingBirthAt() > 0 && kerbal.getExpectingBirthAt() < now)
                 {
-                    birth(kerbal, rng.Next() % 2 == 0);
+                    birth(vessel, kerbal, rng.Next() % 2 == 0);
                 }
             }
         }
 
         private double getDay(double date)
         {
-            return Math.Floor(date / DAY_IN_SECONDS);
+            return Math.Floor(date / TimeUnit.DAY);
         }
     }
 }

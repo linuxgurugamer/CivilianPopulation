@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{3F59EDFD-A936-49BA-B8BF-714B85DDC8E1}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>DomainTests</RootNamespace>
+    <RootNamespace>CivilianPopulation.Domain</RootNamespace>
     <AssemblyName>DomainTests</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
   </PropertyGroup>
@@ -38,6 +38,9 @@
     <Compile Include="CivilianPopulationRecruitmentServiceShould.cs" />
     <Compile Include="CivilianKerbalRosterShould.cs" />
     <Compile Include="CivilianKerbalShould.cs" />
+    <Compile Include="CivilianPopulationDeathServiceShould.cs" />
+    <Compile Include="Repository\CivPopRepositoryShould.cs" />
+    <Compile Include="Services\CivPopServiceRentShould.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -47,6 +50,10 @@
       <Project>{4F8C87CF-564B-4543-9FC4-CF03237D6466}</Project>
       <Name>Domain</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Repository\" />
+    <Folder Include="Services\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -10,9 +10,9 @@ namespace CivilianPopulation.DomainTests
 		[Test()]
         public void turn_into_string() 
         {
-            CivilianKerbal kerbal = new CivilianKerbal("Jeb", "Pilot", true, -1, -1);
+            CivilianKerbal kerbal = new CivilianKerbal("Jeb", "Pilot", true, false, -1, -1);
 			Assert.AreEqual(
-                "{\"birthdate\":-1, \"expectingBirthAt\":-1, \"name\":\"Jeb\", \"male\":true, \"trait\":\"Pilot\"}",
+                "{\"vesselId\":null, \"birthdate\":-1, \"name\":\"Jeb\", \"expectingBirthAt\":-1, \"male\":true, \"dead\":false, \"trait\":\"Pilot\"}",
                 JSON.JsonEncode(kerbal.toTable())
 			);
 		}

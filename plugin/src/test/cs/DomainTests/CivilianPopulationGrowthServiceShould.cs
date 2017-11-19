@@ -64,7 +64,7 @@ namespace CivilianPopulation.Domain
 			List<CivilianKerbal> males = new List<CivilianKerbal>();
 			for (int i = 0; i < 50; i++)
 			{
-                males.Add(new CivilianKerbal("male", "Civilian", true, -1, -1));
+                males.Add(new CivilianKerbal("male", "Civilian", true, false, -1, -1));
 			}
 			List<CivilianKerbal> females = new List<CivilianKerbal>();
 			IEnumerable<CivilianKerbalCouple> couples = service.testMakeCouples(males, females);
@@ -79,8 +79,8 @@ namespace CivilianPopulation.Domain
 			List<CivilianKerbal> females = new List<CivilianKerbal>();
 			for (int i = 0; i < 50; i++)
 			{
-                males.Add(new CivilianKerbal("male-" + i, "Civilian", true, -1, -1));
-                females.Add(new CivilianKerbal("female-" + i, "Civilian", false, -1, -1));
+                males.Add(new CivilianKerbal("male-" + i, "Civilian", true, false, -1, -1));
+                females.Add(new CivilianKerbal("female-" + i, "Civilian", false, false, -1, -1));
 			}
 			IEnumerable<CivilianKerbalCouple> couples = service.testMakeCouples(males, females);
 			Assert.AreEqual(14, couples.Count());
@@ -106,11 +106,11 @@ namespace CivilianPopulation.Domain
 			List<CivilianKerbal> females = new List<CivilianKerbal>();
 			for (int i = 0; i < 50; i++)
 			{
-                males.Add(new CivilianKerbal("male-" + i, "Civilian", true, -1, -1));
-                females.Add(new CivilianKerbal("female-" + i, "Civilian", false, -1, -1));
+                males.Add(new CivilianKerbal("male-" + i, "Civilian", true, false, -1, -1));
+                females.Add(new CivilianKerbal("female-" + i, "Civilian", false, false, -1, -1));
 			}
 			IEnumerable<CivilianKerbalCouple> couples = service.testMakeCouples(males, females);
-			service.testTurnPregnantSomeFemales(0, couples, true);
+            service.testTurnPregnantSomeFemales(25 * TimeUnit.YEAR, couples, true);
 			Assert.AreEqual(3, females.Where(female => female.getExpectingBirthAt() > 0).Count());
 		}
 
@@ -122,8 +122,8 @@ namespace CivilianPopulation.Domain
 			List<CivilianKerbal> females = new List<CivilianKerbal>();
 			for (int i = 0; i < 50; i++)
 			{
-                males.Add(new CivilianKerbal("male-" + i, "Civilian", true, -1, -1));
-                females.Add(new CivilianKerbal("female-" + i, "Civilian", false, -1, -1));
+                males.Add(new CivilianKerbal("male-" + i, "Civilian", true, false, -1, -1));
+                females.Add(new CivilianKerbal("female-" + i, "Civilian", false, false, -1, -1));
 			}
 			IEnumerable<CivilianKerbalCouple> couples = service.testMakeCouples(males, females);
 			service.testTurnPregnantSomeFemales(0, couples, false);
@@ -138,10 +138,10 @@ namespace CivilianPopulation.Domain
             CivilianVessel vessel = new CivilianVesselBuilder().build();
 			for (int i = 0; i < 50; i++)
 			{
-                vessel.addCrew(new CivilianKerbal("male-" + i, "Civilian", true, -1, -1));
-                vessel.addCrew(new CivilianKerbal("female-" + i, "Civilian", false, -1, -1));
+                vessel.addCrew(new CivilianKerbal("male-" + i, "Civilian", true, false, -1, -1));
+                vessel.addCrew(new CivilianKerbal("female-" + i, "Civilian", false, false, -1, -1));
 			}
-            CivilianKerbal mother = new CivilianKerbal("mother", "Civilian", false, -1, now);
+            CivilianKerbal mother = new CivilianKerbal("mother", "Civilian", false, false, -1, now);
             vessel.addCrew(mother);
 
             service.update(now, vessel);
@@ -155,7 +155,7 @@ namespace CivilianPopulation.Domain
 		{
 			kerbal.setExpectingBirthAt(at);
 		}
-		public void birth(CivilianKerbal mother, bool male)
+        public void birth(CivilianVessel vessel, CivilianKerbal mother, bool male)
 		{
 			mother.setExpectingBirthAt(-1);
 		}
@@ -167,7 +167,7 @@ namespace CivilianPopulation.Domain
 
         public CivilianPopulationGrowthServiceCount(
             Action<CivilianKerbal, double> setPregnant,
-            Action<CivilianKerbal, bool> birth) : base(setPregnant, birth)
+            Action<CivilianVessel, CivilianKerbal, bool> birth) : base(setPregnant, birth)
         {
             nbUpdates = 0;
         }
@@ -187,7 +187,7 @@ namespace CivilianPopulation.Domain
 	{
 		public CivilianPopulationGrowthTestService(
 			Action<CivilianKerbal, double> setPregnant,
-			Action<CivilianKerbal, bool> birth) : base(setPregnant, birth)
+            Action<CivilianVessel, CivilianKerbal, bool> birth) : base(setPregnant, birth)
 		{
             this.rng = new System.Random(42);
 		}
@@ -196,7 +196,7 @@ namespace CivilianPopulation.Domain
             IEnumerable<CivilianKerbal> males, 
             IEnumerable<CivilianKerbal> females)
 		{
-            return base.makeCouples(males, females);
+            return base.makeCouples(25 * TimeUnit.YEAR, males, females);
 		}
 
 		public void testTurnPregnantSomeFemales(double date,
@@ -206,10 +206,11 @@ namespace CivilianPopulation.Domain
 			base.turnPregnantSomeFemales(date, couples, breedingAllowed);
 		}
 
-		public void testBirthOfNewCivilans(double date,
+		public void testBirthOfNewCivilans(CivilianVessel vessel, 
+                                           double date,
                                            IEnumerable<CivilianKerbal> females)
 		{
-			base.birthOfNewCivilans(date, females);
+            base.birthOfNewCivilans(vessel, date, females);
 		}
 
 	}

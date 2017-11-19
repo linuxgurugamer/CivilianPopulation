@@ -53,9 +53,9 @@ namespace CivilianPopulation.DomainTests
 		public void encode_non_empty_roster()
 		{
 			CivilianKerbalRoster roster = new CivilianKerbalRoster();
-			roster.add(new CivilianKerbal("Jeb", "Pilot", true, -1, -1));
+            roster.add(new CivilianKerbal("Jeb", "Pilot", true, false, -1, -1));
 			Assert.AreEqual(
-                "{\"Jeb\":{\"birthdate\":-1, \"expectingBirthAt\":-1, \"name\":\"Jeb\", \"male\":true, \"trait\":\"Pilot\"}}",
+                "{\"Jeb\":{\"vesselId\":null, \"birthdate\":-1, \"name\":\"Jeb\", \"expectingBirthAt\":-1, \"male\":true, \"dead\":false, \"trait\":\"Pilot\"}}",
 				roster.toString()
 			);
 		}
@@ -64,8 +64,8 @@ namespace CivilianPopulation.DomainTests
 		public void decode_non_empty_roster()
 		{
 			CivilianKerbalRoster roster = new CivilianKerbalRoster();
-            roster.add(new CivilianKerbal("Jeb", "Pilot", true, -1, -1));
-            roster.add(new CivilianKerbal("Val", "Pilot", false, -1, 123456));
+            roster.add(new CivilianKerbal("Jeb", "Pilot", true, false, -1, -1));
+            roster.add(new CivilianKerbal("Val", "Pilot", false, false, -1, 123456));
 
             string json = roster.toString();
 
@@ -86,7 +86,7 @@ namespace CivilianPopulation.DomainTests
         public void list_1_member()
         {
             CivilianKerbalRoster roster = new CivilianKerbalRoster();
-            roster.add(new CivilianKerbal("Jeb", "Pilot", true, -1, -1));
+            roster.add(new CivilianKerbal("Jeb", "Pilot", true, false, -1, -1));
             int count = 0;
             foreach (CivilianKerbal kerbal in roster.list())
             {
@@ -100,8 +100,8 @@ namespace CivilianPopulation.DomainTests
         public void list_2_members()
         {
             CivilianKerbalRoster roster = new CivilianKerbalRoster();
-            roster.add(new CivilianKerbal("Jeb", "Pilot", true, -1, -1));
-            roster.add(new CivilianKerbal("Val", "Pilot", false, -1, -1));
+            roster.add(new CivilianKerbal("Jeb", "Pilot", true, false, -1, -1));
+            roster.add(new CivilianKerbal("Val", "Pilot", false, false, -1, -1));
             int count = 0;
             foreach (CivilianKerbal kerbal in roster.list())
             {
@@ -116,8 +116,8 @@ namespace CivilianPopulation.DomainTests
         public void check_crew_exists()
         {
             CivilianKerbalRoster roster = new CivilianKerbalRoster();
-            roster.add(new CivilianKerbal("Jeb", "Pilot", true, -1, -1));
-            roster.add(new CivilianKerbal("Val", "Pilot", false, -1, -1));
+            roster.add(new CivilianKerbal("Jeb", "Pilot", true, false, -1, -1));
+            roster.add(new CivilianKerbal("Val", "Pilot", false, false, -1, -1));
             Assert.False(roster.exists("Bob"));
             Assert.True(roster.exists("Jeb"));
         }
@@ -126,8 +126,8 @@ namespace CivilianPopulation.DomainTests
         public void remove_crew()
         {
             CivilianKerbalRoster roster = new CivilianKerbalRoster();
-            roster.add(new CivilianKerbal("Jeb", "Pilot", true, -1, -1));
-            roster.add(new CivilianKerbal("Val", "Pilot", false, -1, -1));
+            roster.add(new CivilianKerbal("Jeb", "Pilot", true, false, -1, -1));
+            roster.add(new CivilianKerbal("Val", "Pilot", false, false, -1, -1));
             roster.remove("Jeb");
             Assert.False(roster.exists("Jeb"));
         }
@@ -136,8 +136,8 @@ namespace CivilianPopulation.DomainTests
         public void retreive_crew_by_name()
         {
             CivilianKerbalRoster roster = new CivilianKerbalRoster();
-            roster.add(new CivilianKerbal("Jeb", "Pilot", true, -1, -1));
-            roster.add(new CivilianKerbal("Val", "Pilot", false, -1, 123456));
+            roster.add(new CivilianKerbal("Jeb", "Pilot", true, false, -1, -1));
+            roster.add(new CivilianKerbal("Val", "Pilot", false, false, -1, 123456));
 
             CivilianKerbal val = roster.get("Val");
 			Assert.AreEqual("Val", val.getName());

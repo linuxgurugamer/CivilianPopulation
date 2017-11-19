@@ -6,11 +6,11 @@ namespace CivilianPopulation.Domain
         private const double DAY_IN_SECONDS = 60 * 60 * 6;
 		private const double MISSION_DURATION = DAY_IN_SECONDS * 85;
 
-		private Action<ContractorMission> setMission;
-        private Action<bool> addCivilian;
+        private Action<CivilianVessel, ContractorMission> setMission;
+        private Action<CivilianVessel, bool> addCivilian;
 		private System.Random rng;
 
-		public CivilianPopulationContractorService(Action<ContractorMission> setMission, Action<bool> addCivilian)
+        public CivilianPopulationContractorService(Action<CivilianVessel, ContractorMission> setMission, Action<CivilianVessel, bool> addCivilian)
         {
 			this.setMission = setMission;
             this.addCivilian = addCivilian;
@@ -32,13 +32,13 @@ namespace CivilianPopulation.Domain
                         missionDuration = missionDuration * 2;
                     }
                     ContractorMission mission = new ContractorMission(currentDate + missionDuration, vessel.getBody().getType());
-					setMission(mission);
+                    setMission(vessel, mission);
 				}
                 else
                 {
                     if (vessel.getBody().getType() != vessel.getMission().getBody())
                     {
-						setMission(null);
+                        setMission(vessel, null);
 					}
                     else
                     {
@@ -46,18 +46,18 @@ namespace CivilianPopulation.Domain
                         {
 							if (rng.Next() % 2 == 0)
 							{
-								addCivilian(true);
+                                addCivilian(vessel, true);
                             } else{
-								addCivilian(false);
+                                addCivilian(vessel, false);
 							}
-                            setMission(null);
+                            setMission(vessel, null);
                         }
                     }
                 }
             }
             else
             {
-                setMission(null);
+                setMission(vessel, null);
             }
 		}
     }

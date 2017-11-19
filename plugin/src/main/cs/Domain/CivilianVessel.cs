@@ -6,6 +6,7 @@ namespace CivilianPopulation.Domain
 {
     public class CivilianVessel
     {
+        private readonly Guid id;
         private readonly string name;
 		private readonly List<CivilianKerbal> crew;
 		private readonly int housingCapacity;
@@ -16,6 +17,7 @@ namespace CivilianPopulation.Domain
 		private readonly ContractorMission missionInProgress;
 
 		public CivilianVessel(
+            Guid id,
             string name,
 			int housingCapacity,
 			bool dockingAllowed,
@@ -25,6 +27,7 @@ namespace CivilianPopulation.Domain
             ContractorMission missionInProgress
         )
         {
+            this.id = id;
 			this.name = name;
             this.crew = new List<CivilianKerbal>();
 			this.housingCapacity = housingCapacity;
@@ -34,7 +37,10 @@ namespace CivilianPopulation.Domain
 			this.body = body;
 			this.missionInProgress = missionInProgress;
 		}
-
+        public Guid getId()
+        {
+            return id;
+        }
         public string getName()
 		{
 			return name;

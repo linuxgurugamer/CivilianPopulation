@@ -33,12 +33,6 @@ namespace CivilianPopulation.Domain
             }
 		}
 
-		public void add(CivilianKerbal kerbal)
-		{
-            data.Add(kerbal.getName(), kerbal);
-		}
-
-
 		public string toString()
 		{
             Hashtable table = new Hashtable();
@@ -49,10 +43,20 @@ namespace CivilianPopulation.Domain
             return JSON.JsonEncode(table);
 		}
 
+        public void add(CivilianKerbal kerbal)
+        {
+            data.Add(kerbal.getName(), kerbal);
+        }
+
 		public IEnumerable<CivilianKerbal> list()
 		{
-            return data.Values;
+            return data.Values.Where(kerbal => !kerbal.isDead());
 		}
+
+        public IEnumerable<CivilianKerbal> listDead()
+        {
+            return data.Values.Where(kerbal => kerbal.isDead());
+        }
 
 		public bool exists(string name)
         {

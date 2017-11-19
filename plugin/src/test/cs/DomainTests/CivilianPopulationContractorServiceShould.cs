@@ -131,10 +131,10 @@ namespace CivilianPopulation.Domain
 			mission = new ContractorMission(DAY_IN_SECONDS * 12, CelestialBodyType.HOMEWORLD);
             builder.targetedBy(mission);
             CivilianVessel vessel = builder.build();
-            vessel.addCrew(new CivilianKerbal("Kerbal 1", "Civilian", true, -1, -1));
-            vessel.addCrew(new CivilianKerbal("Kerbal 2", "Civilian", true, -1, -1));
-            vessel.addCrew(new CivilianKerbal("Kerbal 3", "Civilian", true, -1, -1));
-            vessel.addCrew(new CivilianKerbal("Kerbal 4", "Civilian", true, -1, -1));
+            vessel.addCrew(new CivilianKerbal("Kerbal 1", "Civilian", true, false, -1, -1));
+            vessel.addCrew(new CivilianKerbal("Kerbal 2", "Civilian", true, false, -1, -1));
+            vessel.addCrew(new CivilianKerbal("Kerbal 3", "Civilian", true, false, -1, -1));
+            vessel.addCrew(new CivilianKerbal("Kerbal 4", "Civilian", true, false, -1, -1));
 
             service.update(currentDate, vessel);
 
@@ -177,12 +177,12 @@ namespace CivilianPopulation.Domain
 		}
 
 
-		private void setMission(ContractorMission newMission)
+		private void setMission(CivilianVessel vessel, ContractorMission newMission)
 		{
             this.mission = newMission;
 		}
 
-        private void addCivilian(bool male)
+        private void addCivilian(CivilianVessel vessel, bool male)
         {
             this.delivered++;
         }

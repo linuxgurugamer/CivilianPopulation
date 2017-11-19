@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{4F8C87CF-564B-4543-9FC4-CF03237D6466}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>Domain</RootNamespace>
+    <RootNamespace>CivilianPopulation.Domain</RootNamespace>
     <AssemblyName>Domain</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
   </PropertyGroup>
@@ -45,6 +45,17 @@
     <Compile Include="JSON.cs" />
     <Compile Include="CivilianKerbalRoster.cs" />
     <Compile Include="TimeUnit.cs" />
+    <Compile Include="CivilianKerbalAge.cs" />
+    <Compile Include="CivilianPopulationDeathService.cs" />
+    <Compile Include="Repository\CivPopRepository.cs" />
+    <Compile Include="Repository\CivPopKerbal.cs" />
+    <Compile Include="Repository\CivPopVessel.cs" />
+    <Compile Include="Services\CivPopServiceRent.cs" />
+    <Compile Include="Services\CivPopOncePerDayService.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Repository\" />
+    <Folder Include="Services\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

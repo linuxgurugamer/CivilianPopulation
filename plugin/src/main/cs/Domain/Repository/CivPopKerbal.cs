@@ -8,6 +8,7 @@ namespace CivilianPopulation.Domain.Repository
         private string name;
         private CivPopKerbalGender gender;
         private double birthdate;
+        private bool dead;
         private double expectingBirthAt;
         private bool civilian;
         private string vesselId;
@@ -17,6 +18,7 @@ namespace CivilianPopulation.Domain.Repository
             this.name = name;
             this.gender = gender;
             this.birthdate = birthdate;
+            this.dead = false;
             this.expectingBirthAt = -1;
             this.civilian = civilian;
             this.vesselId = null;
@@ -42,6 +44,7 @@ namespace CivilianPopulation.Domain.Repository
                 this.gender = CivPopKerbalGender.FEMALE;
             }
             this.birthdate = (double)value["birthdate"];
+            this.dead = (bool)value["dead"];
             this.expectingBirthAt = (double)value["expectingBirthAt"];
             this.civilian = (bool)value["civilian"];
             this.vesselId = (string)value["vesselId"];
@@ -62,9 +65,24 @@ namespace CivilianPopulation.Domain.Repository
             return this.civilian;
         }
 
+        public void SetDead(bool dead)
+        {
+            this.dead = dead;
+        }
+
+        public bool IsDead()
+        {
+            return this.dead;
+        }
+
         public void SetBirthdate(double date)
         {
             this.birthdate = date;
+        }
+
+        public double GetBirthdate()
+        {
+            return this.birthdate;
         }
 
         public void SetExpectingBirthAt(double date)
@@ -119,6 +137,7 @@ namespace CivilianPopulation.Domain.Repository
             table.Add("name", name);
             table.Add("male", CivPopKerbalGender.MALE == this.gender);
             table.Add("birthdate", birthdate);
+            table.Add("dead", dead);
             table.Add("expectingBirthAt", expectingBirthAt);
             table.Add("civilian", civilian);
             table.Add("vesselId", vesselId);

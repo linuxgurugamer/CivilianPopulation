@@ -52,19 +52,53 @@ namespace CivilianPopulation.Domain.Repository
             roster.Add(kerbal.GetName(), kerbal);
         }
 
+        public void Kill(CivPopKerbal kerbal)
+        {
+            kerbal.SetDead(true);
+        }
+
+        public void Remove(CivPopKerbal kerbal)
+        {
+            roster.Remove(kerbal.GetName());
+        }
+
+        public bool KerbalExists(string name)
+        {
+            return roster.ContainsKey(name);
+        }
+
         public IEnumerable<CivPopKerbal> GetRoster()
         {
             return roster.Values;
         }
 
-        public IEnumerable<CivPopKerbal> GetRosterForVessel(string vesselId)
+        public IEnumerable<CivPopKerbal> GetLivingRosterForVessel(string vesselId)
         {
-            return roster.Values.Where(k => vesselId.Equals(k.GetVesselId()));
+            return roster.Values
+                         .Where(k => vesselId.Equals(k.GetVesselId()))
+                         .Where(k => !k.IsDead());
+        }
+
+        public IEnumerable<CivPopKerbal> GetDeadRosterForVessel(string vesselId)
+        {
+            return roster.Values
+                         .Where(k => vesselId.Equals(k.GetVesselId()))
+                         .Where(k => k.IsDead());
+        }
+
+        public CivPopKerbal GetKerbal(string name)
+        {
+            return roster[name];
         }
 
         public void Add(CivPopVessel vessel)
         {
             fleet.Add(vessel.GetId(), vessel);
+        }
+
+        public bool VesselExists(string name)
+        {
+            return fleet.ContainsKey(name);
         }
 
         public IEnumerable<CivPopVessel> GetVessels()

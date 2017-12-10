@@ -67,6 +67,40 @@ namespace CivilianPopulation.Domain.Services
         }
 
         [Test()]
+        public void create_no_couples_when_all_males_are_dead()
+        {
+            for (int i = 0; i < 100; i++)
+            {
+                CivPopKerbal kerbal = builder.build(0);
+                kerbal.SetVesselId(vessel.GetId());
+                repo.Add(kerbal);
+                if (kerbal.GetGender() == CivPopKerbalGender.MALE)
+                {
+                    repo.Kill(kerbal);
+                }
+            }
+            IEnumerable<CivPopCouple> couples = service.makeCouples(0, vessel, repo);
+            Assert.AreEqual(0, couples.Count());
+        }
+
+        [Test()]
+        public void create_no_couples_when_all_females_are_dead()
+        {
+            for (int i = 0; i < 100; i++)
+            {
+                CivPopKerbal kerbal = builder.build(0);
+                kerbal.SetVesselId(vessel.GetId());
+                repo.Add(kerbal);
+                if (kerbal.GetGender() == CivPopKerbalGender.FEMALE)
+                {
+                    repo.Kill(kerbal);
+                }
+            }
+            IEnumerable<CivPopCouple> couples = service.makeCouples(0, vessel, repo);
+            Assert.AreEqual(0, couples.Count());
+        }
+
+        [Test()]
         public void turn_pregnant_some_female_when_in_couples()
         {
             for (int i = 0; i < 1000; i++)
@@ -78,14 +112,14 @@ namespace CivilianPopulation.Domain.Services
             IEnumerable<CivPopCouple> couples = service.makeCouples(0, vessel, repo);
             service.turnPregnantSomeFemales(0, couples, vessel.IsAllowBreeding());
 
-            int count = repo.GetRosterForVessel(vessel.GetId())
+            int count = repo.GetLivingRosterForVessel(vessel.GetId())
                 .Where(k => k.GetExpectingBirthAt() > 0)
                 .Count();
             Assert.AreEqual(14, count);
         }
 
         [Test()]
-        public void turn_pregnant_some_female_when_breeding_not_allowed()
+        public void not_turn_pregnant_some_female_when_breeding_not_allowed()
         {
             for (int i = 0; i < 1000; i++)
             {
@@ -96,7 +130,7 @@ namespace CivilianPopulation.Domain.Services
             IEnumerable<CivPopCouple> couples = service.makeCouples(0, vessel, repo);
             service.turnPregnantSomeFemales(0, couples, false);
 
-            int count = repo.GetRosterForVessel(vessel.GetId())
+            int count = repo.GetLivingRosterForVessel(vessel.GetId())
                 .Where(k => k.GetExpectingBirthAt() > 0)
                 .Count();
             Assert.AreEqual(0, count);
@@ -115,7 +149,24 @@ namespace CivilianPopulation.Domain.Services
             service.Update(TimeUnit.DAY, repo);
 
             Assert.AreEqual(-1, kerbal.GetExpectingBirthAt());
-            Assert.AreEqual(2, repo.GetRosterForVessel(vessel.GetId()).Count());
+            Assert.AreEqual(2, repo.GetLivingRosterForVessel(vessel.GetId()).Count());
+        }
+
+        [Test()]
+        public void not_make_dead_female_give_birth_after_pregnancy_duration()
+        {
+            vessel.SetCapacity(2);
+            CivPopKerbal kerbal = builder.build(0);
+            kerbal.SetVesselId(vessel.GetId());
+            kerbal.SetExpectingBirthAt(2);
+            repo.Add(kerbal);
+            repo.Kill(kerbal);
+
+            service.Update(0, repo);
+            service.Update(TimeUnit.DAY, repo);
+
+            Assert.AreEqual(2, kerbal.GetExpectingBirthAt());
+            Assert.AreEqual(0, repo.GetLivingRosterForVessel(vessel.GetId()).Count());
         }
 
         [Test()]
@@ -131,7 +182,7 @@ namespace CivilianPopulation.Domain.Services
             service.Update(TimeUnit.DAY, repo);
 
             Assert.AreEqual(-1, kerbal.GetExpectingBirthAt());
-            Assert.AreEqual(1, repo.GetRosterForVessel(vessel.GetId()).Count());
+            Assert.AreEqual(1, repo.GetLivingRosterForVessel(vessel.GetId()).Count());
         }
     }
 }

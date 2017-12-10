@@ -18,6 +18,7 @@ namespace CivilianPopulation.Domain.Services
             int count = repo.GetRoster()
                             .Where(kerbal => kerbal.IsCivilian())
                             .Where(kerbal => kerbal.GetVesselId() != null)
+                            .Where(kerbal => !kerbal.IsDead())
                             .Count()
                             ;
             repo.AddFunds(this.rent * count);

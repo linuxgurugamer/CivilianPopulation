@@ -18,14 +18,14 @@ namespace CivilianPopulation.Domain.Services
             this.builder = builder;
         }
 
-        public void Update(long date, CivPopRepository repo)
+        public void Update(double date, CivPopRepository repo)
         {
             foreach (CivPopVessel vessel in repo.GetVessels())
             {
                 if (vessel.IsOrbiting()
                     && vessel.GetBody().getType() != CelestialBodyType.OTHERS
                     && vessel.IsAllowDocking()
-                    && vessel.GetCapacity() > repo.GetRosterForVessel(vessel.GetId()).Count()
+                    && vessel.GetCapacity() > repo.GetLivingRosterForVessel(vessel.GetId()).Count()
                    )
                 {
                     if (vessel.GetMissionArrival() < 0)

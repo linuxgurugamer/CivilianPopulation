@@ -57,6 +57,7 @@
     <Compile Include="Services\CivPopKerbalBuilder.cs" />
     <Compile Include="Services\CivPopServiceGrowth.cs" />
     <Compile Include="Services\CivPopCouple.cs" />
+    <Compile Include="Services\CivPopServiceDeath.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Repository\" />

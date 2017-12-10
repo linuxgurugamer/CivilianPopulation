@@ -55,6 +55,29 @@ namespace CivilianPopulation.Domain.Services
         }
 
         [Test()]
+        public void launch_a_mission_to_replace_a_dead_crew()
+        {
+            vessel.SetOrbiting(true);
+            vessel.SetBody(KERBIN);
+            vessel.SetMissionType(null);
+            vessel.SetMissionArrival(-1);
+            vessel.SetAllowDocking(true);
+
+            for (int i = 0; i < 4; i++)
+            {
+                CivPopKerbal kerbal = new CivPopKerbal("kerbal" + i, CivPopKerbalGender.FEMALE, 0, true);
+                repo.Add(kerbal);
+                kerbal.SetVesselId(vessel.GetId());
+                repo.Kill(kerbal);
+            }
+
+            service.Update(0, repo);
+
+            Assert.AreEqual(TimeUnit.DAY * 85, repo.GetVessel("vessel").GetMissionArrival());
+            Assert.AreEqual("HOMEWORLD", repo.GetVessel("vessel").GetMissionType());
+        }
+
+        [Test()]
         public void launch_a_mission_for_day_100_at_day_15()
         {
             vessel.SetOrbiting(true);
@@ -155,7 +178,7 @@ namespace CivilianPopulation.Domain.Services
 
             for (int i = 0; i < 4; i++)
             {
-                CivPopKerbal kerbal = new CivPopKerbal("kerbal"+i, CivPopKerbalGender.FEMALE, 0, true);
+                CivPopKerbal kerbal = new CivPopKerbal("kerbal" + i, CivPopKerbalGender.FEMALE, 0, true);
                 repo.Add(kerbal);
                 kerbal.SetVesselId(vessel.GetId());
             }

@@ -43,7 +43,7 @@ namespace CivilianPopulation.Domain.Services
         public IEnumerable<CivPopCouple> makeCouples(double date, CivPopVessel vessel, CivPopRepository repo)
         {
             IEnumerable<CivPopKerbal> adults
-                = repo.GetRosterForVessel(vessel.GetId())
+            = repo.GetLivingRosterForVessel(vessel.GetId())
                    .Where(kerbal => kerbal.getAge(date) != CivilianKerbalAge.YOUNG);
 
             IEnumerable<CivPopKerbal> males
@@ -115,22 +115,21 @@ namespace CivilianPopulation.Domain.Services
 
             IEnumerable<CivPopKerbal> females = repo.GetRoster()
                 .Where(kerbal => kerbal.GetExpectingBirthAt() > 0)
-                .Where(kerbal => kerbal.GetExpectingBirthAt() < date);
-            foreach (CivPopKerbal female in repo.GetRoster())
+                .Where(kerbal => !kerbal.IsDead())
+                .Where(kerbal => kerbal.GetExpectingBirthAt() < date)
+                ;
+            foreach (CivPopKerbal female in females)
             {
-                if (female.GetExpectingBirthAt() > 0 && female.GetExpectingBirthAt() < date)
+                female.SetExpectingBirthAt(-1);
+                if (female.GetVesselId() != null)
                 {
-                    female.SetExpectingBirthAt(-1);
-                    if (female.GetVesselId() != null)
+                    CivPopVessel vessel = repo.GetVessel(female.GetVesselId());
+                    if (vessel.GetCapacity() > repo.GetLivingRosterForVessel(vessel.GetId()).Count())
                     {
-                        CivPopVessel vessel = repo.GetVessel(female.GetVesselId());
-                        if (vessel.GetCapacity() > repo.GetRosterForVessel(vessel.GetId()).Count())
-                        {
-                            CivPopKerbal child = builder.build(date);
-                            child.SetBirthdate(date);
-                            child.SetVesselId(female.GetVesselId());
-                            childs.Add(child);
-                        }
+                        CivPopKerbal child = builder.build(date);
+                        child.SetBirthdate(date);
+                        child.SetVesselId(female.GetVesselId());
+                        childs.Add(child);
                     }
                 }
             }

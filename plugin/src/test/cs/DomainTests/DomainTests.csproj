@@ -43,6 +43,7 @@
     <Compile Include="Services\CivPopServiceRentShould.cs" />
     <Compile Include="Services\CivPopServiceContractorsShould.cs" />
     <Compile Include="Services\CivPopServiceGrowthShould.cs" />
+    <Compile Include="Services\CivPopServiceDeathShould.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

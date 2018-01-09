@@ -30,23 +30,13 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CivilianKerbal.cs" />
-    <Compile Include="CivilianKerbalCouple.cs" />
-    <Compile Include="CivilianPopulationGrowthService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="CivilianPopulationRentService.cs" />
-    <Compile Include="CivilianVessel.cs" />
-    <Compile Include="CivilianPopulationContractorService.cs" />
-    <Compile Include="ContractorMission.cs" />
-    <Compile Include="CivilianVesselBuilder.cs" />
     <Compile Include="CelestialBodyType.cs" />
     <Compile Include="CelestialBody.cs" />
     <Compile Include="CivilianPopulationRecruitmentService.cs" />
     <Compile Include="JSON.cs" />
-    <Compile Include="CivilianKerbalRoster.cs" />
     <Compile Include="TimeUnit.cs" />
     <Compile Include="CivilianKerbalAge.cs" />
-    <Compile Include="CivilianPopulationDeathService.cs" />
     <Compile Include="Repository\CivPopRepository.cs" />
     <Compile Include="Repository\CivPopKerbal.cs" />
     <Compile Include="Repository\CivPopVessel.cs" />

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using CivilianPopulation.Domain;
+using CivilianPopulation.Domain.Repository;
 using KSP.UI.Screens;
 using UnityEngine;
 
@@ -13,12 +14,11 @@ namespace CivilianPopulation.GUI
 		private ApplicationLauncherButton button = null;
 		private bool windowShown = false;
         private CivilianPopulationWindow window = CivilianPopulationWindow.EMPTY;
-		private Rect windowPosition = new Rect(Screen.width / 2 - 250, Screen.height / 2 - 250, 500, 300);
+		private Rect windowPosition = new Rect(Screen.width / 2 - 250, Screen.height / 2 - 250, 600, 300);
 		private Vector2 scrollPosition;
 
         private double currentDate;
-        private List<CivilianVessel> vessels;
-        private CivilianKerbalRoster roster;
+        private CivPopRepository repo;
 
         CheatPanel cheatPanel = new CheatPanel();
         CrewPanel crewPanel = new CrewPanel();
@@ -35,13 +35,12 @@ namespace CivilianPopulation.GUI
             vesselsPanel = new VesselsPanel();
 		}
 
-        public void update(double currentDate, List<CivilianVessel> vessels, CivilianKerbalRoster roster)
+        public void update(double currentDate, CivPopRepository repo)
         {
 			if (windowShown)
 			{
                 this.currentDate = currentDate;
-				this.vessels = vessels;
-                this.roster = roster;
+                this.repo = repo;
 				windowPosition = GUILayout.Window(0, windowPosition, drawWindow, "Civilian Population");
 			}
 		}
@@ -79,7 +78,7 @@ namespace CivilianPopulation.GUI
         private void drawWindow(int windowId)
         {
             GUILayout.BeginVertical();
-            scrollPosition = GUILayout.BeginScrollView(scrollPosition, GUILayout.Width(500), GUILayout.Height(300));
+            scrollPosition = GUILayout.BeginScrollView(scrollPosition, GUILayout.Width(600), GUILayout.Height(300));
 
             GUILayout.BeginHorizontal();
 
@@ -108,13 +107,13 @@ namespace CivilianPopulation.GUI
             if (window == CivilianPopulationWindow.CREW)
             {
                 crewPanel.setCurrentDate(currentDate);
-                crewPanel.setRoster(roster);
+                crewPanel.setRepository(repo);
                 crewPanel.draw();
             }
             if (window == CivilianPopulationWindow.VESSELS)
             {
                 vesselsPanel.setCurrentDate(currentDate);
-                vesselsPanel.setVessels(vessels);
+                vesselsPanel.setRepository(repo);
                 vesselsPanel.draw();
             }
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using CivilianPopulation.Domain;
+using CivilianPopulation.Domain.Repository;
 using UnityEngine;
 
 namespace CivilianPopulation.GUI
@@ -10,7 +11,7 @@ namespace CivilianPopulation.GUI
         private Grid grid;
         private TimeFormatter formatter;
 
-        private CivilianKerbalRoster roster;
+        private CivPopRepository repo;
         private double currentDate;
 
         public CrewPanel()
@@ -28,9 +29,9 @@ namespace CivilianPopulation.GUI
             this.formatter = new TimeFormatter();
         }
 
-        public void setRoster(CivilianKerbalRoster roster)
+        public void setRepository(CivPopRepository repo)
         {
-            this.roster = roster;
+            this.repo = repo;
         }
 
         public void setCurrentDate(double currentDate)
@@ -77,10 +78,10 @@ namespace CivilianPopulation.GUI
         private string getAge(string name)
         {
             string res = "?";
-            if (roster.exists(name)) 
+            if (repo.KerbalExists(name)) 
             {
-                CivilianKerbal kerbal = roster.get(name);
-                res = formatter.format(currentDate - kerbal.getBirthDate(), TimeFormat.AGE);
+                CivPopKerbal kerbal = repo.GetKerbal(name);
+                res = formatter.format(currentDate - kerbal.GetBirthdate(), TimeFormat.AGE);
             }
             return res;
         }
@@ -88,12 +89,12 @@ namespace CivilianPopulation.GUI
         private string getChildbirth(string name)
         {
             string res = "-";
-            if (roster.exists(name))
+            if (repo.KerbalExists(name)) 
             {
-                CivilianKerbal kerbal = roster.get(name);
-                if (kerbal.getExpectingBirthAt() > -1)
+                CivPopKerbal kerbal = repo.GetKerbal(name);
+                if (kerbal.GetExpectingBirthAt() > -1)
                 {
-                    res = formatter.format(kerbal.getExpectingBirthAt() - currentDate);
+                    res = formatter.format(kerbal.GetExpectingBirthAt() - currentDate);
                 }
             }
             return res;

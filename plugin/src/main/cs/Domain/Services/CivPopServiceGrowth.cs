@@ -32,9 +32,7 @@ namespace CivilianPopulation.Domain.Services
         {
             foreach (CivPopVessel vessel in repo.GetVessels())
             {
-                // make couples
                 IEnumerable<CivPopCouple> couples = makeCouples(date, vessel, repo);
-                // change females state
                 turnPregnantSomeFemales(date, couples, vessel.IsAllowBreeding());
             }
             birthOfNewCivilans(date, repo);

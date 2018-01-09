@@ -1,21 +1,22 @@
 ﻿using System;
-using CivilianPopulation.Domain;
 using System.Collections.Generic;
 using System.Linq;
+using CivilianPopulation.Domain.Services;
+using CivilianPopulation.Domain.Repository;
+using CivilianPopulation.Domain;
 
 namespace InfraConsole
 {
     class CivilianPopulationGrowthSimulator
     {
 
-        private CivilianPopulationGrowthService growth;
-        private CivilianPopulationDeathService death;
+        private CivPopServiceGrowth growth;
+        private CivPopServiceDeath death;
 
         private System.Random rng;
         private int idx;
 
-        private CivilianKerbalRoster roster;
-        private CivilianVessel vessel;
+        private CivPopRepository repo;
 
         private double now;
 
@@ -27,37 +28,32 @@ namespace InfraConsole
 
         public CivilianPopulationGrowthSimulator()
         {
-            growth = new CivilianPopulationGrowthService(setPregnant, birth);
-            death = new CivilianPopulationDeathService(kill);
-
-            roster = new CivilianKerbalRoster();
-            roster.add(new CivilianKerbal("male-0", "Civilian", true, false, 0, -1));
-            roster.add(new CivilianKerbal("female-0", "Civilian", true, false, 0, -1));
-
-            vessel = new CivilianVesselBuilder().allowingBreeding(true).build();
-
-			this.rng = new System.Random();
+            this.rng = new System.Random();
             this.idx = 0;
+
+            CivPopKerbalBuilder builder = new CivPopKerbalBuilder(GetName);
+            growth = new CivPopServiceGrowth(builder);
+            death = new CivPopServiceDeath();
+
+            repo = new CivPopRepository();
+
+            CivPopVessel vessel = new CivPopVessel("vessel");
+            vessel.SetAllowBreeding(true);
+            vessel.SetCapacity(1000000);
+            repo.Add(vessel);
+
+            CivPopKerbal male = new CivPopKerbal(GetName(CivPopKerbalGender.MALE), CivPopKerbalGender.MALE, 0, true);
+            male.SetVesselId("vessel");
+            repo.Add(male);
+            CivPopKerbal female = new CivPopKerbal(GetName(CivPopKerbalGender.FEMALE), CivPopKerbalGender.FEMALE, 0, true);
+            female.SetVesselId("vessel");
+            repo.Add(female);
 		}
 
-		public void setPregnant(CivilianKerbal kerbal, double at)
-		{
-            kerbal.setExpectingBirthAt(at);
-		}
-
-        public void birth(CivilianVessel vessel, CivilianKerbal mother, bool male)
-		{
-			mother.setExpectingBirthAt(-1);
-            CivilianKerbal kerbal = new CivilianKerbal("kerbal-"+idx, "Civilian", male, false, now, -1);
-            roster.add(kerbal);
-            vessel.addCrew(kerbal);
-            idx = idx + 1;
-		}
-
-        private void kill(CivilianKerbal kerbal)
+        public string GetName(CivPopKerbalGender gender)
         {
-            Console.WriteLine(kerbal.getName() + " is dead");
-            kerbal.setDead(true);
+            this.idx++;
+            return "kerbal-" + idx;
         }
 
 		public void run(int days)
@@ -66,26 +62,16 @@ namespace InfraConsole
             for (int today = 0; today <= days; today++)
             {
                 now = today * TimeUnit.DAY + 1;
-                growth.update(now, vessel);
-
-                CivilianKerbalRoster roster = new CivilianKerbalRoster();
-                foreach (CivilianKerbal kerbal in vessel.getFemales())
-                {
-                    roster.add(kerbal);
-                }
-                foreach (CivilianKerbal kerbal in vessel.getMales())
-                {
-                    roster.add(kerbal);
-                }
-                death.update(now, roster);
+                growth.Update(now, repo);
+                death.Update(now, repo);
 
                 Console.WriteLine(
                     (today / TimeUnit.DAYS_PER_YEARS)
                     + "\t" + today
-                    + "\t" + vessel.getCrewCount()
-					+ "\t" + vessel.getMales().Count()
-					+ "\t" + vessel.getFemales().Count()
-					+ "\t" + vessel.getFemales().Where(kerbal => kerbal.getExpectingBirthAt() > 0).Count()
+                    + "\t" + repo.GetLivingRosterForVessel("vessel").Count()
+                    + "\t" + repo.GetLivingRosterForVessel("vessel").Where(k => k.GetGender() == CivPopKerbalGender.MALE).Count()
+                    + "\t" + repo.GetLivingRosterForVessel("vessel").Where(k => k.GetGender() == CivPopKerbalGender.FEMALE).Count()
+                    + "\t" + repo.GetLivingRosterForVessel("vessel").Where(kerbal => kerbal.GetExpectingBirthAt() > 0).Count()
                 );
 			}
 		}

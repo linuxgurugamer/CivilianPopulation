@@ -31,14 +31,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CivilianPopulationGrowthServiceShould.cs" />
-    <Compile Include="CivilianPopulationRentServiceShould.cs" />
     <Compile Include="FundsAccount.cs" />
-    <Compile Include="CivilianPopulationContractorServiceShould.cs" />
     <Compile Include="CivilianPopulationRecruitmentServiceShould.cs" />
-    <Compile Include="CivilianKerbalRosterShould.cs" />
-    <Compile Include="CivilianKerbalShould.cs" />
-    <Compile Include="CivilianPopulationDeathServiceShould.cs" />
     <Compile Include="Repository\CivPopRepositoryShould.cs" />
     <Compile Include="Services\CivPopServiceRentShould.cs" />
     <Compile Include="Services\CivPopServiceContractorsShould.cs" />

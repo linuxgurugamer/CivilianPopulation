@@ -74,7 +74,6 @@
     <Compile Include="CivilianPopulationDockModule.cs" />
     <Compile Include="old\CivilianDockGrowth.cs" />
     <Compile Include="old\CivilianPopulationRegulator.cs" />
-    <Compile Include="CivilianPopulationAdapter.cs" />
     <Compile Include="CivilianPopulationRecruitmentModule.cs" />
     <Compile Include="CivilianPopulationHousingModule.cs" />
     <Compile Include="CivilianPopulationVesselModule.cs" />

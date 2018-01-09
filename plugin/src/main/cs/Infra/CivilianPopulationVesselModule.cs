@@ -19,8 +19,6 @@ namespace CivilianPopulation.Infra
         [KSPField(isPersistant = true, guiActive = false)]
 		public int missionTargetType;
 
-		private CivilianPopulationAdapter adapter = new CivilianPopulationAdapter();
-
         new public void Start()
         {
 		}
@@ -50,26 +48,6 @@ namespace CivilianPopulation.Infra
             }
             return res;
         }
-
-        public ContractorMission getMission()
-		{
-			ContractorMission mission = null;
-			if (missionEndDate != "-1")
-			{
-				try
-				{
-					mission = new ContractorMission(Convert.ToDouble(missionEndDate), adapter.intToBodyType(missionTargetType));
-				}
-				catch (Exception error)
-				{
-					log("error : " + error.Message);
-					log("error : " + error.StackTrace);
-					this.missionEndDate = "-1";
-					mission = null;
-				}
-			}
-			return mission;
-		}
 
         public bool isAllowDocking()
         {

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using CivilianPopulation.Domain;
+using CivilianPopulation.Domain.Repository;
 using UnityEngine;
 
 namespace CivilianPopulation.GUI
@@ -11,16 +12,16 @@ namespace CivilianPopulation.GUI
         private TimeFormatter formatter;
 
         private double currentDate;
-        private List<CivilianVessel> vessels;
+        private CivPopRepository repo;
 
         public VesselsPanel()
         {
             this.formatter = new TimeFormatter();
         }
 
-        public void setVessels(List<CivilianVessel> vessels)
+        public void setRepository(CivPopRepository repo)
         {
-            this.vessels = vessels;
+            this.repo = repo;
         }
 
         public void setCurrentDate(double currentDate)
@@ -31,35 +32,37 @@ namespace CivilianPopulation.GUI
         public void draw()
         {
             GUILayout.BeginVertical();
-            foreach (CivilianVessel vessel in vessels)
+            foreach (CivPopVessel vessel in repo.GetVessels())
             {
-                if (vessel.getCrewCount() > 0 || vessel.getHousingCapacity() > 0)
+                if (  repo.GetLivingRosterForVessel(vessel.GetId()).Count() > 0
+                    && vessel.GetCapacity() > 0
+                   )
                 {
                     GUILayout.BeginHorizontal();
                     GUILayout.Label(getVesselStatus(vessel));
                     GUILayout.EndHorizontal();
 
                     GUILayout.BeginHorizontal();
-                    GUILayout.Label("M : " + vessel.getMales().Count()
-                               + " - F : " + vessel.getFemales().Count()
-                               + " (" + vessel.getFemales().Where(kerbal => kerbal.getExpectingBirthAt() > 0).Count() + ")");
+                    GUILayout.Label("M : " + repo.GetLivingRosterForVessel(vessel.GetId()).Where(k => k.GetGender() == CivPopKerbalGender.MALE).Count()
+                               + " - F : " + repo.GetLivingRosterForVessel(vessel.GetId()).Where(k => k.GetGender() == CivPopKerbalGender.FEMALE).Count()
+                                    + " (" + repo.GetLivingRosterForVessel(vessel.GetId()).Where(k => k.GetExpectingBirthAt() > 0).Count() + ")");
                     GUILayout.EndHorizontal();
 
                     GUILayout.BeginHorizontal();
-                    GUILayout.Label("  Housing capacity : " + vessel.getHousingCapacity());
+                    GUILayout.Label("  Housing capacity : " + vessel.GetCapacity());
                     GUILayout.EndHorizontal();
 
-                    if (vessel.getMission() != null)
+                    if (vessel.GetMissionArrival() > 0)
                     {
                         GUILayout.BeginHorizontal();
-                        GUILayout.Label("  Mission arrival : " + formatter.format(vessel.getMission().getEndDate() - currentDate));
+                        GUILayout.Label("  Mission arrival : " + formatter.format(vessel.GetMissionArrival() - currentDate));
                         GUILayout.EndHorizontal();
                     }
 
-                    foreach (CivilianKerbal female in vessel.getFemales().Where(kerbal => kerbal.getExpectingBirthAt() > 0))
+                    foreach (CivPopKerbal female in repo.GetLivingRosterForVessel(vessel.GetId()).Where(k => k.GetExpectingBirthAt() > 0))
                     {
                         GUILayout.BeginHorizontal();
-                        GUILayout.Label("  " + female.getName() + " will give birth in " + formatter.format(female.getExpectingBirthAt() - currentDate));
+                        GUILayout.Label("  " + female.GetName() + " will give birth in " + formatter.format(female.GetExpectingBirthAt() - currentDate));
                         GUILayout.EndHorizontal();
                     }
                 }
@@ -67,11 +70,14 @@ namespace CivilianPopulation.GUI
             GUILayout.EndVertical();
         }
 
-        private string getVesselStatus(CivilianVessel vessel)
+        private string getVesselStatus(CivPopVessel vessel)
         {
-            string res = vessel.getName();
+            Vessel kVessel = FlightGlobals.Vessels
+                .Find(v => v.id.ToString().Equals(vessel.GetId()));
+
+            string res = kVessel.GetName();
             res += " - ";
-            if (vessel.isOrbiting())
+            if (vessel.IsOrbiting())
             {
                 res += "in orbit around ";
             }
@@ -79,15 +85,17 @@ namespace CivilianPopulation.GUI
             {
                 res += "on surface of ";
             }
-            res += vessel.getBody().getName();
+            res += kVessel.mainBody.name;
+            int civCount = repo.GetLivingRosterForVessel(vessel.GetId())
+                            .Where(kerbal => kerbal.IsCivilian())
+                            .Count();
             res += " - ";
-            res += vessel.getCivilianCount() + " civilian";
-            if (vessel.getCivilianCount() > 1)
+            res += civCount + " civilian";
+            if (civCount > 1)
             {
                 res += "s";
             }
             return res;
         }
-
     }
 }

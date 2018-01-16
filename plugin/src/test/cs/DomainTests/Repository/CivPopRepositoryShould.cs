@@ -51,5 +51,43 @@ namespace CivilianPopulation.Domain.Repository
             );
         }
 
+        [Test()]
+        public void allow_update_on_vessels()
+        {
+            CivPopRepository repo = new CivPopRepository();
+
+            CivPopVessel vessel = new CivPopVessel(Guid.NewGuid().ToString());
+            repo.Add(vessel);
+
+            string json = repo.ToJson();
+            CivPopRepository fromJson = new CivPopRepository(json);
+
+            fromJson.Add(vessel);
+
+            Assert.AreEqual(
+                repo.ToJson(),
+                fromJson.ToJson()
+            );
+        }
+
+        [Test()]
+        public void allow_trait_change_on_kerbals()
+        {
+            CivPopRepository repo = new CivPopRepository();
+
+            CivPopKerbal val = new CivPopKerbal("Valentina", CivPopKerbalGender.FEMALE, 0, true);
+            repo.Add(val);
+
+            string json = repo.ToJson();
+            CivPopRepository fromJson = new CivPopRepository(json);
+
+            val.SetCivilian(false);
+            fromJson.Add(val);
+
+            Assert.AreEqual(
+                repo.ToJson(),
+                fromJson.ToJson()
+            );
+        }
     }
 }

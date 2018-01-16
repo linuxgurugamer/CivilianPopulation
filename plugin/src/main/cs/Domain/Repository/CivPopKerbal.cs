@@ -60,6 +60,11 @@ namespace CivilianPopulation.Domain.Repository
             return this.gender;
         }
 
+        public void SetCivilian(bool civilian)
+        {
+            this.civilian = civilian;
+        }
+
         public bool IsCivilian()
         {
             return this.civilian;

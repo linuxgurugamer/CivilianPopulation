@@ -127,6 +127,7 @@ namespace CivilianPopulation.Infra
 
             foreach (ProtoCrewMember kerbal in kerbals)
             {
+                CivPopKerbal civKerbal;
                 if (!repo.KerbalExists(kerbal.name))
                 {
                     string kerbalName = kerbal.name;
@@ -136,14 +137,17 @@ namespace CivilianPopulation.Infra
                         gender = CivPopKerbalGender.MALE;
                     }
                     double birthdate = Planetarium.GetUniversalTime() - 15 * TimeUnit.YEAR - rng.Next(15 * TimeUnit.YEAR);
-                    bool civilian = false;
-                    if ("Civilian".Equals(kerbal.trait))
-                    {
-                        civilian = true;
-                    }
-                    CivPopKerbal civKerbal = new CivPopKerbal(kerbalName, gender, birthdate, civilian);
-                    repo.Add(civKerbal);
+                    civKerbal = new CivPopKerbal(kerbalName, gender, birthdate, false);
+                } else {
+                    civKerbal = repo.GetKerbal(kerbal.name);
                 }
+                bool civilian = false;
+                if ("Civilian".Equals(kerbal.trait))
+                {
+                    civilian = true;
+                }
+                civKerbal.SetCivilian(civilian);
+                repo.Add(civKerbal);
             }
 
             foreach (Vessel vessel in FlightGlobals.Vessels)

@@ -49,7 +49,14 @@ namespace CivilianPopulation.Domain.Repository
 
         public void Add(CivPopKerbal kerbal)
         {
-            roster.Add(kerbal.GetName(), kerbal);
+            if (roster.ContainsKey(kerbal.GetName()))
+            {
+                roster[kerbal.GetName()] = kerbal;
+            }
+            else
+            {
+                roster.Add(kerbal.GetName(), kerbal);
+            }
         }
 
         public void Kill(CivPopKerbal kerbal)
@@ -93,7 +100,14 @@ namespace CivilianPopulation.Domain.Repository
 
         public void Add(CivPopVessel vessel)
         {
-            fleet.Add(vessel.GetId(), vessel);
+            if (fleet.ContainsKey(vessel.GetId()))
+            {
+                fleet[vessel.GetId()] = vessel;
+            }
+            else
+            {
+                fleet.Add(vessel.GetId(), vessel);
+            }
         }
 
         public bool VesselExists(string name)

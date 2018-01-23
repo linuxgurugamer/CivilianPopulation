@@ -97,5 +97,10 @@ namespace CivilianPopulation.GUI
             }
             return res;
         }
+
+        private void log(string message)
+        {
+            Debug.Log(this.GetType().Name + " - " + message);
+        }
     }
 }

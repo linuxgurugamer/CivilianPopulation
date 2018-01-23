@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using CivilianPopulation.Domain;
 using CivilianPopulation.Domain.Repository;
+using CivilianPopulation.Domain.Services;
 using KSP.UI.Screens;
 using UnityEngine;
 
@@ -20,17 +21,16 @@ namespace CivilianPopulation.GUI
         private double currentDate;
         private CivPopRepository repo;
 
-        CheatPanel cheatPanel = new CheatPanel();
-        CrewPanel crewPanel = new CrewPanel();
-        VesselsPanel vesselsPanel = new VesselsPanel();
+        private CheatPanel cheatPanel;
+        private CrewPanel crewPanel;
+        private VesselsPanel vesselsPanel;
 
-
-		public CivilianPopulationGUI()
+        public CivilianPopulationGUI(CivPopServiceRent rent)
         {
 			GameEvents.onGUIApplicationLauncherReady.Add(onAppLauncherReady);//when AppLauncher can take apps, give it OnAppLauncherReady (mine)
 			GameEvents.onGUIApplicationLauncherDestroyed.Add(onAppLauncherDestroyed);//Not sure what this does
 
-            cheatPanel = new CheatPanel();
+            cheatPanel = new CheatPanel(rent);
             crewPanel = new CrewPanel();
             vesselsPanel = new VesselsPanel();
 		}

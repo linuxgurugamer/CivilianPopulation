@@ -88,9 +88,14 @@ namespace CivilianPopulation.Domain.Repository
 
         public IEnumerable<CivPopKerbal> GetDeadRosterForVessel(string vesselId)
         {
-            return roster.Values
+            List<CivPopKerbal> res = new List<CivPopKerbal>();
+            foreach (CivPopKerbal current in roster.Values
                          .Where(k => vesselId.Equals(k.GetVesselId()))
-                         .Where(k => k.IsDead());
+                         .Where(k => k.IsDead()))
+            {
+                res.Add(current);
+            }
+            return res;
         }
 
         public CivPopKerbal GetKerbal(string name)
@@ -117,12 +122,22 @@ namespace CivilianPopulation.Domain.Repository
 
         public IEnumerable<CivPopVessel> GetVessels()
         {
-            return fleet.Values;
+            List<CivPopVessel> res = new List<CivPopVessel>();
+            foreach (CivPopVessel civVessel in this.fleet.Values)
+            {
+                res.Add(civVessel);
+            }
+            return res;
         }
 
         public CivPopVessel GetVessel(string vesselId)
         {
             return fleet[vesselId];
+        }
+
+        public void Remove(CivPopVessel civVessel)
+        {
+            fleet.Remove(civVessel.GetId());
         }
 
         public string ToJson()

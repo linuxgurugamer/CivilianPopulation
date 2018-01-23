@@ -14,10 +14,6 @@ namespace CivilianPopulation.Infra
 		public bool allowDocking;
 		[KSPField(isPersistant = true, guiActive = false)]
 		public bool allowBreeding;
-		[KSPField(isPersistant = true, guiActive = false)]
-		public string missionEndDate;
-        [KSPField(isPersistant = true, guiActive = false)]
-		public int missionTargetType;
 
         new public void Start()
         {

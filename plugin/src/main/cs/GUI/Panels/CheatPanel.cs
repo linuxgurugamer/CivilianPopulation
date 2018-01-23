@@ -1,12 +1,16 @@
 ﻿using System;
+using CivilianPopulation.Domain.Services;
 using UnityEngine;
 
 namespace CivilianPopulation.GUI
 {
     public class CheatPanel
     {
-        public CheatPanel()
+        private CivPopServiceRent rent;
+
+        public CheatPanel(CivPopServiceRent rent)
         {
+            this.rent = rent;
         }
 
         public void draw()
@@ -24,7 +28,23 @@ namespace CivilianPopulation.GUI
             {
                 spawn();
             }
+
+            GUILayout.BeginHorizontal();
+            GUILayout.Label("Rent per civilian per day : ");
+            string newRent = GUILayout.TextField(rent.GetRent().ToString());
+            GUILayout.EndHorizontal();
+
             GUILayout.EndVertical();
+
+            if (!newRent.Equals(rent.GetRent().ToString()))
+            {
+                long newValue;
+                bool isLong = long.TryParse(newRent, out newValue);
+                if (isLong) 
+                {
+                    rent.SetRent(newValue);    
+                }
+            }
         }
 
         private ProtoCrewMember spawn()

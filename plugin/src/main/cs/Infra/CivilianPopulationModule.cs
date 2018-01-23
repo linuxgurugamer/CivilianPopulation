@@ -49,7 +49,7 @@ namespace CivilianPopulation.Infra
             }
             if (gui == null)
             {
-                gui = new CivilianPopulationGUI();
+                gui = new CivilianPopulationGUI(rent);
             }
             this.rng = new System.Random();
         }
@@ -183,6 +183,23 @@ namespace CivilianPopulation.Infra
                 }
                 repo.Add(civVessel);
             }
+
+            foreach (CivPopVessel civVessel in repo.GetVessels()) 
+            {
+                bool found = false;
+                foreach (Vessel vessel in FlightGlobals.Vessels)
+                {
+                    if (vessel.id.ToString().Equals(civVessel.GetId()))
+                    {
+                        found = true;
+                        break;
+                    }
+                }
+                if (!found)
+                {
+                    repo.Remove(civVessel);
+                }
+            }
         }
 
         private Domain.CelestialBodyType GetBodyType(CelestialBody body)
@@ -248,8 +265,10 @@ namespace CivilianPopulation.Infra
                                 while (newKerbal.gender != gender)
                                 {
                                     kspRoster.Remove(newKerbal);
-                                    kspRoster.GetNewKerbal(ProtoCrewMember.KerbalType.Crew);
+                                    newKerbal = kspRoster.GetNewKerbal(ProtoCrewMember.KerbalType.Crew);
                                 }
+                                newKerbal.ChangeName(current.GetName());
+                                newKerbal.trait = "Civilian";
 
                                 if (house.part.AddCrewmember(newKerbal))
                                 {

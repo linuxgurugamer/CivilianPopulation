@@ -2,6 +2,8 @@
 .project
 .classpath
 target/
+*.iml
+.idea/
 ~$*.xlsx
 **/cs/obj
 **/bin/Debug

@@ -120,7 +120,6 @@ namespace CivilianPopulation.GUI
             GUILayout.EndScrollView();
             GUILayout.EndVertical();
             UnityEngine.GUI.DragWindow();
-            log(repo.ToJson());
         }
 
         private void log(string message)

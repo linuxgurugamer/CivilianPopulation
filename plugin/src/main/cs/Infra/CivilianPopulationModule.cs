@@ -53,10 +53,10 @@ namespace CivilianPopulation.Infra
             }
             this.rng = new System.Random();
         }
-
+        
         public void OnGUI()
         {
-            gui.update(Planetarium.GetUniversalTime(), this.GetRepository());
+            gui.update(Planetarium.GetUniversalTime(), GetRepository());
         }
 
         public void FixedUpdate()
@@ -64,7 +64,7 @@ namespace CivilianPopulation.Infra
             double now = Planetarium.GetUniversalTime();
 
             CivPopRepository repo = GetRepository();
-            this.UpdateRepository(repo);
+            UpdateRepository(repo);
 
             contractors.Update(now, repo);
             death.Update(now, repo);
@@ -81,7 +81,7 @@ namespace CivilianPopulation.Infra
                 KillKerbals(repo, vessel);
                 CreateKerbals(repo, vessel);
             }
-            this.repoJSON = repo.ToJson();
+            repoJSON = repo.ToJson();
         }
 
         private string GenerateKerbalName(CivPopKerbalGender gender)
@@ -101,9 +101,9 @@ namespace CivilianPopulation.Infra
         private CivPopRepository GetRepository()
         {
             CivPopRepository repo = new CivPopRepository();
-            if (this.repoJSON != null)
+            if (repoJSON != null)
             {
-                repo = new CivPopRepository(this.repoJSON);
+                repo = new CivPopRepository(repoJSON.Replace('[', '{').Replace(']', '}'));
             }
             return repo;
         }
@@ -123,8 +123,6 @@ namespace CivilianPopulation.Infra
                 ProtoCrewMember.RosterStatus.Missing
             };
             IEnumerable<ProtoCrewMember> kerbals = HighLogic.CurrentGame.CrewRoster.Kerbals(type, statuses);
-
-
             foreach (ProtoCrewMember kerbal in kerbals)
             {
                 CivPopKerbal civKerbal;
@@ -141,11 +139,7 @@ namespace CivilianPopulation.Infra
                 } else {
                     civKerbal = repo.GetKerbal(kerbal.name);
                 }
-                bool civilian = false;
-                if ("Civilian".Equals(kerbal.trait))
-                {
-                    civilian = true;
-                }
+                bool civilian = "Civilian".Equals(kerbal.trait);
                 civKerbal.SetCivilian(civilian);
                 repo.Add(civKerbal);
             }

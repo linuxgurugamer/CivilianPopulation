@@ -34,18 +34,16 @@ namespace CivilianPopulation.GUI
             GUILayout.BeginVertical();
             foreach (CivPopVessel vessel in repo.GetVessels())
             {
-                if (  repo.GetLivingRosterForVessel(vessel.GetId()).Count() > 0
-                    && vessel.GetCapacity() > 0
-                   )
+                if (vessel.GetCapacity() > 0)
                 {
                     GUILayout.BeginHorizontal();
                     GUILayout.Label(getVesselStatus(vessel));
                     GUILayout.EndHorizontal();
 
                     GUILayout.BeginHorizontal();
-                    GUILayout.Label("M : " + repo.GetLivingRosterForVessel(vessel.GetId()).Where(k => k.GetGender() == CivPopKerbalGender.MALE).Count()
-                               + " - F : " + repo.GetLivingRosterForVessel(vessel.GetId()).Where(k => k.GetGender() == CivPopKerbalGender.FEMALE).Count()
-                                    + " (" + repo.GetLivingRosterForVessel(vessel.GetId()).Where(k => k.GetExpectingBirthAt() > 0).Count() + ")");
+                    GUILayout.Label("M : " + repo.GetLivingRosterForVessel(vessel.GetId()).Count(k => k.GetGender() == CivPopKerbalGender.MALE)
+                               + " - F : " + repo.GetLivingRosterForVessel(vessel.GetId()).Count(k => k.GetGender() == CivPopKerbalGender.FEMALE)
+                                    + " (" + repo.GetLivingRosterForVessel(vessel.GetId()).Count(k => k.GetExpectingBirthAt() > 0) + ")");
                     GUILayout.EndHorizontal();
 
                     GUILayout.BeginHorizontal();

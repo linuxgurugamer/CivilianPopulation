@@ -110,6 +110,12 @@ namespace CivilianPopulation.Infra
 
         private void UpdateRepository(CivPopRepository repo)
         {
+            if (repo.GetFunds() > 0)
+            {
+                Funding.Instance.AddFunds(repo.GetFunds(), TransactionReasons.Progression);
+                repo.AddFunds(repo.GetFunds() * -1);
+            }
+            
             ProtoCrewMember.KerbalType type = ProtoCrewMember.KerbalType.Crew;
             //ProtoCrewMember.KerbalType.Applicant;
             //ProtoCrewMember.KerbalType.Crew;
@@ -162,7 +168,6 @@ namespace CivilianPopulation.Infra
                 {
                     if (module.GetType() == typeof(CivilianPopulationVesselModule))
                     {
-                        //log("vessel has civ pop module");
                         CivilianPopulationVesselModule civModule = (CivilianPopulationVesselModule)module;
                         civVessel.SetCapacity(civModule.capacity);
                         civVessel.SetAllowDocking(civModule.allowDocking);
@@ -214,12 +219,11 @@ namespace CivilianPopulation.Infra
 
         private void KillKerbals(CivPopRepository repo, Vessel vessel)
         {
-            foreach (CivPopKerbal current in repo.GetDeadRosterForVessel(vessel.id.ToString()))
+            foreach (var current in repo.GetDeadRosterForVessel(vessel.id.ToString()))
             {
-                Part part = null;
-                foreach (Part p in vessel.parts)
+                foreach (var part in vessel.parts)
                 {
-                    foreach (ProtoCrewMember crew in p.protoModuleCrew)
+                    foreach (var crew in part.protoModuleCrew)
                     {
                         if (crew.name.Equals(current.GetName()))
                         {
@@ -235,34 +239,33 @@ namespace CivilianPopulation.Infra
 
         private void CreateKerbals(CivPopRepository repo, Vessel vessel)
         {
-            foreach (CivPopKerbal current in repo.GetLivingRosterForVessel(vessel.id.ToString()))
+            foreach (var current in repo.GetLivingRosterForVessel(vessel.id.ToString()))
             {
-                ProtoCrewMember crew = vessel.GetVesselCrew().Find(c => c.name.Equals(current.GetName()));
+                var crew = vessel.GetVesselCrew().Find(c => c.name.Equals(current.GetName()));
                 if (crew == null)
                 {
-                    List<CivilianPopulationHousingModule> houses = vessel.FindPartModulesImplementing<CivilianPopulationHousingModule>();
+                    var houses = vessel.FindPartModulesImplementing<CivilianPopulationHousingModule>();
                     if (houses.Count > 0)
                     {
-                        foreach (CivilianPopulationHousingModule house in houses)
+                        foreach (var house in houses)
                         {
                             if (house.part.CrewCapacity > house.part.protoModuleCrew.Count)
                             {
-                                KerbalRoster kspRoster = HighLogic.CurrentGame.CrewRoster;
-                                ProtoCrewMember newKerbal = kspRoster.GetNewKerbal(ProtoCrewMember.KerbalType.Crew);
+                                var kspRoster = HighLogic.CurrentGame.CrewRoster;
+                                var newKerbal = kspRoster.GetNewKerbal(ProtoCrewMember.KerbalType.Crew);
 
-                                ProtoCrewMember.Gender gender = ProtoCrewMember.Gender.Male;
+                                var gender = ProtoCrewMember.Gender.Male;
                                 if (current.GetGender().Equals(CivPopKerbalGender.FEMALE))
                                 {
                                     gender = ProtoCrewMember.Gender.Female;
                                 }
 
-                                while (newKerbal.gender != gender)
+                                while (newKerbal.gender != gender || newKerbal.trait != "Civilian")
                                 {
                                     kspRoster.Remove(newKerbal);
                                     newKerbal = kspRoster.GetNewKerbal(ProtoCrewMember.KerbalType.Crew);
                                 }
                                 newKerbal.ChangeName(current.GetName());
-                                newKerbal.trait = "Civilian";
 
                                 if (house.part.AddCrewmember(newKerbal))
                                 {

@@ -176,10 +176,7 @@ Civilian behaviour
 DONE :
 
 - Rent of civilian : 200 funds per civilian per day (6 hours).
-- Civilian contractor growth : Every 80 days on Kerbin orbit, 160 around Mun or Minmus, never elsewhere, a civilian will be created on an activated Civilian Dock.
+- Civilian contractor growth : Every 85 days on Kerbin orbit, 170 around Mun or Minmus, never elsewhere, a civilian will be created on an activated Civilian Dock.
 - Civilian recruitment process : The button recruit of the university will turn civilian living in this university into regular kerbals with a random choosen profession.
-- Civilian breeding growth : If allowed (From a Habitat part or the contractors dock), Kerbals will breed. Females give birth after 75 days of pregnancy. New born kerbal can start breeding at once.
-
-TODO :
-
-- Civilian aging and death
+- Civilian breeding growth : If allowed (From a Habitat part or the contractors dock), Kerbals will breed. Females give birth after 320 (3/4 of a Kerbin Year) days of pregnancy. Males can breed from 15yo females from 15yo to 45yo.
+- Civilian aging and death : Once a Kerbal reach 75yo, there (age-75)% chance per year that he dies from his old age any day during this year.

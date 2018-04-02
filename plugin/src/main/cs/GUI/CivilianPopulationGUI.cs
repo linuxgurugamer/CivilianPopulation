@@ -86,10 +86,12 @@ namespace CivilianPopulation.GUI
             {
                 windowShown = false;
             }
+	        /*
             if (GUILayout.Button("Cheat", GUILayout.Width(100f)))
             {
                 window = CivilianPopulationWindow.CHEAT;
             }
+            */
             if (GUILayout.Button("Crew", GUILayout.Width(100f)))
             {
                 window = CivilianPopulationWindow.CREW;

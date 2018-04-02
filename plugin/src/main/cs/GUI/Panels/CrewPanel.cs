@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using CivilianPopulation.Domain;
 using CivilianPopulation.Domain.Repository;
+using KSP.UI.Screens;
 using UnityEngine;
 
 namespace CivilianPopulation.GUI
@@ -41,61 +43,83 @@ namespace CivilianPopulation.GUI
 
         public void draw()
         {
-            Dictionary<string, string> crewVessels = new Dictionary<string, string>();
-            foreach (Vessel vessel in FlightGlobals.Vessels)
+            var i = 0;
+            var data = new string[repo.GetRoster().Count(), 6];
+            foreach (var crew in repo.GetRoster())
             {
-                foreach (ProtoCrewMember crew in vessel.GetVesselCrew())
+                ProtoCrewMember kCrew = null;
+                foreach (var current in HighLogic.CurrentGame.CrewRoster.Crew)
                 {
-                    crewVessels.Add(crew.name, vessel.GetName());
+                    if (current.name == crew.GetName())
+                    {
+                        kCrew = current;
+                        break;
+                    }
                 }
-            }
-
-            KerbalRoster kspRoster = HighLogic.CurrentGame.CrewRoster;
-            string[,] data = new string[HighLogic.CurrentGame.CrewRoster.Count, 6];
-
-            int i = 0;
-            foreach (ProtoCrewMember crew in HighLogic.CurrentGame.CrewRoster.Crew)
-            {
-                data[i, 0] = crew.name;
-                data[i, 1] = crew.trait;
-                data[i, 2] = "KSC";
-                if (crewVessels.ContainsKey(crew.name))
-                {
-                    data[i, 2] = crewVessels[crew.name];
-                }
-                data[i, 3] = crew.gender.displayDescription(); 
-                data[i, 4] = getAge(crew.name);
-                data[i, 5] = getChildbirth(crew.name);
+                
+                data[i, 0] = crew.GetName();
+                data[i, 1] = getTrait(kCrew);
+                data[i, 2] = getStatus(crew);
+                data[i, 3] = getGender(crew);
+                data[i, 4] = getAge(crew);
+                data[i, 5] = getChildbirth(crew);
                 i++;
             }
-
             GUILayout.BeginVertical();
             grid.setData(data);
             grid.draw();
             GUILayout.EndVertical();
         }
 
-        private string getAge(string name)
+        private string getTrait(ProtoCrewMember kCrew)
         {
-            string res = "?";
-            if (repo.KerbalExists(name)) 
+            var res = "Civilian";
+            if (kCrew != null)
             {
-                CivPopKerbal kerbal = repo.GetKerbal(name);
-                res = formatter.format(currentDate - kerbal.GetBirthdate(), TimeFormat.AGE);
+                res = kCrew.trait;
             }
             return res;
         }
 
-        private string getChildbirth(string name)
+        private string getStatus(CivPopKerbal crew)
+        {
+            var res = "KSC";
+            foreach (var vessel in FlightGlobals.Vessels)
+            {
+                if (vessel.id.ToString() == crew.GetVesselId())
+                {
+                    res = vessel.GetName();
+                    break;
+                }
+            }
+            if (crew.IsDead())
+            {
+                res = "Dead at " + res;
+            }
+            return res;
+        }
+
+        private string getGender(CivPopKerbal crew)
+        {
+            var gender = ProtoCrewMember.Gender.Male;
+            if (crew.GetGender().Equals(CivPopKerbalGender.FEMALE))
+            {
+                gender = ProtoCrewMember.Gender.Female;
+            }
+            return gender.displayDescription();
+        }
+
+        private string getAge(CivPopKerbal crew)
+        {
+            return formatter.format(currentDate - crew.GetBirthdate(), TimeFormat.AGE);
+        }
+
+        private string getChildbirth(CivPopKerbal crew)
         {
             string res = "-";
-            if (repo.KerbalExists(name)) 
+            if (crew.GetExpectingBirthAt() > -1)
             {
-                CivPopKerbal kerbal = repo.GetKerbal(name);
-                if (kerbal.GetExpectingBirthAt() > -1)
-                {
-                    res = formatter.format(kerbal.GetExpectingBirthAt() - currentDate);
-                }
+                res = formatter.format(crew.GetExpectingBirthAt() - currentDate);
             }
             return res;
         }

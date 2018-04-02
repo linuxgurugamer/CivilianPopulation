@@ -70,12 +70,12 @@ namespace CivilianPopulation.GUI
 
         private string getVesselStatus(CivPopVessel vessel)
         {
-            Vessel kVessel = FlightGlobals.Vessels
+            var kVessel = FlightGlobals.Vessels
                 .Find(v => v.id.ToString().Equals(vessel.GetId()));
 
-            string res = kVessel.GetName();
+            var res = kVessel.GetName();
             res += " - ";
-            if (vessel.IsOrbiting())
+            if (!kVessel.LandedOrSplashed)
             {
                 res += "in orbit around ";
             }
@@ -84,9 +84,9 @@ namespace CivilianPopulation.GUI
                 res += "on surface of ";
             }
             res += kVessel.mainBody.name;
-            int civCount = repo.GetLivingRosterForVessel(vessel.GetId())
-                            .Where(kerbal => kerbal.IsCivilian())
-                            .Count();
+            var civCount = repo
+                            .GetLivingRosterForVessel(vessel.GetId())
+                            .Count(kerbal => kerbal.IsCivilian());
             res += " - ";
             res += civCount + " civilian";
             if (civCount > 1)

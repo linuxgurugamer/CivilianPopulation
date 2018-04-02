@@ -11,6 +11,10 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<maven.assembly.version>3.1.1</maven.assembly.version>
+		<!--
+		While waiting for https://issues.apache.org/jira/browse/MASSEMBLY-878 to be fixed,
+		This version of maven-assembly-plugin can be found here https://github.com/rleroy/maven-assembly-plugin
+		-->
 	</properties>
 
 	<modules>

@@ -45,7 +45,7 @@ namespace CivilianPopulation.GUI
         {
             var i = 0;
             var data = new string[repo.GetRoster().Count(), 6];
-            foreach (var crew in repo.GetRoster())
+            foreach (var crew in repo.GetRoster().OrderBy(crew => crew.GetName()))
             {
                 ProtoCrewMember kCrew = null;
                 foreach (var current in HighLogic.CurrentGame.CrewRoster.Crew)

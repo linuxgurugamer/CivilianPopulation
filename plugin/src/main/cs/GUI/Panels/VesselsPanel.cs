@@ -32,7 +32,7 @@ namespace CivilianPopulation.GUI
         public void draw()
         {
             GUILayout.BeginVertical();
-            foreach (CivPopVessel vessel in repo.GetVessels())
+            foreach (CivPopVessel vessel in repo.GetVessels().OrderBy(v => v.GetId()))
             {
                 if (vessel.GetCapacity() > 0)
                 {

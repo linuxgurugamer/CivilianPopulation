@@ -92,10 +92,6 @@ namespace CivilianPopulation.GUI
                     break;
                 }
             }
-            if (crew.IsDead())
-            {
-                res = "Dead at " + res;
-            }
             return res;
         }
 
@@ -111,6 +107,13 @@ namespace CivilianPopulation.GUI
 
         private string getAge(CivPopKerbal crew)
         {
+            var res = formatter.format(currentDate - crew.GetBirthdate(), TimeFormat.AGE);
+            if (crew.IsDead())
+            {
+                res = res + " - Dead";
+            }
+            return res;
+
             return formatter.format(currentDate - crew.GetBirthdate(), TimeFormat.AGE);
         }
 

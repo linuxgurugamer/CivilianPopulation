@@ -4,7 +4,7 @@
 	<groupId>tv.amis.pamynx</groupId>
 	<artifactId>ksp-civilian-population</artifactId>
 	<packaging>pom</packaging>
-	<version>2.1.1-SNAPSHOT</version>
+	<version>2.1.1</version>
 	<name>KSP :: Civilian Population</name>
 
 	<properties>
@@ -27,7 +27,7 @@
 
 	<scm>
 		<connection>scm:git:https://github.com/rleroy/CivilianPopulation.git</connection>
-		<tag>HEAD</tag>
+		<tag>ksp-civilian-population-2.1.1</tag>
 	</scm>
 
 	<build>

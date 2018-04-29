@@ -113,8 +113,6 @@ namespace CivilianPopulation.GUI
                 res = res + " - Dead";
             }
             return res;
-
-            return formatter.format(currentDate - crew.GetBirthdate(), TimeFormat.AGE);
         }
 
         private string getChildbirth(CivPopKerbal crew)

@@ -56,7 +56,10 @@ namespace CivilianPopulation.GUI
 					null,
 					null,
 					null,
-					ApplicationLauncher.AppScenes.ALWAYS,
+					ApplicationLauncher.AppScenes.FLIGHT |
+					ApplicationLauncher.AppScenes.MAPVIEW |
+					ApplicationLauncher.AppScenes.TRACKSTATION |
+					ApplicationLauncher.AppScenes.SPACECENTER,
 					GameDatabase.Instance.GetTexture("CivilianPopulation/GUI/CivPopIcon", false)
 				);
 			}

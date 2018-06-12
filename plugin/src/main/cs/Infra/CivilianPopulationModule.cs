@@ -10,7 +10,7 @@ using UnityEngine.AI;
 
 namespace CivilianPopulation.Infra
 {
-    [KSPScenario(ScenarioCreationOptions.AddToAllGames, GameScenes.FLIGHT, GameScenes.TRACKSTATION, GameScenes.SPACECENTER, GameScenes.EDITOR)]
+    [KSPScenario(ScenarioCreationOptions.AddToAllGames, GameScenes.FLIGHT, GameScenes.TRACKSTATION, GameScenes.SPACECENTER)]
     public class CivilianPopulationModule : ScenarioModule
     {
         private static CivPopKerbalBuilder builder;
@@ -60,38 +60,31 @@ namespace CivilianPopulation.Infra
             gui.update(Planetarium.GetUniversalTime(), GetRepository());
         }
 
-        private double lastUpdate = -1;
-
         public void FixedUpdate()
         {
             double now = Planetarium.GetUniversalTime();
 
-            if (lastUpdate > -1 && GetHour(lastUpdate) < GetHour(now)) {
-                CivPopRepository repo = GetRepository();
-                UpdateRepository(repo);
-    
-                contractors.Update(now, repo);
-                death.Update(now, repo);
-                growth.Update(now, repo);
-    
-                if (HighLogic.CurrentGame.Mode == Game.Modes.CAREER)
-                {
-                    rent.Update(now, repo);
-                }
-    
-                Vessel vessel = FlightGlobals.ActiveVessel;
-                if (vessel != null)
-                {
-                    KillKerbals(repo, vessel);
-                    CreateKerbals(repo, vessel);
-                }
-    
-                repoJSON = repo.ToJson();
-            }
-            lastUpdate = now;
-        }
+            CivPopRepository repo = GetRepository();
+            UpdateRepository(repo);
 
-        private double GetHour(double date) => Math.Floor(date / TimeUnit.HOUR);
+            contractors.Update(now, repo);
+            death.Update(now, repo);
+            growth.Update(now, repo);
+
+            if (HighLogic.CurrentGame.Mode == Game.Modes.CAREER)
+            {
+                rent.Update(now, repo);
+            }
+
+            Vessel vessel = FlightGlobals.ActiveVessel;
+            if (vessel != null)
+            {
+                KillKerbals(repo, vessel);
+                CreateKerbals(repo, vessel);
+            }
+
+            repoJSON = repo.ToJson();
+        }
 
         private string GenerateKerbalName(CivPopKerbalGender gender)
         {

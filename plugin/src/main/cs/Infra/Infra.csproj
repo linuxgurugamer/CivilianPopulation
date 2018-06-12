@@ -27,6 +27,8 @@
     <ConsolePause>false</ConsolePause>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="CivilianPopulationMonitor.cs" />
+    <Compile Include="CivilianPopulationService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="CivilianPopulationModule.cs" />
     <Compile Include="CivilianPopulationDockModule.cs" />

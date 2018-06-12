@@ -25,6 +25,8 @@ namespace CivilianPopulation.Infra
         private static CivilianPopulationGUI gui;
 
         protected System.Random rng;
+        private CivilianPopulationService service;
+        private CivilianPopulationMonitor monitor;
 
         public void Start()
         {
@@ -53,37 +55,51 @@ namespace CivilianPopulation.Infra
                 gui = new CivilianPopulationGUI(rent);
             }
             this.rng = new System.Random();
+            this.service = new CivilianPopulationService();
+            this.monitor = new CivilianPopulationMonitor();
         }
         
         public void OnGUI()
         {
+            //monitor.show();
+            monitor.add("Trash");
             gui.update(Planetarium.GetUniversalTime(), GetRepository());
+            monitor.add("OnGUI");
         }
 
         public void FixedUpdate()
         {
+            monitor.add("Trash");
             double now = Planetarium.GetUniversalTime();
+            monitor.add("GetUniversalTime");
 
             CivPopRepository repo = GetRepository();
             UpdateRepository(repo);
+            monitor.add("UpdateRepository");
 
             contractors.Update(now, repo);
+            monitor.add("contractors");
             death.Update(now, repo);
+            monitor.add("death");
             growth.Update(now, repo);
+            monitor.add("growth");
 
             if (HighLogic.CurrentGame.Mode == Game.Modes.CAREER)
             {
                 rent.Update(now, repo);
             }
+            monitor.add("rent");
 
             Vessel vessel = FlightGlobals.ActiveVessel;
             if (vessel != null)
             {
-                KillKerbals(repo, vessel);
-                CreateKerbals(repo, vessel);
+                service.KillKerbals(repo, vessel);
+                service.CreateKerbals(repo, vessel);
             }
+            monitor.add("Vessels");
 
             repoJSON = repo.ToJson();
+            monitor.add("ToJson");
         }
 
         private string GenerateKerbalName(CivPopKerbalGender gender)
@@ -100,14 +116,20 @@ namespace CivilianPopulation.Infra
             return res;
         }
 
+        private CivPopRepository repository = null;
         private CivPopRepository GetRepository()
         {
-            CivPopRepository repo = new CivPopRepository();
-            if (repoJSON != null)
+            monitor.add("Trash");
+            if (repository == null)
             {
-                repo = new CivPopRepository(repoJSON.Replace('[', '{').Replace(']', '}'));
+                repository = new CivPopRepository();
+                if (repoJSON != null)
+                {
+                    repository = new CivPopRepository(repoJSON.Replace('[', '{').Replace(']', '}'));
+                }
             }
-            return repo;
+            monitor.add("GetRepository");
+            return repository;
         }
 
         private void UpdateRepository(CivPopRepository repo)
@@ -219,74 +241,6 @@ namespace CivilianPopulation.Infra
             return type;
         }
 
-        private void KillKerbals(CivPopRepository repo, Vessel vessel)
-        {
-            foreach (var current in repo.GetDeadRosterForVessel(vessel.id.ToString()))
-            {
-                foreach (var part in vessel.parts)
-                {
-                    foreach (var crew in part.protoModuleCrew)
-                    {
-                        if (crew.name.Equals(current.GetName()))
-                        {
-                            part.RemoveCrewmember(crew);
-                            vessel.RemoveCrew(crew);
-                            crew.Die();
-                        }
-                    }
-                }
-                repo.Remove(current);
-            }
-        }
-
-        private void CreateKerbals(CivPopRepository repo, Vessel vessel)
-        {
-            foreach (var current in repo.GetLivingRosterForVessel(vessel.id.ToString()))
-            {
-                var crew = vessel.GetVesselCrew().Find(c => c.name.Equals(current.GetName()));
-                if (crew == null)
-                {
-                    var houses = vessel.FindPartModulesImplementing<CivilianPopulationHousingModule>();
-                    if (houses.Count > 0)
-                    {
-                        foreach (var house in houses)
-                        {
-                            if (house.part.CrewCapacity > house.part.protoModuleCrew.Count)
-                            {
-                                var kspRoster = HighLogic.CurrentGame.CrewRoster;
-                                var newKerbal = kspRoster.GetNewKerbal(ProtoCrewMember.KerbalType.Crew);
-
-                                var gender = ProtoCrewMember.Gender.Male;
-                                if (current.GetGender().Equals(CivPopKerbalGender.FEMALE))
-                                {
-                                    gender = ProtoCrewMember.Gender.Female;
-                                }
-
-                                while (newKerbal.gender != gender || newKerbal.trait != "Civilian")
-                                {
-                                    kspRoster.Remove(newKerbal);
-                                    newKerbal = kspRoster.GetNewKerbal(ProtoCrewMember.KerbalType.Crew);
-                                }
-                                newKerbal.ChangeName(current.GetName());
-
-                                if (house.part.AddCrewmember(newKerbal))
-                                {
-                                    vessel.SpawnCrew();
-                                    log("CreateKerbals : " + newKerbal.name + " has been placed successfully");
-                                    break;
-                                }
-                            }
-                        }
-                    }
-                }
-                crew = vessel.GetVesselCrew().Find(c => c.name.Equals(current.GetName()));
-                if (crew == null)
-                {
-                    current.SetDead(true);
-                    log("CreateKerbals : " + current.GetName() + " died because of a lack of room");
-                }
-            }
-        }
 
 		private void log(string message)
 		{

@@ -155,8 +155,8 @@ namespace CivilianPopulation.Infra
             IEnumerable<ProtoCrewMember> kerbals = HighLogic.CurrentGame.CrewRoster.Kerbals(type, statuses);
             foreach (ProtoCrewMember kerbal in kerbals)
             {
-                CivPopKerbal civKerbal;
-                if (!repo.KerbalExists(kerbal.name))
+                CivPopKerbal civKerbal = repo.GetKerbal(kerbal.name);
+                if (civKerbal == null)
                 {
                     string kerbalName = kerbal.name;
                     CivPopKerbalGender gender = CivPopKerbalGender.FEMALE;
@@ -166,8 +166,6 @@ namespace CivilianPopulation.Infra
                     }
                     double birthdate = Planetarium.GetUniversalTime() - 15 * TimeUnit.YEAR - rng.Next(15 * TimeUnit.YEAR);
                     civKerbal = new CivPopKerbal(kerbalName, gender, birthdate, false);
-                } else {
-                    civKerbal = repo.GetKerbal(kerbal.name);
                 }
                 bool civilian = "Civilian".Equals(kerbal.trait);
                 civKerbal.SetCivilian(civilian);
@@ -202,7 +200,10 @@ namespace CivilianPopulation.Infra
                 foreach (ProtoCrewMember kerbal in vessel.GetVesselCrew())
                 {
                     CivPopKerbal civKerbal = repo.GetKerbal(kerbal.name);
-                    civKerbal.SetVesselId(vessel.id.ToString());
+                    if (civKerbal != null)
+                    {
+                        civKerbal.SetVesselId(vessel.id.ToString());
+                    }
                 }
                 repo.Add(civVessel);
             }

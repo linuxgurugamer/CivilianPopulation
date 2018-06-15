@@ -100,7 +100,12 @@ namespace CivilianPopulation.Domain.Repository
 
         public CivPopKerbal GetKerbal(string name)
         {
-            return roster[name];
+            CivPopKerbal res = null;
+            if (KerbalExists(name))
+            {
+                res = roster[name];
+            }
+            return res;
         }
 
         public void Add(CivPopVessel vessel)

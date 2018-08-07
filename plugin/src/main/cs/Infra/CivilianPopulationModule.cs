@@ -169,7 +169,14 @@ namespace CivilianPopulation.Infra
                 }
                 bool civilian = "Civilian".Equals(kerbal.trait);
                 civKerbal.SetCivilian(civilian);
-                repo.Add(civKerbal);
+                if (ProtoCrewMember.RosterStatus.Assigned.Equals(kerbal.rosterStatus))
+                {
+                    repo.Add(civKerbal);
+                }
+                else
+                {
+                    repo.Remove(civKerbal);
+                }
             }
 
             foreach (Vessel vessel in FlightGlobals.Vessels)

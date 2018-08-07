@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using NUnit.Framework;
 
 namespace CivilianPopulation.Domain.Repository
@@ -87,6 +88,20 @@ namespace CivilianPopulation.Domain.Repository
             Assert.AreEqual(
                 repo.ToJson(),
                 fromJson.ToJson()
+            );
+        }
+
+        [Test()]
+        public void allow_removing_of_not_existing_kerbal()
+        {
+            CivPopRepository repo = new CivPopRepository();
+            CivPopKerbal val = new CivPopKerbal("Valentina", CivPopKerbalGender.FEMALE, 0, true);
+            
+            repo.Remove(val);
+            
+            Assert.AreEqual(
+                    repo.GetRoster().Count(),
+                    0
             );
         }
     }

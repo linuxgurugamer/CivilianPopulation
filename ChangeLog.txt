@@ -1,0 +1,8 @@
+Changelog
+
+3.0.0
+	Adoption by Linuxgurugamer
+	Added bulkheadProfiles to all parts
+	Fixed bad chars in some parts preventing them from loading
+	Reorganized directories
+	Created overall solution file

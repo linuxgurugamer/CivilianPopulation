@@ -12,6 +12,9 @@ namespace CivilianPopulation.Infra
 {
     [KSPScenario(ScenarioCreationOptions.AddToAllGames, GameScenes.FLIGHT, GameScenes.TRACKSTATION, GameScenes.SPACECENTER)]
     public class CivilianPopulationModule : ScenarioModule
+
+    // [KSPAddon(KSPAddon.Startup.AllGameScenes, true)]
+    //public class CivilianPopulationModule: MonoBehaviour
     {
         private static CivPopKerbalBuilder builder;
         private static CivPopServiceContractors contractors;
@@ -54,9 +57,14 @@ namespace CivilianPopulation.Infra
             {
                 gui = new CivilianPopulationGUI(rent);
             }
+            else
+                gui.InitButton();
+
+
             this.rng = new System.Random();
             this.service = new CivilianPopulationService();
             this.monitor = new CivilianPopulationMonitor();
+            DontDestroyOnLoad(this);
         }
         
         public void OnGUI()

@@ -6,3 +6,9 @@ Changelog
 	Fixed bad chars in some parts preventing them from loading
 	Reorganized directories
 	Created overall solution file
+	Added Assemblyversion.tt to all dlls
+	Added InstallChecker to all dlls
+	Adjusted node positions on many parts
+	Replaced stock toolbar code with ToolbarController
+	Added support for the ClickThroughBlocker
+	Added unique numbers for the window ids

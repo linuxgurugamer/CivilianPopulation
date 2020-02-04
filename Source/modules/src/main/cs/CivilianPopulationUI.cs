@@ -1,38 +1,54 @@
 ﻿using System;
 using KSP.UI.Screens;
 using UnityEngine;
+using ClickThroughFix;
+using ToolbarControl_NS;
 
 namespace CivilianPopulation
 {
+
     internal class CivilianPopulationUI
     {
         private CivilianPopulationCore core;
         private CivilianPopulationAdapter adapter;
 
-        private ApplicationLauncherButton button = null;
+        //private ApplicationLauncherButton button = null;
         private bool windowShown = false;
         private Rect windowPosition = new Rect(Screen.width / 2 - 250, Screen.height / 2 - 250, 500, 300);
         private Vector2 scrollPosition;
+
+        internal static String _AssemblyName { get { return System.Reflection.Assembly.GetExecutingAssembly().GetName().Name; } }
+        int baseWindowID;
 
         public CivilianPopulationUI(CivilianPopulationAdapter adapter, CivilianPopulationCore core)
         {
             this.adapter = adapter;
             this.core = core;
 
+#if false
             GameEvents.onGUIApplicationLauncherReady.Add(onAppLauncherReady);//when AppLauncher can take apps, give it OnAppLauncherReady (mine)
             GameEvents.onGUIApplicationLauncherDestroyed.Add(onAppLauncherDestroyed);//Not sure what this does
+#endif
+            InitToolbarButton();
+            baseWindowID = UnityEngine.Random.Range(1000, 2000000) + _AssemblyName.GetHashCode();
+
         }
 
         public void draw()
         {
             if (windowShown)
             {
-                windowPosition = GUILayout.Window(0, windowPosition, drawWindow, "Civilian Population");
+                windowPosition = ClickThruBlocker.GUILayoutWindow(baseWindowID, windowPosition, drawWindow, "Civilian Population UI");
             }
         }
 
-        private void onAppLauncherReady()
+        ToolbarControl toolbarControl2;
+        internal const string MODID = "CivPop";
+        internal const string MODNAME = "Civilian Population UI";
+
+        private void InitToolbarButton()
         {
+#if false
             if (ApplicationLauncher.Instance != null && button == null)
             {
                 button = ApplicationLauncher.Instance.AddModApplication(
@@ -44,6 +60,25 @@ namespace CivilianPopulation
                     null,
                     ApplicationLauncher.AppScenes.ALWAYS,
                     GameDatabase.Instance.GetTexture("CivilianPopulation/GUI/CivPopIcon", false)
+                );
+            }
+#endif
+            if (toolbarControl2 == null)
+            {
+                GameObject gameObject = new GameObject();
+                toolbarControl2 = gameObject.AddComponent<ToolbarControl>();
+                toolbarControl2.AddToAllToolbars(windowToggle, windowToggle,
+                    ApplicationLauncher.AppScenes.FLIGHT |
+                    ApplicationLauncher.AppScenes.MAPVIEW |
+                    ApplicationLauncher.AppScenes.TRACKSTATION |
+                    ApplicationLauncher.AppScenes.SPACECENTER |
+                    ApplicationLauncher.AppScenes.SPH |
+                    ApplicationLauncher.AppScenes.VAB,
+                    MODID,
+                    "civPopBtn2",
+                    "CivilianPopulation/PluginData/GUI/CivPopIcon-38",
+                    "CivilianPopulation/PluginData/GUI/CivPopIcon-24",
+                    MODNAME
                 );
             }
         }
@@ -86,6 +121,7 @@ namespace CivilianPopulation
             GUI.DragWindow();
         }
 
+#if false
         private void onAppLauncherDestroyed()
         {
             if (ApplicationLauncher.Instance != null && button != null)
@@ -93,5 +129,18 @@ namespace CivilianPopulation
                 ApplicationLauncher.Instance.RemoveApplication(button);
             }
         }
+#endif
+        private void OnDestroy()
+        {
+            if (toolbarControl2 != null)
+            {
+                toolbarControl2.OnDestroy();
+                GameObject.Destroy(toolbarControl2);
+                toolbarControl2 = null;
+
+            }
+        }
+
+
     }
 }

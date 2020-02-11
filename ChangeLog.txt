@@ -5,6 +5,8 @@ Changelog
 		Added smallCivPopReactor
 		Added colossalLandingLeg
 		Added colossalLandingLeg2
+	Added basic tags to all parts
+	Edited descriptions to remove i18n chars
 
 3.0.0
 	Adoption by Linuxgurugamer

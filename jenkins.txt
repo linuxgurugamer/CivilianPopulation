@@ -38,6 +38,7 @@
 2:CivilianPopulation,Source/plugin/src/main/cs/Domain/Domain.csproj,CivilianPopulation.version,GameData/CivilianPopulation/Plugins
 2:CivilianPopulation,Source/plugin/src/main/cs/GUI/GUI.csproj,CivilianPopulation.version,GameData/CivilianPopulation/Plugins
 2:CivilianPopulation,Source/plugin/src/main/cs/Infra/Infra.csproj,CivilianPopulation.version,GameData/CivilianPopulation/Plugins
+2:CivilianPopulation,Source/modules/src/main/cs/Modules.csproj,CivilianPopulation.version,GameData/CivilianPopulation/Plugins
 
 
 # 3:SOURCEFILE, DESTDIR

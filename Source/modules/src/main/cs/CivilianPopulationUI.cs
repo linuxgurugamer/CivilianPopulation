@@ -118,7 +118,7 @@ namespace CivilianPopulation
             GUILayout.EndHorizontal();
             GUILayout.EndScrollView();
             GUILayout.EndVertical();
-            GUI.DragWindow();
+            UnityEngine.GUI.DragWindow();
         }
 
 #if false

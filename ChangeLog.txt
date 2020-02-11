@@ -1,5 +1,11 @@
 Changelog
 
+3.0.0.1
+	Minor tweaks to the CTT configs
+		Added smallCivPopReactor
+		Added colossalLandingLeg
+		Added colossalLandingLeg2
+
 3.0.0
 	Adoption by Linuxgurugamer
 	Added bulkheadProfiles to all parts

@@ -1,5 +1,8 @@
 Changelog
 
+3.0.0.3
+	Removed bad character in CTT patch for the nduniverisity part in the TechRequired
+
 3.0.0.2
 	Added missing animation modules for the landing legs.  Legs don't have suspension at this time
 	Added missing reactorassets.png file (made new one, couldn't find in old versions of mod)

@@ -2,6 +2,7 @@ Changelog
 
 3.0.0.2
 	Added missing animation modules for the landing legs.  Legs don't have suspension at this time
+	Added missing reactorassets.png file (made new one, couldn't find in old versions of mod)
 
 3.0.0.1
 	Minor tweaks to the CTT configs

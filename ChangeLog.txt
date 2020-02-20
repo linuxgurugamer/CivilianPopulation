@@ -1,5 +1,15 @@
 Changelog
 
+3.0.0.4
+	Created new module to add sounds to animation: 
+		ModuleAnimateGenericSound
+			Can use seperate deploy and retraction sound, using Stock EFFECTS stanzas
+			Added code for parts in symmetry
+			Added option to set animation speed
+	Added animation sounds when landing legs lower and raise to both landing legs
+	Slowed animation down to 1/10 speed
+	
+
 3.0.0.3
 	Removed bad character in CTT patch for the nduniverisity part in the TechRequired
 

@@ -49,6 +49,7 @@
     <Compile Include="InstallChecker.cs" />
     <Compile Include="KSPAdapter.cs" />
     <Compile Include="CivilianPopulationAdapter.cs" />
+    <Compile Include="ModuleAnimateGenericSound.cs" />
     <Compile Include="RegisterToolbar.cs" />
   </ItemGroup>
   <ItemGroup>

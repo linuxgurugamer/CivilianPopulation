@@ -1,11 +1,12 @@
-﻿using UnityEngine;
+﻿#if false
+using UnityEngine;
 using KSP;
 using KSP.UI.Screens;
 using System.Collections;
 
 namespace CivilianPopulation
 {
-    class ModuleAnimateGenericSound : ModuleAnimateGeneric
+    class ModuleAnimateGenericEffects : ModuleAnimateGeneric
     {
         #region KSPFields
         [KSPField]
@@ -78,7 +79,7 @@ namespace CivilianPopulation
                 {
                     if ((Object)base.part.symmetryCounterparts[num] != (Object)base.part)
                     {
-                        base.part.symmetryCounterparts[num].Modules.GetModule<ModuleAnimateGenericSound>(0).DoToggle();
+                        base.part.symmetryCounterparts[num].Modules.GetModule<ModuleAnimateGenericEffects>(0).DoToggle();
                     }
                 }
             }
@@ -89,3 +90,4 @@ namespace CivilianPopulation
         }
     }
 }
+#endif

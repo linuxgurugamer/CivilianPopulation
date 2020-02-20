@@ -1,5 +1,11 @@
 Changelog
 
+3.0.0.5
+	Renamed module to ModuleAnimateGenericEffects
+	Split ModuleAnimateGenericEffects into new mod
+	Added MM code to parts to use stock ModuleAnimateGeneric if the ModuleAnimateGenericEffects is not installed
+	Mod now has dependency on ModuleAnimateGenericEffects for proper animation & sounds for the landing legs
+
 3.0.0.4
 	Created new module to add sounds to animation: 
 		ModuleAnimateGenericSound

@@ -1,5 +1,17 @@
 Changelog
 
+3.0.0.6
+	Fixed time displays to show time in years, days, hours & minutes
+	Changed the "x" to "Close" in the GUI
+	Added following parts:
+		biosphereAirlock
+		LaserSmelter
+		CNC Mill
+		CivPopSAS
+		CivPoPSaucer
+		Flight School
+		Movie Theater
+
 3.0.0.5
 	Renamed module to ModuleAnimateGenericEffects
 	Split ModuleAnimateGenericEffects into new mod

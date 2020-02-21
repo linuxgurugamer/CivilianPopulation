@@ -1,10 +1,9 @@
-﻿using System;
-namespace CivilianPopulation.Domain
+﻿namespace CivilianPopulation.Domain
 {
-	public enum CelestialBodyType
-	{
-		HOMEWORLD,
-		HOMEWORLD_MOON,
-		OTHERS
-	}
+    public enum CelestialBodyType
+    {
+        HOMEWORLD,
+        HOMEWORLD_MOON,
+        OTHERS
+    }
 }

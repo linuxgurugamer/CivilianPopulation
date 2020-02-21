@@ -5,7 +5,7 @@ namespace CivilianPopulation.Infra
 {
     public class CivilianPopulationService
     {
-        
+
         public void CreateKerbals(CivPopRepository repo, Vessel vessel)
         {
             foreach (var current in repo.GetLivingRosterForVessel(vessel.id.ToString()))
@@ -54,7 +54,7 @@ namespace CivilianPopulation.Infra
                 }
             }
         }
-        
+
         public void KillKerbals(CivPopRepository repo, Vessel vessel)
         {
             foreach (var current in repo.GetDeadRosterForVessel(vessel.id.ToString()))
@@ -74,7 +74,7 @@ namespace CivilianPopulation.Infra
                 repo.Remove(current);
             }
         }
-        
+
         private void log(string message)
         {
             Debug.Log(this.GetType().Name + " - " + message);

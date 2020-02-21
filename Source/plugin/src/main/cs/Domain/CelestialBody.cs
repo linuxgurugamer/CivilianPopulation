@@ -1,5 +1,4 @@
-﻿using System;
-namespace CivilianPopulation.Domain
+﻿namespace CivilianPopulation.Domain
 {
     public class CelestialBody
     {
@@ -22,19 +21,19 @@ namespace CivilianPopulation.Domain
             return this.type;
         }
 
-		public override bool Equals(object obj)
-		{
-			var that = obj as CelestialBody;
-			if (that == null)
-			{
-				return false;
-			}
-			return this.name.Equals(that.name);
-		}
+        public override bool Equals(object obj)
+        {
+            var that = obj as CelestialBody;
+            if (that == null)
+            {
+                return false;
+            }
+            return this.name.Equals(that.name);
+        }
 
-		public override int GetHashCode()
-		{
-			return this.name.GetHashCode();
-		}
-	}
+        public override int GetHashCode()
+        {
+            return this.name.GetHashCode();
+        }
+    }
 }

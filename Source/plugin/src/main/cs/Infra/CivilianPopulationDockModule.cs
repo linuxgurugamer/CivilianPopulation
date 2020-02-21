@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace CivilianPopulation.Infra
 {
@@ -15,46 +14,46 @@ namespace CivilianPopulation.Infra
 
         public void Update()
         {
-			Events["activate"].active = !activated;
-			Events["deactivate"].active = activated;
-		}
+            Events["activate"].active = !activated;
+            Events["deactivate"].active = activated;
+        }
 
         public void FixedUpdate()
         {
-			// log(" - FixedUpdate !");
-		}
+            // log(" - FixedUpdate !");
+        }
 
         [KSPEvent(guiName = "Allow contractors", active = true, guiActive = true)]
         public void activate()
         {
-			this.getCivilianPopulationVesselModule().setAllowDocking(true);
-			this.activated = true;
-		}
+            this.getCivilianPopulationVesselModule().setAllowDocking(true);
+            this.activated = true;
+        }
 
         [KSPEvent(guiName = "Refuse contractors", active = false, guiActive = true)]
         public void deactivate()
         {
             this.getCivilianPopulationVesselModule().setAllowDocking(false);
-			this.activated = false;
+            this.activated = false;
         }
 
-		public bool isActivated() 
+        public bool isActivated()
         {
             return this.activated;
         }
 
         private CivilianPopulationVesselModule getCivilianPopulationVesselModule()
         {
-			foreach (VesselModule module in vessel.vesselModules)
-			{
-				if (module.GetType() == typeof(CivilianPopulationVesselModule))
-				{
-					CivilianPopulationVesselModule civPopModule = (CivilianPopulationVesselModule)module;
+            foreach (VesselModule module in vessel.vesselModules)
+            {
+                if (module.GetType() == typeof(CivilianPopulationVesselModule))
+                {
+                    CivilianPopulationVesselModule civPopModule = (CivilianPopulationVesselModule)module;
                     return civPopModule;
-				}
-			}
-			return null;
-		}
+                }
+            }
+            return null;
+        }
 
         private void log(string message)
         {

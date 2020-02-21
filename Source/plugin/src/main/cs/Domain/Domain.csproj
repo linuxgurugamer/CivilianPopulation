@@ -37,6 +37,7 @@
       <DependentUpon>AssemblyVersion.tt</DependentUpon>
     </Compile>
     <Compile Include="InstallChecker.cs" />
+    <Compile Include="MovieTheaterModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="CelestialBodyType.cs" />
     <Compile Include="CelestialBody.cs" />

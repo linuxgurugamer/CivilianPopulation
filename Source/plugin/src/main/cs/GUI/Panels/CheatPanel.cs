@@ -1,5 +1,4 @@
-﻿using System;
-using CivilianPopulation.Domain.Services;
+﻿using CivilianPopulation.Domain.Services;
 using UnityEngine;
 
 namespace CivilianPopulation.GUI
@@ -40,9 +39,9 @@ namespace CivilianPopulation.GUI
             {
                 long newValue;
                 bool isLong = long.TryParse(newRent, out newValue);
-                if (isLong) 
+                if (isLong)
                 {
-                    rent.SetRent(newValue);    
+                    rent.SetRent(newValue);
                 }
             }
         }
@@ -53,7 +52,7 @@ namespace CivilianPopulation.GUI
             ProtoCrewMember newKerbal = kspRoster.GetNewKerbal(ProtoCrewMember.KerbalType.Crew);
             foreach (Vessel vessel in FlightGlobals.Vessels)
             {
-                log(vessel.GetName()); 
+                log(vessel.GetName());
                 if (vessel.GetName().Equals("Ground Base - Laythe"))
                 {
                     log("Adding crew : " + newKerbal.name + " to vessel");

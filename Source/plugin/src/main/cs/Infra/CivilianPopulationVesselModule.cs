@@ -1,23 +1,20 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using CivilianPopulation.Domain;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 namespace CivilianPopulation.Infra
 {
     public class CivilianPopulationVesselModule : VesselModule
     {
-		[KSPField(isPersistant = true, guiActive = false)]
-		public int capacity;
-		[KSPField(isPersistant = true, guiActive = false)]
-		public bool allowDocking;
-		[KSPField(isPersistant = true, guiActive = false)]
-		public bool allowBreeding;
+        [KSPField(isPersistant = true, guiActive = false)]
+        public int capacity;
+        [KSPField(isPersistant = true, guiActive = false)]
+        public bool allowDocking;
+        [KSPField(isPersistant = true, guiActive = false)]
+        public bool allowBreeding;
 
         new public void Start()
         {
-		}
+        }
 
         public void Update()
         {
@@ -25,11 +22,11 @@ namespace CivilianPopulation.Infra
 
         public void FixedUpdate()
         {
-			if (FlightGlobals.ActiveVessel != null && FlightGlobals.ActiveVessel.id == vessel.id)
-			{
+            if (FlightGlobals.ActiveVessel != null && FlightGlobals.ActiveVessel.id == vessel.id)
+            {
                 this.capacity = updateVesselCapacity();
-			}
-		}
+            }
+        }
 
         private int updateVesselCapacity()
         {
@@ -50,36 +47,36 @@ namespace CivilianPopulation.Infra
             return allowDocking;
         }
 
-		public void setAllowDocking(bool allow)
-		{
-			this.allowDocking = allow;
-			List<CivilianPopulationDockModule> docks = FlightGlobals.ActiveVessel.FindPartModulesImplementing<CivilianPopulationDockModule>();
-			foreach (CivilianPopulationDockModule dock in docks)
-			{
-				dock.activated = allow;
-			}
-		}
+        public void setAllowDocking(bool allow)
+        {
+            this.allowDocking = allow;
+            List<CivilianPopulationDockModule> docks = FlightGlobals.ActiveVessel.FindPartModulesImplementing<CivilianPopulationDockModule>();
+            foreach (CivilianPopulationDockModule dock in docks)
+            {
+                dock.activated = allow;
+            }
+        }
 
         public bool isAllowBreeding()
         {
             return allowBreeding;
         }
 
-		public void setAllowBreeding(bool allow)
-		{
-			this.allowBreeding = allow;
-			List<CivilianPopulationHousingModule> houses = FlightGlobals.ActiveVessel.FindPartModulesImplementing<CivilianPopulationHousingModule>();
-			foreach (CivilianPopulationHousingModule house in houses)
-			{
-				house.activated = allow;
-			}
-		}
+        public void setAllowBreeding(bool allow)
+        {
+            this.allowBreeding = allow;
+            List<CivilianPopulationHousingModule> houses = FlightGlobals.ActiveVessel.FindPartModulesImplementing<CivilianPopulationHousingModule>();
+            foreach (CivilianPopulationHousingModule house in houses)
+            {
+                house.activated = allow;
+            }
+        }
 
-		private void log(string message)
-		{
-			Debug.Log(this.GetType().Name + " - " + message);
-		}
-	}
+        private void log(string message)
+        {
+            Debug.Log(this.GetType().Name + " - " + message);
+        }
+    }
 }
 
 

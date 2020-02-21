@@ -14,7 +14,7 @@ namespace CivilianPopulation.Infra
             counters = new Dictionary<string, long>();
             lastTick = DateTime.Now.Ticks;
         }
-        
+
         public void add(String counter)
         {
             if (!counters.ContainsKey(counter))

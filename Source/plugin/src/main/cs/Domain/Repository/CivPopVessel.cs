@@ -3,7 +3,7 @@ using System.Collections;
 
 namespace CivilianPopulation.Domain.Repository
 {
-    public class CivPopVessel 
+    public class CivPopVessel
     {
         private bool orbiting;
         private CelestialBody body;
@@ -93,7 +93,7 @@ namespace CivilianPopulation.Domain.Repository
         {
             this.capacity = capacity;
         }
-        
+
         public bool IsOrbiting()
         {
             return this.orbiting;

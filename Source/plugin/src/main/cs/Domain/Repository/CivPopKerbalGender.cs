@@ -1,5 +1,4 @@
-﻿using System;
-namespace CivilianPopulation.Domain.Repository
+﻿namespace CivilianPopulation.Domain.Repository
 {
     public enum CivPopKerbalGender
     {

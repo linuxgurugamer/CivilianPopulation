@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace CivilianPopulation
+﻿namespace CivilianPopulation
 {
     public class CivilianPopulationCore
     {

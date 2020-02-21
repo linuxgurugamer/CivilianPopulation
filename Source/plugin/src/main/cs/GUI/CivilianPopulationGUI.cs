@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using CivilianPopulation.Domain;
-using CivilianPopulation.Domain.Repository;
+﻿using CivilianPopulation.Domain.Repository;
 using CivilianPopulation.Domain.Services;
-using KSP.UI.Screens;
-using UnityEngine;
 using ClickThroughFix;
+using KSP.UI.Screens;
+using System;
 using ToolbarControl_NS;
+using UnityEngine;
 
 namespace CivilianPopulation.GUI
 {
@@ -128,7 +125,7 @@ namespace CivilianPopulation.GUI
 
             GUILayout.BeginHorizontal();
 
-            if (GUILayout.Button("x", GUILayout.Width(100f)))
+            if (GUILayout.Button("Close", GUILayout.Width(100f)))
             {
                 windowShown = false;
             }

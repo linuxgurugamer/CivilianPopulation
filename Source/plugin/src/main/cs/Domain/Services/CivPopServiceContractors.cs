@@ -1,6 +1,5 @@
-﻿using System;
+﻿using CivilianPopulation.Domain.Repository;
 using System.Linq;
-using CivilianPopulation.Domain.Repository;
 
 namespace CivilianPopulation.Domain.Services
 {

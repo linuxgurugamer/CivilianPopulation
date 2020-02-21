@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 
 namespace CivilianPopulation
@@ -26,7 +25,7 @@ namespace CivilianPopulation
             return this.vessel.vesselName;
         }
 
-        public int getCivilianCount() 
+        public int getCivilianCount()
         {
             return civilianCount;
         }
@@ -35,5 +34,5 @@ namespace CivilianPopulation
         {
             return this.vessel.GetVesselCrew();
         }
-   }
+    }
 }

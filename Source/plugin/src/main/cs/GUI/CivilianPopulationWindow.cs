@@ -1,5 +1,4 @@
-﻿using System;
-namespace CivilianPopulation.GUI
+﻿namespace CivilianPopulation.GUI
 {
     public enum CivilianPopulationWindow
     {

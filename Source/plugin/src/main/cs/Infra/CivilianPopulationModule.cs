@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using CivilianPopulation.Domain;
+﻿using CivilianPopulation.Domain;
 using CivilianPopulation.Domain.Repository;
 using CivilianPopulation.Domain.Services;
 using CivilianPopulation.GUI;
+using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
 
 namespace CivilianPopulation.Infra
 {
@@ -66,7 +63,7 @@ namespace CivilianPopulation.Infra
             this.monitor = new CivilianPopulationMonitor();
             DontDestroyOnLoad(this);
         }
-        
+
         public void OnGUI()
         {
             //monitor.show();
@@ -147,7 +144,7 @@ namespace CivilianPopulation.Infra
                 Funding.Instance.AddFunds(repo.GetFunds(), TransactionReasons.Progression);
                 repo.AddFunds(repo.GetFunds() * -1);
             }
-            
+
             ProtoCrewMember.KerbalType type = ProtoCrewMember.KerbalType.Crew;
             //ProtoCrewMember.KerbalType.Applicant;
             //ProtoCrewMember.KerbalType.Crew;
@@ -223,7 +220,7 @@ namespace CivilianPopulation.Infra
                 repo.Add(civVessel);
             }
 
-            foreach (CivPopVessel civVessel in repo.GetVessels()) 
+            foreach (CivPopVessel civVessel in repo.GetVessels())
             {
                 bool found = false;
                 foreach (Vessel vessel in FlightGlobals.Vessels)
@@ -258,9 +255,9 @@ namespace CivilianPopulation.Infra
         }
 
 
-		private void log(string message)
-		{
-			Debug.Log(this.GetType().Name + " - " + message);
-		}
+        private void log(string message)
+        {
+            Debug.Log(this.GetType().Name + " - " + message);
+        }
     }
 }

@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using CivilianPopulation.Domain.Repository;
 using System.Linq;
-using CivilianPopulation.Domain;
-using CivilianPopulation.Domain.Repository;
-using KSP.UI.Screens;
 using UnityEngine;
 
 namespace CivilianPopulation.GUI
@@ -56,7 +52,7 @@ namespace CivilianPopulation.GUI
                         break;
                     }
                 }
-                
+
                 data[i, 0] = crew.GetName();
                 data[i, 1] = getTrait(kCrew);
                 data[i, 2] = getStatus(crew);

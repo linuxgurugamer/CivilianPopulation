@@ -1,5 +1,5 @@
-﻿using System;
-using CivilianPopulation.Domain.Repository;
+﻿using CivilianPopulation.Domain.Repository;
+using System;
 
 namespace CivilianPopulation.Domain.Services
 {

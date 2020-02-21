@@ -90,7 +90,7 @@ namespace CivilianPopulation
             catch (Exception ex)
             {
                 Debug.LogError("-ERROR- " + this.GetType().FullName + "[" + this.GetInstanceID().ToString("X") + "][" + Time.time.ToString("0.00") + "]: " +
-                   "Exception caught while cleaning up old files.\n" + ex.Message + "\n" + ex.StackTrace );
+                   "Exception caught while cleaning up old files.\n" + ex.Message + "\n" + ex.StackTrace);
 
             }
         }

@@ -5,6 +5,11 @@ using System.Linq;
 
 namespace CivilianPopulation.Domain.Repository
 {
+    [KSPScenario(ScenarioCreationOptions.AddToAllGames, GameScenes.FLIGHT, GameScenes.TRACKSTATION, GameScenes.SPACECENTER)]
+    public class CivilianPopulationRosterModule : ScenarioModule
+    {
+
+    }
     public class CivPopRepository
     {
         private double funds;

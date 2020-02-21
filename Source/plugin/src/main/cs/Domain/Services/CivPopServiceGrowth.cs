@@ -1,7 +1,6 @@
-﻿using System;
+﻿using CivilianPopulation.Domain.Repository;
 using System.Collections.Generic;
 using System.Linq;
-using CivilianPopulation.Domain.Repository;
 
 namespace CivilianPopulation.Domain.Services
 {
@@ -132,7 +131,7 @@ namespace CivilianPopulation.Domain.Services
                 }
             }
 
-            foreach(CivPopKerbal child in childs)
+            foreach (CivPopKerbal child in childs)
             {
                 repo.Add(child);
             }

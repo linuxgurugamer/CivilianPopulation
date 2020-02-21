@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using UnityEngine;
-using KSP;
-using KSP.UI.Screens;
+﻿using UnityEngine;
 
 namespace CivilianPopulation
 {
@@ -15,7 +10,7 @@ namespace CivilianPopulation
 
         private static CivilianPopulationCore core;
         private static CivilianPopulationUI ui;
-        
+
         public void Start()
         {
             CivilianPopulationAdapter adapter = new KSPAdapter();
@@ -36,7 +31,7 @@ namespace CivilianPopulation
         {
             core.update();
         }
-        
+
         private void log(string message)
         {
             Debug.Log(this.GetType().Name + message);

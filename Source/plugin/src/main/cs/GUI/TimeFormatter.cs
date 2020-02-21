@@ -1,5 +1,5 @@
-﻿using System;
-using CivilianPopulation.Domain;
+﻿using CivilianPopulation.Domain;
+using System;
 
 namespace CivilianPopulation.GUI
 {
@@ -25,61 +25,62 @@ namespace CivilianPopulation.GUI
             return res;
         }
 
-		public string format(double time)
+        public string format(double time)
         {
             int sec = (int)time;
-			int min = 0;
-			int hour = 0;
-			int days = 0;
-			int years = 0;
-			if (sec >= 60)
-			{
-				min = sec / 60;
-				sec = sec - min * 60;
-			}
-			if (min >= 60)
-			{
-				hour = min / 60;
-				min = min - hour * 60;
-			}
+            int min = 0;
+            int hour = 0;
+            int days = 0;
+            int years = 0;
+            if (sec >= 60)
+            {
+                min = sec / 60;
+                sec = sec - min * 60;
+            }
+            if (min >= 60)
+            {
+                hour = min / 60;
+                min = min - hour * 60;
+            }
             if (hour >= TimeUnit.HOURS_PER_DAYS)
-			{
+            {
                 days = hour / TimeUnit.HOURS_PER_DAYS;
                 hour = hour - days * TimeUnit.HOURS_PER_DAYS;
-			}
+            }
             if (days >= TimeUnit.DAYS_PER_YEARS)
             {
                 years = days / TimeUnit.DAYS_PER_YEARS;
                 days = days - years * TimeUnit.DAYS_PER_YEARS;
             }
 
-			string secAsString = sec.ToString("D2");
-			string minAsString = min.ToString("D2");
-			string hourAsString = hour.ToString("D2");
+            string secAsString = sec.ToString("D2");
+            string minAsString = min.ToString("D2");
+            string hourAsString = hour.ToString("D2");
 
             String res = hourAsString + ":" + minAsString + ":" + secAsString;
-            if (days > 0 || years > 0) {
+            if (days > 0 || years > 0)
+            {
                 if (days > 1)
                 {
                     res = days + " day(s) " + res;
                 }
                 else
                 {
-					res = days + " day " + res;
-				}
+                    res = days + " day " + res;
+                }
             }
-			if (years > 0)
-			{
-				if (years > 1)
-				{
-					res = years + " year(s) " + res;
-				}
-				else
-				{
-					res = years + " year " + res;
-				}
-			}
-			return res;
+            if (years > 0)
+            {
+                if (years > 1)
+                {
+                    res = years + " year(s) " + res;
+                }
+                else
+                {
+                    res = years + " year " + res;
+                }
+            }
+            return res;
         }
 
         public string formatAge(double time)

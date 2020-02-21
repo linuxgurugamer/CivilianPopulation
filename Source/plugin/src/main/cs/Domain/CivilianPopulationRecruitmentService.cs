@@ -1,5 +1,4 @@
-﻿using System;
-namespace CivilianPopulation.Domain
+﻿namespace CivilianPopulation.Domain
 {
     public class CivilianPopulationRecruitmentService
     {
@@ -9,17 +8,17 @@ namespace CivilianPopulation.Domain
         public CivilianPopulationRecruitmentService(string traits)
         {
             this.traits = traits.Split(',');
-			this.rng = new System.Random();
-		}
+            this.rng = new System.Random();
+        }
 
         public string selectTrait()
         {
-			return selectTrait(rng.Next());
+            return selectTrait(rng.Next());
         }
 
-		public string selectTrait(int random)
-		{
+        public string selectTrait(int random)
+        {
             return this.traits[random % traits.Length];
-		}
-	}
+        }
+    }
 }

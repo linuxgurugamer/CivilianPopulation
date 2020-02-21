@@ -1,8 +1,9 @@
-﻿using System;
+﻿using ClickThroughFix;
 using KSP.UI.Screens;
-using UnityEngine;
-using ClickThroughFix;
+using System;
+using System.Text;
 using ToolbarControl_NS;
+using UnityEngine;
 
 namespace CivilianPopulation
 {
@@ -88,16 +89,35 @@ namespace CivilianPopulation
             windowShown = !windowShown;
         }
 
+        string FormatTime(double time)
+        {
+            int days = (int)(time / (6f * 3600f));
+            int years = days / 426;
+            days = days - years * 426;
+            int seconds = (int)(time % (6f * 3600));
+            int minutes = seconds / 60;
+            int hours = minutes / 60;
+            minutes -= hours * 60;
+
+            StringBuilder s = new StringBuilder();
+            if (years > 0)
+                s.Append(years + " years, ");
+            if (days > 0)
+                s.Append(days + " days, ");
+            s.Append(hours.ToString("D2") + ":" + minutes.ToString("D2"));
+
+            return s.ToString();
+        }
         private void drawWindow(int windowId)
         {
             GUILayout.BeginVertical();
             scrollPosition = GUILayout.BeginScrollView(scrollPosition, GUILayout.Width(500), GUILayout.Height(300));
 
             GUILayout.BeginHorizontal();
-            GUILayout.Label("Get universal time : " + Planetarium.GetUniversalTime());
+            GUILayout.Label("Get universal time : " + FormatTime(Planetarium.GetUniversalTime()));
             GUILayout.EndHorizontal();
             GUILayout.BeginHorizontal();
-            GUILayout.Label("Time until taxes : " + core.getTimeUntilTaxes());
+            GUILayout.Label("Time until taxes : " + FormatTime(core.getTimeUntilTaxes()));
             GUILayout.EndHorizontal();
 
             foreach (CivilianVessel vessel in adapter.getVessels())

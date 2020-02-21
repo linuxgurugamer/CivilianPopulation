@@ -1,5 +1,4 @@
-﻿using System;
-namespace CivilianPopulation.Domain
+﻿namespace CivilianPopulation.Domain
 {
     public enum CivilianKerbalAge
     {

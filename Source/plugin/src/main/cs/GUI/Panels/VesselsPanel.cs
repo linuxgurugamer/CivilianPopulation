@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using CivilianPopulation.Domain.Repository;
 using System.Linq;
-using CivilianPopulation.Domain;
-using CivilianPopulation.Domain.Repository;
 using UnityEngine;
 
 namespace CivilianPopulation.GUI

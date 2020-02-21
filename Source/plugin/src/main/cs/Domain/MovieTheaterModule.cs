@@ -17,21 +17,21 @@ namespace CivilianPopulation.Domain
         [KSPField(isPersistant = false, guiActive = false)]
         public float RomanceMovieBonus = .05f;
 
-        //[KSPField(isPersistant = false, guiActive = false)]
-        //public string InspirationResourceName = "inspiration";
+        [KSPField(isPersistant = false, guiActive = false)]
+        public string InspirationResourceName = "inspiration";
 
         [KSPField(isPersistant = true, guiActive = true, guiName = "Movie Type Playing")]
         public string MovieType = "none";
         [KSPField(isPersistant = true, guiActive = true, guiName = "Bonus")]
         public string MovieBonus = "none";
 
-        //void resetPartInspiration()
-        //{
-        //    /*  CHECK THIS OUT FOR BUG  */
-        //
-        //    this.part.RequestResource(InspirationResourceName, 99999999, ResourceFlowMode.NO_FLOW); //reset this part's resource only
-        //
-        //}
+        void resetPartInspiration()
+        {
+            /*  CHECK THIS OUT FOR BUG  */
+        
+            this.part.RequestResource(InspirationResourceName, 99999999, ResourceFlowMode.NO_FLOW); //reset this part's resource only
+        
+        }
         #region regolith
 
         [KSPField]

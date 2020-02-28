@@ -23,11 +23,15 @@ namespace CivilianPopulation.Infra
             // log(" - FixedUpdate !");
         }
 
-        [KSPEvent(guiName = "Allow breeding", active = true, guiActive = true)]
+        [KSPField(guiName = "Breeding Status:", isPersistant = true, guiActive = true, guiActiveEditor = false)]
+        public string breedingStatus = "Not allowed";
+
+        [KSPEvent(guiName = "Allow breeding", active = true, guiActive = true, guiActiveEditor = false)]
         public void activate()
         {
             this.getCivilianPopulationVesselModule().setAllowBreeding(true);
             this.activated = true;
+            breedingStatus = "Allowed";
         }
 
         [KSPEvent(guiName = "Forbid breeding", active = false, guiActive = true)]
@@ -35,6 +39,8 @@ namespace CivilianPopulation.Infra
         {
             this.getCivilianPopulationVesselModule().setAllowBreeding(false);
             this.activated = false;
+            breedingStatus = "Not Allowed";
+
         }
 
         public bool isActivated()

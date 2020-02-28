@@ -32,7 +32,7 @@ namespace CivilianPopulation.Domain.Services
             foreach (CivPopVessel vessel in repo.GetVessels())
             {
                 IEnumerable<CivPopCouple> couples = makeCouples(date, vessel, repo);
-                turnPregnantSomeFemales(date, couples, vessel.IsAllowBreeding());
+                turnPregnantSomeFemales(vessel.KSPVessel, date, couples, vessel.IsAllowBreeding());
             }
             birthOfNewCivilans(date, repo);
         }
@@ -82,6 +82,7 @@ namespace CivilianPopulation.Domain.Services
         }
 
         public void turnPregnantSomeFemales(
+            Vessel v,
             double now,
             IEnumerable<CivPopCouple> couples,
             bool breedingAllowed)
@@ -96,7 +97,7 @@ namespace CivilianPopulation.Domain.Services
                     {
                         if (female.GetExpectingBirthAt() < 0)
                         {
-                            if (rng.Next() % CHANCE_OF_PREGNANCY == 0)
+                            if ( (rng.Next() % 100) <= CHANCE_OF_PREGNANCY + getTheaterBonus(v))
                             {
                                 female.SetExpectingBirthAt(now + PREGNANCY_DURATION_IN_DAYS * TimeUnit.DAY);
                             }
@@ -104,6 +105,23 @@ namespace CivilianPopulation.Domain.Services
                     }
                 }
             }
+        }
+        private int getTheaterBonus(Vessel vessel)
+        {
+#if true
+            int improvedChance = 0;
+            List<MovieTheater> list = vessel.FindPartModulesImplementing<MovieTheater>();
+            foreach (MovieTheater item in list)
+            {
+                if (item.MovieType == "Romance")
+                {
+                    improvedChance += (int)item.RomanceMovieBonus * 100;
+                }
+            }
+            return improvedChance;
+#else
+            return 0;
+#endif
         }
 
         public void birthOfNewCivilans(double date, CivPopRepository repo)

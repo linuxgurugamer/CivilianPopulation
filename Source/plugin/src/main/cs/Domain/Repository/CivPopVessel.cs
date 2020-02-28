@@ -14,10 +14,11 @@ namespace CivilianPopulation.Domain.Repository
         private bool allowBreeding;
         private double missionArrival;
         private string missionType;
-
-        public CivPopVessel(string id)
+        private Vessel kspVessel;
+        public CivPopVessel(Vessel v)
         {
-            this.id = id;
+            this.kspVessel = v;
+            this.id = v.id.ToString(); ;
             this.capacity = 0;
             this.allowDocking = false;
             this.allowBreeding = false;
@@ -79,6 +80,8 @@ namespace CivilianPopulation.Domain.Repository
             }
         }
 
+        public Vessel KSPVessel
+        { get { return kspVessel; } }
         public string GetId()
         {
             return id;

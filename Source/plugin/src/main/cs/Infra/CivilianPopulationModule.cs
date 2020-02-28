@@ -189,7 +189,7 @@ namespace CivilianPopulation.Infra
                 CivPopVessel civVessel;
                 if (!repo.VesselExists(vessel.id.ToString()))
                 {
-                    civVessel = new CivPopVessel(vessel.id.ToString());
+                    civVessel = new CivPopVessel(vessel);
                 }
                 else
                 {

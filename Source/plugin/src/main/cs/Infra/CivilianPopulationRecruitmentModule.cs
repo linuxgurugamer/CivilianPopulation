@@ -1,5 +1,6 @@
 ﻿using CivilianPopulation.Domain;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace CivilianPopulation.Infra
@@ -35,9 +36,36 @@ namespace CivilianPopulation.Infra
             {
                 if (crewMember.trait == "Civilian")
                 {
-                    string trait = service.selectTrait();
+                    int engineer, pilot, scientist;
+                    applyTheaterBonus(out engineer, out pilot, out scientist);
+                    string trait = service.selectTrait(engineer, pilot, scientist);
                     crewMember.trait = trait;
                     log(crewMember.name + " is now a " + crewMember.trait + "!");
+                }
+            }
+        }
+
+        private void applyTheaterBonus(out int engineer, out int pilot, out int scientist)
+        {
+            List<MovieTheater> list = this.vessel.FindPartModulesImplementing<MovieTheater>();
+            Debug.Log((object)list.Count);
+            engineer = 0;
+            pilot = 0;
+            scientist = 0;
+            foreach (MovieTheater item in list)
+            {
+                Debug.Log((object)item.MovieType);
+                if (item.MovieType == "Racing Movies")
+                {
+                    engineer++;
+                }
+                if (item.MovieType == "Scifi Movies")
+                {
+                    pilot++;
+                }
+                if (item.MovieType == "Documentaries" )
+                {
+                    scientist++;
                 }
             }
         }

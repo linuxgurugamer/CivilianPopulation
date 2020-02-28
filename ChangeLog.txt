@@ -1,5 +1,12 @@
 Changelog
 
+3.0.0.7
+	Fixed internal spaces for flight school and movie theater
+	removed resources from the flight school (Not needed since they are added by LS patches)
+	Added message to hab module showing current breeding status
+	Improved recruitement, to now take into account what is being show in in the movie theatres
+	Chance of female getting pregnant now improved if romance movies are being shown
+
 3.0.0.6
 	Fixed time displays to show time in years, days, hours & minutes
 	Changed the "x" to "Close" in the GUI

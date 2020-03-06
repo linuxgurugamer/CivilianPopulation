@@ -17,6 +17,7 @@ namespace CivilianPopulation
         if (crewMember.trait == debuggingClass.civilianTrait && changedTrait == false) {
           crewMember.trait = getRandomTrait ();
           changedTrait = true;
+          KerbalRoster.SetExperienceTrait(pcm, crewMember.trait); // can be combined and simpliied, but thought would leave as is to show.
           Debug.Log (debuggingClass.modName + crewMember.name + " is now a " + crewMember.trait + "!");
         }
       }

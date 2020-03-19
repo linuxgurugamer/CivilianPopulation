@@ -1,6 +1,7 @@
 ﻿using CivilianPopulation.Domain.Repository;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 namespace CivilianPopulation.Domain.Services
 {
@@ -29,10 +30,16 @@ namespace CivilianPopulation.Domain.Services
 
         protected override void DoUpdate(double date, CivPopRepository repo)
         {
+            SimpleLogger.fetch.Info("DoUpdate, repo.Count: " + repo.GetVessels().Count());
             foreach (CivPopVessel vessel in repo.GetVessels())
             {
-                IEnumerable<CivPopCouple> couples = makeCouples(date, vessel, repo);
-                turnPregnantSomeFemales(vessel.KSPVessel, date, couples, vessel.IsAllowBreeding());
+                if (vessel.KSPVessel == null)
+                    SimpleLogger.fetch.Info("KSPVessel is null");
+                else
+                {
+                    IEnumerable<CivPopCouple> couples = makeCouples(date, vessel, repo);
+                    turnPregnantSomeFemales(vessel.KSPVessel, date, couples, vessel.IsAllowBreeding());
+                }
             }
             birthOfNewCivilans(date, repo);
         }
@@ -87,6 +94,8 @@ namespace CivilianPopulation.Domain.Services
             IEnumerable<CivPopCouple> couples,
             bool breedingAllowed)
         {
+            if (v == null)
+                SimpleLogger.fetch.Info("turnPregnantSomeFemales, v is null");
             if (breedingAllowed)
             {
                 foreach (CivPopCouple couple in couples)
@@ -110,7 +119,11 @@ namespace CivilianPopulation.Domain.Services
         {
 #if true
             int improvedChance = 0;
+            if (vessel == null)
+                Debug.Log("getTheaterBonus, vessel is null");
             List<MovieTheater> list = vessel.FindPartModulesImplementing<MovieTheater>();
+            if (list == null)
+                Debug.Log("getTheaterBonus, list is null");
             foreach (MovieTheater item in list)
             {
                 if (item.MovieType == "Romance")
@@ -144,6 +157,32 @@ namespace CivilianPopulation.Domain.Services
                         CivPopKerbal child = builder.build(date);
                         child.SetBirthdate(date);
                         child.SetVesselId(female.GetVesselId());
+
+                        ProtoCrewMember pcm = new ProtoCrewMember(ProtoCrewMember.KerbalType.Crew, child.GetName());
+                        KerbalRoster.SetExperienceTrait(pcm, "Civilian");//Set the Kerbal as the specified role (kerbalTraitName)
+                        var plist = vessel.KSPVessel.parts.FindAll(p => p.CrewCapacity > p.protoModuleCrew.Count);
+
+                        // There may be a better way, but this will look for space in the same part as the female giving birth
+                        Part part = null;
+                        foreach (var p in plist)
+                        {
+                            var crew = p.protoModuleCrew.Find(c => c.name == female.GetName());
+                            if ( crew != null)
+                            {
+                                part = p;
+                                SimpleLogger.fetch.Info("Crew member: " + female.GetName() + ", found on part: " + p.partInfo.title);
+                                break;
+                            }
+                        }
+                        // If part is null, no room in same part, so just find a part with room
+                        if (part == null)
+                            part = vessel.KSPVessel.parts.Find(p => p.CrewCapacity > p.protoModuleCrew.Count);
+                        if (part != null)
+                        {
+                            part.AddCrewmember(pcm);
+                            vessel.KSPVessel.SpawnCrew();
+                            SimpleLogger.fetch.Info("Child added to childs, name: " + child.GetName());
+                        }
                         childs.Add(child);
                     }
                 }

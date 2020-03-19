@@ -24,8 +24,11 @@ namespace CivilianPopulation
             List<CivilianVessel> res = new List<CivilianVessel>();
             foreach (Vessel vessel in FlightGlobals.Vessels)
             {
-                CivilianVessel civVessel = new CivilianVessel(vessel);
-                res.Add(civVessel);
+                if (vessel != null)
+                {
+                    CivilianVessel civVessel = new CivilianVessel(vessel);
+                    res.Add(civVessel);
+                }
             }
             return res;
         }

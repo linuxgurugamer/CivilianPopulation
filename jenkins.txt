@@ -31,20 +31,21 @@
 1:CivilianPopulation, CivilianPopulation.version
 
 # 2:PROJNAME, PROJFILE, VERSIONFILE, PLUGINSFOLDER
-#2:CivilianPopulation,CivilianPopulation/CivilianPopulation.csproj,CivilianPopulation.version,GameData/CivilianPopulation/Plugins
+2:CivilianPopulation,CivilianPopulation/CivilianPopulation.csproj,CivilianPopulation.version,GameData/CivilianPopulation/Plugins
 
 
 
-2:CivilianPopulation,Source/plugin/src/main/cs/Domain/Domain.csproj,CivilianPopulation.version,GameData/CivilianPopulation/Plugins
-2:CivilianPopulation,Source/plugin/src/main/cs/GUI/GUI.csproj,CivilianPopulation.version,GameData/CivilianPopulation/Plugins
-2:CivilianPopulation,Source/plugin/src/main/cs/Infra/Infra.csproj,CivilianPopulation.version,GameData/CivilianPopulation/Plugins
-2:CivilianPopulation,Source/modules/src/main/cs/Modules.csproj,CivilianPopulation.version,GameData/CivilianPopulation/Plugins
+#2:CivilianPopulation,Source/plugin/src/main/cs/Domain/Domain.csproj,CivilianPopulation.version,GameData/CivilianPopulation/Plugins
+#2:CivilianPopulation,Source/plugin/src/main/cs/GUI/GUI.csproj,CivilianPopulation.version,GameData/CivilianPopulation/Plugins
+#2:CivilianPopulation,Source/plugin/src/main/cs/Infra/Infra.csproj,CivilianPopulation.version,GameData/CivilianPopulation/Plugins
+#2:CivilianPopulation,Source/modules/src/main/cs/Modules.csproj,CivilianPopulation.version,GameData/CivilianPopulation/Plugins
 
 
 # 3:SOURCEFILE, DESTDIR
 3:CivilianPopulation.version,GameData/CivilianPopulation
 3:License.md,GameData/CivilianPopulation
-#3:README.md,GameData/CivilianPopulation
+3:ChangeLog.txt,GameData/CivilianPopulation
+3:KerbalChangeLog.cfg, GameData/CivilianPopulation
 
 # 4:SOURCDIR, DESTDIR
 #4:Textures,GameData/ManeuverQueue/Textures

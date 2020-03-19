@@ -187,7 +187,7 @@ namespace CivilianPopulation.Infra
             foreach (Vessel vessel in FlightGlobals.Vessels)
             {
                 CivPopVessel civVessel;
-                if (!repo.VesselExists(vessel.id.ToString()))
+                if (vessel != null && !repo.VesselExists(vessel.id.ToString()))
                 {
                     civVessel = new CivPopVessel(vessel);
                 }
@@ -225,7 +225,7 @@ namespace CivilianPopulation.Infra
                 bool found = false;
                 foreach (Vessel vessel in FlightGlobals.Vessels)
                 {
-                    if (vessel.id.ToString().Equals(civVessel.GetId()))
+                    if (vessel != null && vessel.id.ToString().Equals(civVessel.GetId()))
                     {
                         found = true;
                         break;

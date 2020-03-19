@@ -52,15 +52,18 @@ namespace CivilianPopulation.GUI
             ProtoCrewMember newKerbal = kspRoster.GetNewKerbal(ProtoCrewMember.KerbalType.Crew);
             foreach (Vessel vessel in FlightGlobals.Vessels)
             {
-                log(vessel.GetName());
-                if (vessel.GetName().Equals("Ground Base - Laythe"))
+                if (vessel != null)
                 {
-                    log("Adding crew : " + newKerbal.name + " to vessel");
-                    Part part = vessel.parts.Find(p => p.CrewCapacity > p.protoModuleCrew.Count);
-                    if (part != null)
+                    log(vessel.GetName());
+                    if (vessel.GetName().Equals("Ground Base - Laythe"))
                     {
-                        log("Adding crew : " + newKerbal.name + " to part");
-                        part.AddCrewmember(newKerbal);
+                        log("Adding crew : " + newKerbal.name + " to vessel");
+                        Part part = vessel.parts.Find(p => p.CrewCapacity > p.protoModuleCrew.Count);
+                        if (part != null)
+                        {
+                            log("Adding crew : " + newKerbal.name + " to part");
+                            part.AddCrewmember(newKerbal);
+                        }
                     }
                 }
             }

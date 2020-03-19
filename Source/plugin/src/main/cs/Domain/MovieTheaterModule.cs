@@ -25,6 +25,7 @@ namespace CivilianPopulation.Domain
         [KSPField(isPersistant = true, guiActive = true, guiName = "Bonus")]
         public string MovieBonus = "none";
 
+
         void resetPartInspiration()
         {
             /*  CHECK THIS OUT FOR BUG  */
@@ -32,7 +33,8 @@ namespace CivilianPopulation.Domain
             this.part.RequestResource(InspirationResourceName, 99999999, ResourceFlowMode.NO_FLOW); //reset this part's resource only
         
         }
-        #region regolith
+
+#region regolith
 
         [KSPField]
         public string RecipeInputs = "";
@@ -180,7 +182,7 @@ namespace CivilianPopulation.Domain
 
 
 
-        #endregion
+#endregion
 
 
 

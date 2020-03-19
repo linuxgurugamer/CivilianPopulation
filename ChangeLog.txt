@@ -1,5 +1,15 @@
 Changelog
 
+3.0.0.8 
+	Merged all four projects into single project 
+	Added back old parts, FlightSchool, Theater
+	Added back resources: education, flightExperience, inspiration
+	Fixed issue with nullrefs because of null vessels
+	Fixed issue with reloading from JSON, vessel wouldn't be properly linked
+	Numerous other small fixes
+	Added KerbalChangeLog.cfg
+	Eliminated unnecessary 2nd button, incorporated into single window with tabs
+
 3.0.0.7
 	Fixed internal spaces for flight school and movie theater
 	removed resources from the flight school (Not needed since they are added by LS patches)

@@ -1,0 +1,164 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{DD027844-CCFC-49DB-943D-B686BB86C55F}</ProjectGuid>
+    <OutputType>library</OutputType>
+    <RootNamespace>CivilianPopulation</RootNamespace>
+    <AssemblyName>CivilianPopulation</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="$(KSPDIR)\KSP_x64_Data\Managed\Assembly*.dll">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="$(KSPDIR)\KSP_x64_Data\Managed\UnityEngine*.dll">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="ClickThroughBlocker">
+      <HintPath>R:\KSP_1.8.1_dev\GameData\000_ClickThroughBlocker\Plugins\ClickThroughBlocker.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="ToolbarControl">
+      <HintPath>R:\KSP_1.8.1_dev\GameData\001_ToolbarControl\Plugins\ToolbarControl.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AssemblyVersion.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AssemblyVersion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Domain\CelestialBody.cs" />
+    <Compile Include="Domain\CelestialBodyType.cs" />
+    <Compile Include="Domain\CivilianKerbalAge.cs" />
+    <Compile Include="Domain\CivilianPopulationRecruitmentService.cs" />
+    <Compile Include="Domain\JSON.cs" />
+    <Compile Include="Domain\MovieTheaterModule.cs" />
+    <Compile Include="Domain\Repository\CivPopKerbal.cs" />
+    <Compile Include="Domain\Repository\CivPopKerbalGender.cs" />
+    <Compile Include="Domain\Repository\CivPopRepository.cs" />
+    <Compile Include="Domain\Repository\CivPopVessel.cs" />
+    <Compile Include="Domain\Services\CivPopCouple.cs" />
+    <Compile Include="Domain\Services\CivPopKerbalBuilder.cs" />
+    <Compile Include="Domain\Services\CivPopOncePerDayService.cs" />
+    <Compile Include="Domain\Services\CivPopServiceContractors.cs" />
+    <Compile Include="Domain\Services\CivPopServiceDeath.cs" />
+    <Compile Include="Domain\Services\CivPopServiceGrowth.cs" />
+    <Compile Include="Domain\Services\CivPopServiceRent.cs" />
+    <Compile Include="Domain\TimeUnit.cs" />
+    <Compile Include="GUI\CivilianPopulationGUI.cs" />
+    <Compile Include="GUI\CivilianPopulationWindow.cs" />
+    <Compile Include="GUI\Components\Grid.cs" />
+    <Compile Include="GUI\Panels\CheatPanel.cs" />
+    <Compile Include="GUI\Panels\CrewPanel.cs" />
+    <Compile Include="GUI\Panels\VesselsPanel.cs" />
+    <Compile Include="GUI\TimeFormatter.cs" />
+    <Compile Include="Infra\CivilianPopulationDockModule.cs" />
+    <Compile Include="Infra\CivilianPopulationHousingModule.cs" />
+    <Compile Include="Infra\CivilianPopulationModule.cs" />
+    <Compile Include="Infra\CivilianPopulationMonitor.cs" />
+    <Compile Include="Infra\CivilianPopulationRecruitmentModule.cs" />
+    <Compile Include="Infra\CivilianPopulationResources.cs" />
+    <Compile Include="Infra\CivilianPopulationService.cs" />
+    <Compile Include="Infra\CivilianPopulationVesselModule.cs" />
+    <Compile Include="Infra\old\CivilianDockGrowth.cs" />
+    <Compile Include="Infra\old\CivilianPopulationRegulator.cs" />
+    <Compile Include="modules\CivilianPopulation.cs" />
+    <Compile Include="modules\CivilianPopulationAdapter.cs" />
+    <Compile Include="modules\CivilianPopulationConfiguration.cs" />
+    <Compile Include="modules\CivilianPopulationCore.cs" />
+    <Compile Include="modules\CivilianPopulationUI.cs" />
+    <Compile Include="modules\CivilianVessel.cs" />
+    <Compile Include="modules\KSPAdapter.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Utils\Constants.cs" />
+    <Compile Include="Utils\InstallChecker.cs" />
+    <Compile Include="Utils\RegisterToolbar.cs" />
+    <Compile Include="Utils\RegisterToolbar2.cs" />
+    <Compile Include="Utils\Settings.cs" />
+    <Compile Include="Utils\Log.cs" />
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="AssemblyVersion.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>AssemblyVersion.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>"$(DevEnvDir)\texttransform.exe" "$(ProjectDir)AssemblyVersion.tt"</PreBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PostBuildEvent>
+set KSPDIR=$(KSPDIR)
+
+IF "%25KSPDIR%25"=="" (
+
+	ECHO Configuration error - KSPDIR not specified in project.
+
+	ECHO Either set KSPDIR environment variable or edit BetterLoadSaveGame.Common.props
+
+	PAUSE
+
+	GOTO DONE
+
+)
+
+start /D $(SolutionDir) /WAIT deploy.bat  $(TargetDir) $(TargetFileName)
+
+if $(ConfigurationName) == Release (	
+
+	start /D $(SolutionDir) /WAIT buildRelease.bat $(TargetDir) $(TargetFileName)
+
+)
+</PostBuildEvent>
+  </PropertyGroup>
+</Project>

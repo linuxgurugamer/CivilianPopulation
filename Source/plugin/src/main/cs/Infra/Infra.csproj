@@ -46,6 +46,8 @@
     <Compile Include="CivilianPopulationRecruitmentModule.cs" />
     <Compile Include="CivilianPopulationHousingModule.cs" />
     <Compile Include="CivilianPopulationVesselModule.cs" />
+    <Compile Include="Settings.cs" />
+    <Compile Include="SimpleLogger.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Domain\Domain.csproj">

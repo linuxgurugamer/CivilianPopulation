@@ -82,7 +82,7 @@ namespace CivilianPopulation.GUI
             var res = "KSC";
             foreach (var vessel in FlightGlobals.Vessels)
             {
-                if (vessel.id.ToString() == crew.GetVesselId())
+                if (vessel != null && vessel.id.ToString() == crew.GetVesselId())
                 {
                     res = vessel.GetName();
                     break;

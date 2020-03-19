@@ -16,13 +16,17 @@ namespace CivilianPopulation.Domain
             //rng = new System.Random();
         }
 
-        public string selectTrait(int engineer, int pilot, int scientist)
+        public string selectTrait(int engineer, int pilot, int scientist, double educationRes, double educationNeeded, double flightExperienceRes, double flightExpNeeded)
         {
             Dictionary<string, float> foo = new Dictionary<string, float>();
-            foo.Add("Engineer", engineer);
-            foo.Add("Pilot", pilot);
-            foo.Add("Scientist", scientist);
-
+            if (educationRes >= educationNeeded )
+                foo.Add("Engineer", engineer);
+            if (flightExperienceRes >= flightExpNeeded)
+                foo.Add("Pilot", pilot);
+            if (educationRes >= educationNeeded)
+                foo.Add("Scientist", scientist);
+            if (foo.Count == 0)
+                return "";
             return foo.RandomElementByWeight(e => e.Value).Key;
  
             //return selectTrait(rng.Next());

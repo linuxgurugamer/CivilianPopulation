@@ -115,6 +115,44 @@ namespace CivilianPopulation.Domain.Repository
 
         public void Add(CivPopVessel vessel)
         {
+            if (vessel.KSPVessel == null)
+            {
+                return;
+            }
+            if (vessel.KSPVessel.vesselType == VesselType.Debris ||
+              vessel.KSPVessel.vesselType == VesselType.SpaceObject ||
+              vessel.KSPVessel.vesselType == VesselType.EVA ||
+              vessel.KSPVessel.vesselType == VesselType.Flag ||
+              vessel.KSPVessel.vesselType == VesselType.DeployedScienceController ||
+              vessel.KSPVessel.vesselType == VesselType.DeployedSciencePart ||
+              vessel.KSPVessel.vesselType == VesselType.Unknown
+              )
+                return;
+            if (vessel.KSPVessel.rootPart == null)
+            {
+                SimpleLogger.fetch.Info("vessel.KSPVessel.rootPart == null");
+                string currentStackTrace = System.Environment.StackTrace;
+                SimpleLogger.fetch.Info("currentStackTrace: " + currentStackTrace);
+
+                return;
+            }
+            if (vessel.KSPVessel.rootPart.Modules == null)
+            {
+                SimpleLogger.fetch.Info("vessel.KSPVessel.rootPart.Modules == null");
+                string currentStackTrace = System.Environment.StackTrace;
+                SimpleLogger.fetch.Info("currentStackTrace: " + currentStackTrace);
+                return;
+            }
+
+
+            if (vessel.KSPVessel.rootPart.Modules.Contains<ModuleAsteroid>())
+            {
+                SimpleLogger.fetch.Info("Vessel is asteroid");
+                string currentStackTrace = System.Environment.StackTrace;
+                SimpleLogger.fetch.Info("currentStackTrace: " + currentStackTrace);
+                return;
+            }
+
             if (fleet.ContainsKey(vessel.GetId()))
             {
                 fleet[vessel.GetId()] = vessel;

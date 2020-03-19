@@ -129,12 +129,12 @@ namespace CivilianPopulation.GUI
             {
                 windowShown = false;
             }
-            /*
+#if true
             if (GUILayout.Button("Cheat", GUILayout.Width(100f)))
             {
                 window = CivilianPopulationWindow.CHEAT;
             }
-            */
+#endif
             if (GUILayout.Button("Crew", GUILayout.Width(100f)))
             {
                 window = CivilianPopulationWindow.CREW;

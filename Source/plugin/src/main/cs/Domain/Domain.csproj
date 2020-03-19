@@ -43,6 +43,7 @@
     <Compile Include="CelestialBody.cs" />
     <Compile Include="CivilianPopulationRecruitmentService.cs" />
     <Compile Include="JSON.cs" />
+    <Compile Include="SimpleLogger.cs" />
     <Compile Include="TimeUnit.cs" />
     <Compile Include="CivilianKerbalAge.cs" />
     <Compile Include="Repository\CivPopRepository.cs" />

@@ -23,8 +23,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		CivilianPopulation.version = CivilianPopulation.version
 		deploy.bat = deploy.bat
 		jenkins.txt = jenkins.txt
+		KerbalChangeLog.cfg = KerbalChangeLog.cfg
 		License.md = License.md
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CivilianPopulation", "CivilianPopulation\CivilianPopulation.csproj", "{DD027844-CCFC-49DB-943D-B686BB86C55F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -48,6 +51,10 @@ Global
 		{CFEA7549-024A-4D5B-B6A0-73CBA0DD097D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CFEA7549-024A-4D5B-B6A0-73CBA0DD097D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CFEA7549-024A-4D5B-B6A0-73CBA0DD097D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DD027844-CCFC-49DB-943D-B686BB86C55F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DD027844-CCFC-49DB-943D-B686BB86C55F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DD027844-CCFC-49DB-943D-B686BB86C55F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DD027844-CCFC-49DB-943D-B686BB86C55F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

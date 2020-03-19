@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29709.97
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Modules", "Source\modules\src\main\cs\Modules.csproj", "{F2FAB7A0-382D-4886-8610-54F394A10E27}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Modules", "Source\Modules\src\main\cs\Modules.csproj", "{F2FAB7A0-382D-4886-8610-54F394A10E27}"
 	ProjectSection(ProjectDependencies) = postProject
 		{CFEA7549-024A-4D5B-B6A0-73CBA0DD097D} = {CFEA7549-024A-4D5B-B6A0-73CBA0DD097D}
 		{41FBBF95-D442-424D-9CA6-FBBB07B6CE45} = {41FBBF95-D442-424D-9CA6-FBBB07B6CE45}

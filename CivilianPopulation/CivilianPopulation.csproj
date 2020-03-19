@@ -87,13 +87,13 @@
     <Compile Include="Infra\CivilianPopulationVesselModule.cs" />
     <Compile Include="Infra\old\CivilianDockGrowth.cs" />
     <Compile Include="Infra\old\CivilianPopulationRegulator.cs" />
-    <Compile Include="modules\CivilianPopulation.cs" />
-    <Compile Include="modules\CivilianPopulationAdapter.cs" />
-    <Compile Include="modules\CivilianPopulationConfiguration.cs" />
-    <Compile Include="modules\CivilianPopulationCore.cs" />
-    <Compile Include="modules\CivilianPopulationUI.cs" />
-    <Compile Include="modules\CivilianVessel.cs" />
-    <Compile Include="modules\KSPAdapter.cs" />
+    <Compile Include="Modules\CivilianPopulation.cs" />
+    <Compile Include="Modules\CivilianPopulationAdapter.cs" />
+    <Compile Include="Modules\CivilianPopulationConfiguration.cs" />
+    <Compile Include="Modules\CivilianPopulationCore.cs" />
+    <Compile Include="Modules\CivilianPopulationUI.cs" />
+    <Compile Include="Modules\CivilianVessel.cs" />
+    <Compile Include="Modules\KSPAdapter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

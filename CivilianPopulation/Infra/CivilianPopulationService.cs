@@ -10,12 +10,9 @@ namespace CivilianPopulation.Infra
         {
             foreach (CivPopKerbal current in repo.GetLivingRosterForVessel(vessel.id.ToString()))
             {
-                Log.Info("current.GetName(): " + current.GetName());
-
                 var crew = vessel.GetVesselCrew().Find(c => c.name.Equals(current.GetName()));
                 if (crew == null)
                 {
-                    Log.Info("crew == null");
                     var houses = vessel.FindPartModulesImplementing<CivilianPopulationHousingModule>();
                     if (houses.Count > 0)
                     {

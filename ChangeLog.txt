@@ -1,5 +1,8 @@
 Changelog
 
+3.0.0.9
+	Fixed bug which would create a new kerbal when a kerbal went eva from anywhere on the same vessel
+
 3.0.0.8 
 	Merged all four projects into single project 
 	Added back old parts, FlightSchool, Theater

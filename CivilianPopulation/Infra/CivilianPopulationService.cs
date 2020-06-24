@@ -8,11 +8,14 @@ namespace CivilianPopulation.Infra
 
         public void CreateKerbals(CivPopRepository repo, Vessel vessel)
         {
-            foreach (var current in repo.GetLivingRosterForVessel(vessel.id.ToString()))
+            foreach (CivPopKerbal current in repo.GetLivingRosterForVessel(vessel.id.ToString()))
             {
+                Log.Info("current.GetName(): " + current.GetName());
+
                 var crew = vessel.GetVesselCrew().Find(c => c.name.Equals(current.GetName()));
                 if (crew == null)
                 {
+                    Log.Info("crew == null");
                     var houses = vessel.FindPartModulesImplementing<CivilianPopulationHousingModule>();
                     if (houses.Count > 0)
                     {
@@ -34,8 +37,11 @@ namespace CivilianPopulation.Infra
                                     kspRoster.Remove(newKerbal);
                                     newKerbal = kspRoster.GetNewKerbal(ProtoCrewMember.KerbalType.Crew);
                                 }
-                                newKerbal.ChangeName(current.GetName());
-
+                                if (!newKerbal.ChangeName(current.GetName()))
+                                {
+                                    kspRoster.Remove(newKerbal);
+                                    continue;
+                                }
                                 if (house.part.AddCrewmember(newKerbal))
                                 {
                                     vessel.SpawnCrew();

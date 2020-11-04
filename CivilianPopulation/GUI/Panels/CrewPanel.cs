@@ -1,19 +1,37 @@
 ﻿
 
-
+using System;
+using System.Collections;
+using System.Collections.Generic;
 using CivilianPopulation.Domain.Repository;
 using System.Linq;
 using UnityEngine;
+using Smooth.Collections;
 
 namespace CivilianPopulation.GUI
 {
-    public class CrewPanel 
+    public class CrewPanel
     {
         private Grid grid;
         private TimeFormatter formatter;
 
         private CivPopRepository repo;
         private double currentDate;
+
+        class StringComparer<TKey> : IComparer<string>
+        {
+            public int Compare(string x, string y)
+            {
+                return y.CompareTo(x);
+            }
+        }
+        SortedList<string, CivPopKerbal> list = new SortedList<string, CivPopKerbal>();
+        SortedList<string, CivPopKerbal> reverseList = new SortedList<string, CivPopKerbal>(new StringComparer<string>());
+
+        IOrderedEnumerable<CivPopKerbal> sortedList = null;
+        string lastSort = "";
+        bool lastReverseSort = false;
+        
 
         public CrewPanel()
         {
@@ -25,8 +43,26 @@ namespace CivilianPopulation.GUI
                 "Age",
                 "Childbirth"
             };
-            grid = new Grid();
-            grid.setHeaders(headers);
+            int[] headerWidth =
+            {
+                130,
+                60,
+                80,
+                60,
+                130,
+                140
+            };
+            GUIStyle[] styles =
+            {
+                RegisterToolbar.DefGuiSkin.label,
+                RegisterToolbar.labelCentered,
+                RegisterToolbar.DefGuiSkin.label,
+                RegisterToolbar.labelCentered,
+                RegisterToolbar.DefGuiSkin.label,
+                RegisterToolbar.DefGuiSkin.label
+            };
+            grid = new Grid();            
+            grid.setHeaders(headers, headerWidth, styles);
             this.formatter = new TimeFormatter();
         }
 
@@ -43,8 +79,127 @@ namespace CivilianPopulation.GUI
         public void draw()
         {
             var i = 0;
+            int cnt = 0;
             var data = new string[repo.GetRoster().Count(), 6];
-            foreach (var crew in repo.GetRoster().OrderBy(crew => crew.GetName()))
+
+            if (sortedList == null || lastSort != grid.GetCurrentSort || lastReverseSort != grid.GetReverseSort|| repo.GetRoster().Count() != sortedList.Count())
+            {
+                lastSort = grid.GetCurrentSort;
+                lastReverseSort = grid.GetReverseSort;
+                switch (lastSort)
+                {
+                    case "Name":
+                        if (grid.GetReverseSort)
+                            sortedList = repo.GetRoster().OrderByDescending(crew => crew.GetName());
+                        else
+                            sortedList = repo.GetRoster().OrderBy(crew => crew.GetName());
+                        break;
+
+                    case "Trait":
+                        list.Clear();
+                        reverseList.Clear();
+                        foreach (var crew in repo.GetRoster())
+                        {
+                            foreach (var current in HighLogic.CurrentGame.CrewRoster.Crew)
+                            {
+                                if (current.name == crew.GetName())
+                                {
+                                    if (grid.GetReverseSort)
+                                        reverseList.Add(getTrait(current) + cnt.ToString(), crew);
+                                    else
+                                        list.Add(getTrait(current) + cnt.ToString(), crew);
+                                    cnt++;
+                                    break;
+                                }
+                            }
+                        }
+                        if (grid.GetReverseSort)
+                        {
+                            cnt = 0;
+                            foreach (var a in reverseList)
+                                list.Add(cnt++.ToString(), a.Value);
+                        }
+                        sortedList = list.Values.OrderBy(key => 0);
+                        break;
+                    case "Location":
+                        list.Clear();
+                        reverseList.Clear();
+                        foreach (var crew in repo.GetRoster())
+                        {
+                            foreach (var current in HighLogic.CurrentGame.CrewRoster.Crew)
+                            {
+                                if (current.name == crew.GetName())
+                                {
+                                    if (grid.GetReverseSort)
+                                        reverseList.Add(getStatus(crew) + cnt.ToString(), crew);
+                                    else
+                                        list.Add(getStatus(crew) + cnt.ToString(), crew);
+                                    cnt++;
+                                    break;
+                                }
+                            }
+                        }
+                        if (grid.GetReverseSort)
+                        {
+                            cnt = 0;
+                            foreach (var a in reverseList)
+                                list.Add(cnt++.ToString(), a.Value);
+                        }
+                        sortedList = list.Values.OrderBy(key => 0);
+
+                        break;
+                    case "Gender":
+                        list.Clear();
+                        reverseList.Clear();
+                        foreach (var crew in repo.GetRoster())
+                        {
+                            foreach (var current in HighLogic.CurrentGame.CrewRoster.Crew)
+                            {
+                                if (current.name == crew.GetName())
+                                {
+                                    if (grid.GetReverseSort)
+                                        reverseList.Add(getGender(crew) + cnt.ToString(), crew);
+                                    else
+                                        list.Add(getGender(crew) + cnt.ToString(), crew);
+                                    cnt++;
+                                    break;
+                                }
+                            }
+                        }
+                        if (grid.GetReverseSort)
+                        {
+                            cnt = 0;
+                            foreach (var a in reverseList)
+                                list.Add(cnt++.ToString(), a.Value);
+                        }
+                        sortedList = list.Values.OrderBy(key => 0);
+
+                        break;
+                    case "Age":
+                        if (grid.GetReverseSort)
+                            sortedList = repo.GetRoster().OrderByDescending(crew => currentDate - crew.GetBirthdate());
+                        else
+                            sortedList = repo.GetRoster().OrderBy(crew => currentDate - crew.GetBirthdate());
+                        break;
+
+                    case "Childbirth":
+                        if (grid.GetReverseSort)
+                            sortedList = repo.GetRoster().OrderByDescending(crew => crew.GetExpectingBirthAt());
+                        else
+                            sortedList = repo.GetRoster().OrderBy(crew => crew.GetExpectingBirthAt());
+                        break;
+                    default:
+                        if (grid.GetReverseSort)
+                            sortedList = repo.GetRoster().OrderByDescending(crew => crew.GetName());
+                        else
+                            sortedList = repo.GetRoster().OrderBy(crew => crew.GetName());
+                        break;
+
+                }
+            }
+            //sortedList = repo.GetRoster().OrderBy(crew => crew.GetName());
+
+            foreach (var crew in sortedList)
             {
                 ProtoCrewMember kCrew = null;
                 foreach (var current in HighLogic.CurrentGame.CrewRoster.Crew)
@@ -116,7 +271,7 @@ namespace CivilianPopulation.GUI
 
         private string getChildbirth(CivPopKerbal crew)
         {
-            string res = "-";
+            string res = "       -";
             if (crew.GetExpectingBirthAt() > -1)
             {
                 res = formatter.format(crew.GetExpectingBirthAt() - currentDate);

@@ -42,7 +42,7 @@ namespace CivilianPopulation.Infra
                                 if (house.part.AddCrewmember(newKerbal))
                                 {
                                     vessel.SpawnCrew();
-                                    log("CreateKerbals : " + newKerbal.name + " has been placed successfully");
+                                    Log.Info("CreateKerbals : " + newKerbal.name + " has been placed successfully");
                                     break;
                                 }
                             }
@@ -53,7 +53,7 @@ namespace CivilianPopulation.Infra
                 if (crew == null)
                 {
                     current.SetDead(true);
-                    log("CreateKerbals : " + current.GetName() + " died because of a lack of room");
+                    Log.Info("CreateKerbals : " + current.GetName() + " died because of a lack of room");
                 }
             }
         }
@@ -78,10 +78,11 @@ namespace CivilianPopulation.Infra
             }
         }
 
+#if false
         private void log(string message)
         {
             Debug.Log(this.GetType().Name + " - " + message);
         }
-
+#endif
     }
 }

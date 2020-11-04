@@ -36,6 +36,8 @@ namespace CivilianPopulation
             toolTip = "Inspiration needed to be recruited.  Minimum value is approximiately equal to 3 Kerbin days")]
         public double inspirationCost = 50f;
 
+        [GameParameters.CustomIntParameterUI("Minimum age when a kerbal can die of old age", minValue = 75, maxValue = 200 )]
+        public int minAgeDeath = 75;
 
         public override void SetDifficultyPreset(GameParameters.Preset preset)
         {

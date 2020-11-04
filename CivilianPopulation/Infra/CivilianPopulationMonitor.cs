@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using UnityEngine;
+using System.Diagnostics;
+
 
 namespace CivilianPopulation.Infra
 {
@@ -15,6 +16,7 @@ namespace CivilianPopulation.Infra
             lastTick = DateTime.Now.Ticks;
         }
 
+        [ConditionalAttribute("DEBUG")]
         public void add(String counter)
         {
             if (!counters.ContainsKey(counter))
@@ -25,17 +27,13 @@ namespace CivilianPopulation.Infra
             lastTick = DateTime.Now.Ticks;
         }
 
+        [ConditionalAttribute("DEBUG")]
         public void show()
         {
             foreach (string key in counters.Keys)
             {
-                log(key + " : " + counters[key]);
+                Log.Info(key + " : " + counters[key]);
             }
-        }
-
-        private void log(string message)
-        {
-            Debug.Log(this.GetType().Name + " - " + message);
         }
     }
 }

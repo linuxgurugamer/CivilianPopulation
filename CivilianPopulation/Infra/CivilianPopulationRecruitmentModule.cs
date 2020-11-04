@@ -61,7 +61,7 @@ namespace CivilianPopulation.Infra
                     if (trait != "")
                     {
                         crewMember.trait = trait;
-                        log(crewMember.name + " is now a " + crewMember.trait + "!");
+                        Log.Info(crewMember.name + " is now a " + crewMember.trait + "!");
                         //RequestResource(Part part, int id, double demand, bool usePri)
                         //vessel.resourcePartSet.RequestResource(this.part, inspirationID, inspirationCost, true);
                         double d = this.part.RequestResource(inspirationID, HighLogic.CurrentGame.Parameters.CustomParams<CP>().inspirationCost);
@@ -89,13 +89,13 @@ namespace CivilianPopulation.Infra
         private void applyTheaterBonus(out int engineer, out int pilot, out int scientist)
         {
             List<MovieTheater> list = this.vessel.FindPartModulesImplementing<MovieTheater>();
-            Debug.Log((object)list.Count);
+
             engineer = 0;
             pilot = 0;
             scientist = 0;
             foreach (MovieTheater item in list)
             {
-                Debug.Log((object)item.MovieType);
+
                 if (item.MovieType == "Racing Movies")
                 {
                     engineer++;
@@ -111,9 +111,11 @@ namespace CivilianPopulation.Infra
             }
         }
 
+#if false
         private void log(string message)
         {
             Debug.Log(this.GetType().Name + " - " + message);
         }
+#endif
     }
 }

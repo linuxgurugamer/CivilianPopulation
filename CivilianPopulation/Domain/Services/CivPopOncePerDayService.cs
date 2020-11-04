@@ -11,9 +11,11 @@ namespace CivilianPopulation.Domain.Services
         {
         }
 
-        public void Update(double date, CivPopRepository repo)
+
+
+        public void Update(double date, CivPopRepository repo, bool now = false)
         {
-            if (lastUpdate > -1 && GetDay(lastUpdate) < GetDay(date))
+            if (lastUpdate > -1 && GetDay(lastUpdate) < GetDay(date) || now)
             {
                 DoUpdate(date, repo);
             }

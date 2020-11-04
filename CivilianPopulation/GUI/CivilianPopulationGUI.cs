@@ -26,7 +26,6 @@ namespace CivilianPopulation.GUI
 #endif
         private CrewPanel crewPanel;
         private VesselsPanel vesselsPanel;
-        private CivilianPopulationUI timePanel;
 
         internal static String _AssemblyName { get { return System.Reflection.Assembly.GetExecutingAssembly().GetName().Name; } }
         int baseWindowID;
@@ -39,7 +38,6 @@ namespace CivilianPopulation.GUI
 #endif
             crewPanel = new CrewPanel();
             vesselsPanel = new VesselsPanel();
-            timePanel = CivilianPopulation.ui;
 
             baseWindowID = UnityEngine.Random.Range(1000, 2000000) + _AssemblyName.GetHashCode();
 
@@ -82,10 +80,9 @@ namespace CivilianPopulation.GUI
         //private void onAppLauncherDestroyed()
         private void OnDestroy()
         {
-            Debug.Log("CivilianPopulationGUI.OnDestroy");
+            Log.Info("CivilianPopulationGUI.OnDestroy");
             if (toolbarControl != null)
             {
-                Debug.Log("CivilianPopulationGUI.OnDestroy destroying toolbarControl");
                 toolbarControl.OnDestroy();
                 GameObject.Destroy(toolbarControl);
                 toolbarControl = null;
@@ -100,7 +97,7 @@ namespace CivilianPopulation.GUI
         private void drawWindow(int windowId)
         {
             GUILayout.BeginVertical();
-            scrollPosition = GUILayout.BeginScrollView(scrollPosition, GUILayout.Width(600), GUILayout.Height(300));
+            //scrollPosition = GUILayout.BeginScrollView(scrollPosition, GUILayout.Width(600), GUILayout.Height(300));
 
             GUILayout.BeginHorizontal();
 
@@ -135,6 +132,9 @@ namespace CivilianPopulation.GUI
                 cheatPanel.draw();
             }
 #endif
+            if (window != CivilianPopulationWindow.CREW)
+                scrollPosition = GUILayout.BeginScrollView(scrollPosition, GUILayout.Width(600), GUILayout.Height(300));
+
             switch (window)
             {
                 case CivilianPopulationWindow.CREW:
@@ -142,8 +142,8 @@ namespace CivilianPopulation.GUI
                     crewPanel.setRepository(repo);
                     crewPanel.draw();
                     break;
-                case CivilianPopulationWindow.TIME:                    
-                    timePanel.drawWindow(0);                    
+                case CivilianPopulationWindow.TIME:
+                        CivilianPopulation.ui.drawWindow(0);
                     break;
                 case CivilianPopulationWindow.VESSELS:
                     vesselsPanel.setCurrentDate(currentDate);
@@ -157,9 +157,11 @@ namespace CivilianPopulation.GUI
             UnityEngine.GUI.DragWindow();
         }
 
+#if false
         private void log(string message)
         {
             Debug.Log(this.GetType().Name + " - " + message);
         }
+#endif
     }
 }

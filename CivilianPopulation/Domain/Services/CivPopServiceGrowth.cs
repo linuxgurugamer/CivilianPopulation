@@ -7,6 +7,7 @@ namespace CivilianPopulation.Domain.Services
 {
     public class CivPopServiceGrowth : CivPopOncePerDayService
     {
+
         private const int MALE_AVAILABILITY = 3;
         private const int FEMALE_AVAILABILITY = 3;
         private const int CHANCE_OF_PREGNANCY = 10;
@@ -38,7 +39,7 @@ namespace CivilianPopulation.Domain.Services
                     turnPregnantSomeFemales(vessel.KSPVessel, date, couples, vessel.IsAllowBreeding());
                 }
             }
-            birthOfNewCivilans(date, repo);
+            birthOfNewCivilians(date, repo);
         }
 
         public IEnumerable<CivPopCouple> MakeCouples(double date, CivPopVessel vessel, CivPopRepository repo)
@@ -137,20 +138,19 @@ namespace CivilianPopulation.Domain.Services
 #endif
         }
 
-        public void birthOfNewCivilans(double date, CivPopRepository repo)
+        public void birthOfNewCivilians(double date, CivPopRepository repo)
         {
             List<CivPopKerbal> childs = new List<CivPopKerbal>();
             IEnumerable<CivPopKerbal> females = repo.GetRoster()
                 .Where(kerbal => kerbal.GetExpectingBirthAt() > 0)
                 .Where(kerbal => !kerbal.IsDead())
-                .Where(kerbal => kerbal.GetExpectingBirthAt() < date)
-                ;
+                .Where(kerbal => kerbal.GetExpectingBirthAt() <= date);
+
             foreach (CivPopKerbal female in females)
             {
                 female.SetExpectingBirthAt(-1);
                 if (female.GetVesselId() != null)
                 {
-
                     CivPopVessel vessel = repo.GetVessel(female.GetVesselId());
                     if (vessel.GetCapacity() > repo.GetLivingRosterForVessel(vessel.GetId()).Count())
                     {
@@ -158,9 +158,12 @@ namespace CivilianPopulation.Domain.Services
                         child.SetBirthdate(date);
                         child.SetVesselId(female.GetVesselId());
 
+
                         ProtoCrewMember pcm = new ProtoCrewMember(ProtoCrewMember.KerbalType.Crew, child.GetName());
                         KerbalRoster.SetExperienceTrait(pcm, "Civilian");//Set the Kerbal as the specified role (kerbalTraitName)
                         var plist = vessel.KSPVessel.parts.FindAll(p => p.CrewCapacity > p.protoModuleCrew.Count);
+                        
+                        HighLogic.fetch.currentGame.CrewRoster.AddCrewMember(pcm);
 
                         // There may be a better way, but this will look for space in the same part as the female giving birth
                         Part part = null;

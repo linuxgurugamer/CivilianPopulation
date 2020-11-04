@@ -16,11 +16,11 @@ namespace CivilianPopulation.GUI
         public void draw()
         {
             GUILayout.BeginVertical();
-            if (GUILayout.Button("Funds", GUILayout.Width(100f)))
+            if (Funding.Instance != null && GUILayout.Button("Funds", GUILayout.Width(100f)))
             {
-                Funding.Instance.AddFunds(100000, TransactionReasons.Cheating);
+                Funding.Instance.AddFunds(100000f, TransactionReasons.Cheating);
             }
-            if (GUILayout.Button("Science", GUILayout.Width(100f)))
+            if (ResearchAndDevelopment.Instance != null && GUILayout.Button("Science", GUILayout.Width(100f)))
             {
                 ResearchAndDevelopment.Instance.AddScience(100, TransactionReasons.Cheating);
             }
@@ -55,14 +55,14 @@ namespace CivilianPopulation.GUI
             {
                 if (vessel != null)
                 {
-                    log(vessel.GetName());
+                    Log.Info(vessel.GetName());
                     if (vessel.GetName().Equals("Ground Base - Laythe"))
                     {
-                        log("Adding crew : " + newKerbal.name + " to vessel");
+                        Log.Info("Adding crew : " + newKerbal.name + " to vessel");
                         Part part = vessel.parts.Find(p => p.CrewCapacity > p.protoModuleCrew.Count);
                         if (part != null)
                         {
-                            log("Adding crew : " + newKerbal.name + " to part");
+                            Log.Info("Adding crew : " + newKerbal.name + " to part");
                             part.AddCrewmember(newKerbal);
                         }
                     }
@@ -70,11 +70,12 @@ namespace CivilianPopulation.GUI
             }
             return newKerbal;
         }
-
+#if false
         private void log(string message)
         {
             Debug.Log(this.GetType().Name + " - " + message);
         }
+#endif
     }
 #endif
-}
+    }

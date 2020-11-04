@@ -2,6 +2,7 @@
 using CivilianPopulation.Domain.Repository;
 using CivilianPopulation.Domain.Services;
 using CivilianPopulation.GUI;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -13,10 +14,11 @@ namespace CivilianPopulation.Infra
     // [KSPAddon(KSPAddon.Startup.AllGameScenes, true)]
     //public class CivilianPopulationModule: MonoBehaviour
     {
+        internal static CivilianPopulationModule Instance;
         private static CivPopKerbalBuilder builder;
         private static CivPopServiceContractors contractors;
         private static CivPopServiceDeath death;
-        private static CivPopServiceGrowth growth;
+        internal static CivPopServiceGrowth growth;
         private static CivPopServiceRent rent;
 
         [KSPField(isPersistant = true, guiActive = false)]
@@ -26,10 +28,12 @@ namespace CivilianPopulation.Infra
 
         protected System.Random rng;
         private CivilianPopulationService service;
+#if DEBUG
         private CivilianPopulationMonitor monitor;
-
+#endif
         public void Start()
         {
+            Instance = this;
             if (builder == null)
             {
                 builder = new CivPopKerbalBuilder(this.GenerateKerbalName);
@@ -60,51 +64,105 @@ namespace CivilianPopulation.Infra
 
             this.rng = new System.Random();
             this.service = new CivilianPopulationService();
+#if DEBUG
             this.monitor = new CivilianPopulationMonitor();
+#endif
             DontDestroyOnLoad(this);
+
+            StartCoroutine(SlowUpdate());
         }
 
         public void OnGUI()
         {
+            
+#if DEBUG
             //monitor.show();
             monitor.add("Trash");
+#endif
             gui.update(Planetarium.GetUniversalTime(), GetRepository());
+#if DEBUG
             monitor.add("OnGUI");
+#endif
         }
 
+        internal void DoGrowthUpdateNow()
+        {
+            var currentDate = Planetarium.GetUniversalTime();
+            CivPopRepository repo = GetRepository();
+            foreach (var crew in repo.GetRoster())
+            {
+                if (crew.GetExpectingBirthAt() <= currentDate)
+                {
+                    growth.Update(currentDate, repo, true);
+#if DEBUG
+                    monitor.add("growth");
+#endif
+                    return;
+                }
+            }
+        }
+        IEnumerator SlowUpdate()
+        {
+            while (true)
+            {
+                yield return new WaitForSecondsRealtime(1f);
+
+                DoGrowthUpdateNow();
+
+#if false
+            }
+        }
         public void FixedUpdate()
         {
-            monitor.add("Trash");
-            double now = Planetarium.GetUniversalTime();
-            monitor.add("GetUniversalTime");
+#endif
+#if DEBUG
+                monitor.add("Trash");
+#endif
+                double now = Planetarium.GetUniversalTime();
+#if DEBUG
+                monitor.add("GetUniversalTime");
+#endif
 
-            CivPopRepository repo = GetRepository();
-            UpdateRepository(repo);
-            monitor.add("UpdateRepository");
+                CivPopRepository repo = GetRepository();
+                UpdateRepository(repo);
+#if DEBUG
+                monitor.add("UpdateRepository");
+#endif
+                contractors.Update(now, repo);
+#if DEBUG
+                monitor.add("contractors");
+#endif
+                death.Update(now, repo);
+#if DEBUG
+                monitor.add("death");
+#endif
+                growth.Update(now, repo);
+#if DEBUG
+                monitor.add("growth");
+#endif
 
-            contractors.Update(now, repo);
-            monitor.add("contractors");
-            death.Update(now, repo);
-            monitor.add("death");
-            growth.Update(now, repo);
-            monitor.add("growth");
+                if (HighLogic.CurrentGame.Mode == Game.Modes.CAREER)
+                {
+                    rent.Update(now, repo);
+                }
+#if DEBUG
+                monitor.add("rent");
+#endif
+                Vessel vessel = FlightGlobals.ActiveVessel;
+                if (vessel != null)
+                {
+                    service.KillKerbals(repo, vessel);
+                    service.CreateKerbals(repo, vessel);
+                }
+#if DEBUG
+                monitor.add("Vessels");
+#endif
 
-            if (HighLogic.CurrentGame.Mode == Game.Modes.CAREER)
-            {
-                rent.Update(now, repo);
+                repoJSON = repo.ToJson();
+#if DEBUG
+                monitor.add("ToJson");
+#endif
             }
-            monitor.add("rent");
-
-            Vessel vessel = FlightGlobals.ActiveVessel;
-            if (vessel != null)
-            {
-                service.KillKerbals(repo, vessel);
-                service.CreateKerbals(repo, vessel);
-            }
-            monitor.add("Vessels");
-
-            repoJSON = repo.ToJson();
-            monitor.add("ToJson");
         }
 
         private string GenerateKerbalName(CivPopKerbalGender gender)
@@ -124,7 +182,9 @@ namespace CivilianPopulation.Infra
         private CivPopRepository repository = null;
         private CivPopRepository GetRepository()
         {
+#if DEBUG
             monitor.add("Trash");
+#endif
             if (repository == null)
             {
                 repository = new CivPopRepository();
@@ -133,13 +193,15 @@ namespace CivilianPopulation.Infra
                     repository = new CivPopRepository(repoJSON.Replace('[', '{').Replace(']', '}'));
                 }
             }
+#if DEBUG
             monitor.add("GetRepository");
+#endif
             return repository;
         }
 
         private void UpdateRepository(CivPopRepository repo)
         {
-            if (repo.GetFunds() > 0)
+            if (Funding.Instance != null && repo.GetFunds() > 0)
             {
                 Funding.Instance.AddFunds(repo.GetFunds(), TransactionReasons.Progression);
                 repo.AddFunds(repo.GetFunds() * -1);
@@ -257,10 +319,11 @@ namespace CivilianPopulation.Infra
             return type;
         }
 
-
+#if false
         private void log(string message)
         {
             Debug.Log(this.GetType().Name + " - " + message);
         }
+#endif
     }
 }

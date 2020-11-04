@@ -1,5 +1,20 @@
 Changelog
 
+3.0.1 
+	Thanks to user @pmborg for this:
+		Added ModuleAsteroidDrill and ModuleCometDrill into the Netherdyne Laser Drill
+	Fixed nullref when clicking the time button
+	Fixed nullref when playing in Sandbox during FixedUpdate while trying to update funds
+	Disabled the CivilialPopulationMonitor when not compiled with DEBUG
+	Fixed growth issue to have kerbals born when time is up rather than all new kerbals 1/day
+	Fixed Nullref when saving games AFTER a kerbal was born
+	Fixed bug where a kerbal would have a lesser chance to die the older they got (after 75)
+	Added settings option to specify the minimum age a kerbal can die
+	Updated Crew panel
+		Added buttons at top of each column, clicking on a button will sort by that column, clicking again will reverse the sort
+		Optimized the CrewPanel to only re-sort if something changed
+
+
 3.0.0.9
 	Fixed bug which would create a new kerbal when a kerbal went eva from anywhere on the same vessel
 

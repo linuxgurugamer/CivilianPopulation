@@ -233,3 +233,7 @@ $RECYCLE.BIN/
 *.dll
 *.pdb
 .vs
+
+# Rider/Resharper files
+/CivilianPopulation.sln.DotSettings
+**/.idea/

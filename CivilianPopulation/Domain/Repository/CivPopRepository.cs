@@ -103,7 +103,7 @@ namespace CivilianPopulation.Domain.Repository
                          .Where(k => !k.IsDead());
         }
 
-        public IEnumerable<CivPopKerbal> GetDeadRosterForVessel(string vesselId)
+        public List<CivPopKerbal> GetDeadRosterForVessel(string vesselId)
         {
             List<CivPopKerbal> res = new List<CivPopKerbal>();
             foreach (CivPopKerbal current in roster.Values

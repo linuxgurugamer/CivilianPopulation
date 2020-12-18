@@ -60,6 +60,30 @@ namespace CivilianPopulation.Infra
 
         public void KillKerbals(CivPopRepository repo, Vessel vessel)
         {
+            var deadList = repo.GetDeadRosterForVessel(vessel.id.ToString());
+
+            for (int i = deadList.Count - 1; i > 0; i--)
+            {
+                var current = deadList[i];
+                for (int p = vessel.parts.Count - 1; p > 0; p--)
+                {
+                    var part = vessel.parts[p];
+                    for (int c = part.protoModuleCrew.Count - 1; c >0; c--)
+                    {
+                        var crew = part.protoModuleCrew[c];
+                        if (crew.name.Equals(current.GetName()))
+                        {
+                            part.RemoveCrewmember(crew);
+                            vessel.RemoveCrew(crew);
+                            crew.Die();
+                        }
+
+                    }
+                }
+                repo.Remove(current);
+            }
+
+#if false
             foreach (var current in repo.GetDeadRosterForVessel(vessel.id.ToString()))
             {
                 foreach (var part in vessel.parts)
@@ -76,6 +100,7 @@ namespace CivilianPopulation.Infra
                 }
                 repo.Remove(current);
             }
+#endif
         }
 
 #if false

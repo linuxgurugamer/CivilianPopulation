@@ -1,5 +1,8 @@
 Changelog
 
+3.0.1.1
+	Fixed Invalid Operation Exception, was causing Kerbals to die upon entering a vessel
+
 3.0.1 
 	Thanks to user @pmborg for this:
 		Added ModuleAsteroidDrill and ModuleCometDrill into the Netherdyne Laser Drill

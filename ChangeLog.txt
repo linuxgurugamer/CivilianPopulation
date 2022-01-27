@@ -1,5 +1,9 @@
 Changelog
 
+3.0.1.2
+	Added AssemblyFileVersion
+	Updated version file for 1.12
+
 3.0.1.1
 	Fixed Invalid Operation Exception, was causing Kerbals to die upon entering a vessel
 

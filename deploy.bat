@@ -13,10 +13,12 @@ set GAMEDATA="GameData"
 set VERSIONFILE=%GAMEDIR%.version
 
 
+
 set DP0=r:\dp0\kspdev
 
 copy /Y "%1%2" "%GAMEDATA%\%GAMEDIR%\Plugins"
 copy /Y "%1%3".pdb "%GAMEDATA%\%GAMEDIR%\Plugins"
+
 
 copy /Y %VERSIONFILE% %GAMEDATA%\%GAMEDIR%
 

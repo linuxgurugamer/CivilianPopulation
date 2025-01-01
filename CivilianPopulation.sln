@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29709.97
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35312.102
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Modules", "Source\Modules\src\main\cs\Modules.csproj", "{F2FAB7A0-382D-4886-8610-54F394A10E27}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -25,6 +25,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		jenkins.txt = jenkins.txt
 		KerbalChangeLog.cfg = KerbalChangeLog.cfg
 		License.md = License.md
+		README-WEB.md = README-WEB.md
+		Readme.md = Readme.md
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CivilianPopulation", "CivilianPopulation\CivilianPopulation.csproj", "{DD027844-CCFC-49DB-943D-B686BB86C55F}"
